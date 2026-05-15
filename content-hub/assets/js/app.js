@@ -316,7 +316,11 @@ document.querySelectorAll('.filter-option').forEach((option) => {
 document.querySelectorAll('.content-filter-head:not(.search-filter-head)').forEach((head) => {
   const filterBar = head.querySelector('.content-filter-bar');
   const section = head.closest('.section');
-  const rows = [...(section?.querySelectorAll('.task-list .task-row:not(.task-header)') || [])];
+  const workspaceFiles = head.closest('.workspace-all-files');
+  const rows = [
+    ...(section?.querySelectorAll('.task-list .task-row:not(.task-header)') || []),
+    ...(workspaceFiles?.querySelectorAll('[data-workspace-item]') || []),
+  ];
   if (!filterBar || !rows.length || filterBar.querySelector('[data-contextual-search]')) return;
 
   const search = document.createElement('label');
@@ -334,7 +338,8 @@ document.querySelectorAll('.content-filter-head:not(.search-filter-head)').forEa
   input?.addEventListener('input', () => {
     const query = input.value.trim().toLowerCase();
     rows.forEach((row) => {
-      row.hidden = Boolean(query) && !row.textContent.toLowerCase().includes(query);
+      const searchable = `${row.dataset.search || ''} ${row.textContent}`.toLowerCase();
+      row.hidden = Boolean(query) && !searchable.includes(query);
     });
   });
 });
@@ -517,6 +522,114 @@ document.querySelectorAll('[data-workspace-modal]').forEach((modal) => {
   });
 });
 
+const createShareModal = () => {
+  if (!document.querySelector('[data-open-share-modal]') || document.querySelector('[data-share-modal]')) return;
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <div class="modal-backdrop" data-share-modal hidden>
+      <section class="share-modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+        <div class="share-modal-head">
+          <h2 id="share-modal-title">Invite to collaborate</h2>
+          <button class="icon-btn" type="button" aria-label="Close share" data-share-modal-close>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="share-modal-body">
+          <section class="share-modal-section">
+            <h3>Share by workgroup</h3>
+            <form class="share-workgroup-form" data-share-form>
+              <div class="share-search-wrap">
+                <label class="share-search">
+                  <span class="sr-only">Search for users or groups</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                  <input type="search" placeholder="Search for users or groups" data-share-search aria-controls="share-suggestions-document" autocomplete="off">
+                </label>
+                <div class="share-suggestions" id="share-suggestions-document" data-share-suggestions hidden></div>
+              </div>
+              <label class="share-role-select">
+                <span class="sr-only">Permission role</span>
+                <select aria-label="Permission role">
+                  <option>Viewer</option>
+                  <option>Commenter</option>
+                  <option>Editor</option>
+                  <option>Admin</option>
+                </select>
+              </label>
+              <button class="secondary-btn share-submit" type="submit">Share</button>
+            </form>
+          </section>
+          <section class="share-modal-section">
+            <h3>Who can access</h3>
+            <div class="share-access-list">
+              <div class="share-access-row">
+                <span class="share-access-avatar">MS</span>
+                <span class="share-access-person">
+                  <strong>Maya Stone</strong>
+                  <span>maya.stone@example.com</span>
+                </span>
+                <span class="share-role-pill">Owner</span>
+              </div>
+              <div class="share-access-row">
+                <span class="share-access-avatar violet">JB</span>
+                <span class="share-access-person">
+                  <strong>Jonah Blake</strong>
+                  <span>jonah.blake@example.com</span>
+                </span>
+                <label class="share-access-role">
+                  <span class="sr-only">Jonah Blake permission role</span>
+                  <select aria-label="Jonah Blake permission role">
+                    <option>Viewer</option>
+                    <option>Commenter</option>
+                    <option>Editor</option>
+                    <option>Admin</option>
+                  </select>
+                </label>
+              </div>
+              <div class="share-access-row">
+                <span class="share-access-avatar group">PR</span>
+                <span class="share-access-person">
+                  <strong>Procurement Review</strong>
+                  <span>Group · 6 members</span>
+                </span>
+                <label class="share-access-role">
+                  <span class="sr-only">Procurement Review permission role</span>
+                  <select aria-label="Procurement Review permission role">
+                    <option>Viewer</option>
+                    <option>Commenter</option>
+                    <option selected>Editor</option>
+                    <option>Admin</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </div>
+  `);
+};
+
+createShareModal();
+
+const openShareModal = () => {
+  const modal = document.querySelector('[data-share-modal]');
+  if (!modal) return;
+  modal.hidden = false;
+  modal.querySelector('[data-share-search]')?.focus();
+};
+
+document.addEventListener('click', (event) => {
+  const trigger = event.target.closest('[data-open-share-modal]');
+  if (!trigger) return;
+  event.preventDefault();
+  openShareModal();
+});
+
 document.querySelectorAll('[data-share-modal]').forEach((modal) => {
   const input = modal.querySelector('[data-share-search]');
   const form = modal.querySelector('[data-share-form]');
@@ -559,13 +672,6 @@ document.querySelectorAll('[data-share-modal]').forEach((modal) => {
     `).join('');
     suggestions.hidden = matches.length === 0;
   };
-
-  document.querySelectorAll('[data-open-share-modal]').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      modal.hidden = false;
-      input?.focus();
-    });
-  });
 
   closeButtons.forEach((button) => {
     button.addEventListener('click', closeModal);
