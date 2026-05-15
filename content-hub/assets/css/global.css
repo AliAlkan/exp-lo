@@ -299,6 +299,18 @@ button {
   box-shadow: var(--shadow);
 }
 
+.search-modal {
+  width: min(100%, 980px);
+  max-height: min(760px, calc(100vh - 48px));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
 .change-request-modal {
   width: min(100%, 520px);
   border: 1px solid var(--line);
@@ -338,6 +350,16 @@ button {
   border-bottom: 1px solid var(--line);
 }
 
+.search-modal-head {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px 12px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
 .change-request-head {
   min-height: 62px;
   display: flex;
@@ -370,6 +392,13 @@ button {
   color: var(--ink);
   font-size: 26px;
   line-height: 1.15;
+}
+
+.search-modal-head h2 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.2;
 }
 
 .change-request-head h2 {
@@ -1738,6 +1767,41 @@ button {
   gap: 8px;
 }
 
+.contextual-search {
+  min-height: 31px;
+  width: 176px;
+  display: grid;
+  grid-template-columns: 15px minmax(0, 1fr);
+  align-items: center;
+  gap: 7px;
+  padding: 0 9px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--muted);
+}
+
+.contextual-search:focus-within {
+  border-color: var(--muted);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--focus);
+}
+
+.contextual-search input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 760;
+}
+
+.contextual-search input::placeholder {
+  color: var(--muted);
+}
+
 .filter-menu {
   position: relative;
 }
@@ -2021,6 +2085,17 @@ button {
   box-shadow: var(--shadow);
 }
 
+.search-modal-shell {
+  width: 100%;
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
 .search-command {
   display: grid;
   grid-template-columns: 34px minmax(0, 1fr) 42px;
@@ -2100,6 +2175,78 @@ button {
   padding: 30px 24px;
   color: var(--muted);
   font-weight: 760;
+}
+
+.search-recents {
+  display: grid;
+  gap: 12px;
+  padding: 22px 24px 26px;
+}
+
+.search-recents h3 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 840;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.search-recent-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.recent-search-item {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 11px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+}
+
+.recent-search-item:hover,
+.recent-search-item:focus-visible {
+  border-color: var(--line-strong);
+  background: var(--surface-soft);
+  box-shadow: var(--focus);
+  outline: 0;
+}
+
+.recent-search-item svg {
+  color: var(--subtle);
+}
+
+.recent-search-item span {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.recent-search-item strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 820;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-search-item small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .link-button {
@@ -2851,6 +2998,11 @@ button {
 .article-editor {
   width: min(100%, 860px);
   margin: 0 auto;
+}
+
+.article-editor [contenteditable="true"] {
+  outline: 0;
+  caret-color: var(--brand);
 }
 
 .article-title-row {
@@ -3885,6 +4037,37 @@ select:focus-visible {
   .topbar {
     min-height: 54px;
     padding: 10px 14px;
+  }
+
+  .modal-backdrop {
+    padding: 12px;
+  }
+
+  .search-modal {
+    max-height: calc(100vh - 24px);
+  }
+
+  .search-command {
+    grid-template-columns: 26px minmax(0, 1fr) 38px;
+    gap: 10px;
+    min-height: 72px;
+    padding: 0 16px;
+  }
+
+  .search-command input {
+    font-size: 20px;
+  }
+
+  .search-filter-head {
+    padding: 0 14px 14px;
+  }
+
+  .search-recents {
+    padding: 18px 16px 22px;
+  }
+
+  .search-recent-list {
+    grid-template-columns: 1fr;
   }
 
   .workspace {

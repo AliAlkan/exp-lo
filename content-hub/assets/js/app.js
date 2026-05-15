@@ -22,6 +22,160 @@ document.querySelectorAll('[data-prompt-sample]').forEach((sample) => {
   });
 });
 
+const searchModalResults = [
+  { type: 'folder', people: 'Ali P.', workspace: 'Learning Content', status: 'Folder', statusClass: 'neutral', title: 'Campaign assets', date: 'May 23, 2026', owner: 'Ali P.', initials: 'AP', swatch: 'learning', icon: 'task-folder-icon', search: 'campaign assets folder ali p. learning content may 23 2026' },
+  { type: 'folder', people: 'Maya Stone', workspace: 'Student Affairs', status: 'Folder', statusClass: 'neutral', title: 'Orientation handoff', date: 'May 24, 2026', owner: 'Maya S.', initials: 'MS', avatarClass: 'violet', swatch: 'student', icon: 'task-folder-icon', search: 'orientation handoff folder maya stone student affairs may 24 2026' },
+  { type: 'document', people: 'Maya Stone', workspace: 'Knowledge Base', status: 'Approved', title: 'Lab Access Policy v2', date: 'May 11, 2026', owner: 'Maya S.', initials: 'MS', avatarClass: 'violet', swatch: 'knowledge', icon: 'doc-icon', search: 'lab access policy v2 document maya stone knowledge base approved may 11 2026' },
+  { type: 'document', people: 'Ali P.', workspace: 'Learning Content', status: 'Drafting', statusClass: 'blue', title: 'Summer Launch Kit', date: 'May 15, 2026', owner: 'Ali P.', initials: 'AP', swatch: 'learning', icon: 'doc-icon', search: 'summer launch kit document ali p. learning content drafting may 15 2026' },
+  { type: 'spreadsheet', people: 'Ali P.', workspace: 'Manufacturer Contract Workspace', status: 'Needs review', statusClass: 'amber', title: 'Supplier Scorecard.xlsx', date: 'May 22, 2026', owner: 'Ali P.', initials: 'AP', swatch: 'research', icon: 'doc-icon', search: 'supplier scorecard xlsx spreadsheet ali p. manufacturer contract workspace needs review may 22 2026' },
+  { type: 'document', people: 'Arman Kaya', workspace: 'Learning Content', status: 'Needs review', statusClass: 'amber', title: 'Course Module: Botanical Extraction', date: 'May 16, 2026', owner: 'Arman K.', initials: 'AK', avatarClass: 'green', swatch: 'learning', icon: 'doc-icon', search: 'course module botanical extraction document arman kaya learning content needs review may 16 2026' },
+  { type: 'website', people: 'Ali P.', workspace: 'Student Affairs', status: 'Drafting', statusClass: 'blue', title: 'Student Portal Welcome Page', date: 'May 18, 2026', owner: 'Ali P.', initials: 'AP', swatch: 'student', icon: 'doc-icon', search: 'student portal welcome page website ali p. student affairs drafting may 18 2026' },
+  { type: 'file', people: 'Maya Stone', workspace: 'Compliance Library', status: 'In review', statusClass: 'amber', title: 'Disclosure Language Matrix', date: 'May 18, 2026', owner: 'Maya S.', initials: 'MS', avatarClass: 'violet', swatch: 'compliance', icon: 'doc-icon', search: 'disclosure language matrix file maya stone compliance library in review may 18 2026' },
+  { type: 'image', people: 'Ali P.', workspace: 'Knowledge Base', status: 'Approved', title: 'Campus Wayfinding Map', date: 'May 17, 2026', owner: 'Ali P.', initials: 'AP', swatch: 'knowledge', icon: 'doc-icon', search: 'campus wayfinding map image ali p. knowledge base approved may 17 2026' },
+  { type: 'document', people: 'Arman Kaya', workspace: 'Faculty Newsroom', status: 'In review', statusClass: 'amber', title: 'Sample Handling SOP', date: 'May 13, 2026', owner: 'Arman K.', initials: 'AK', avatarClass: 'green', swatch: 'faculty', icon: 'doc-icon', search: 'sample handling sop document arman kaya faculty newsroom in review may 13 2026' },
+];
+
+const searchModalRecents = [
+  { query: 'lab access policy', meta: 'Policy references' },
+  { query: 'supplier scorecard', meta: 'Contract workspace' },
+  { query: 'botanical extraction', meta: 'Learning modules' },
+  { query: 'student portal', meta: 'Draft pages' },
+];
+
+const createSearchModal = () => {
+  if (document.querySelector('[data-search-modal]')) return;
+
+  const resultItems = searchModalResults.map((item) => `
+    <li class="task-row" data-search-result data-type="${item.type}" data-people="${item.people}" data-workspace="${item.workspace}" data-status="${item.status}" data-search="${item.search}">
+      <span class="checkbox" aria-hidden="true"></span>
+      <span class="task-name"><span class="${item.icon}"></span> ${item.title}</span>
+      <span class="muted">${item.date}</span>
+      <span class="owner"><span class="owner-avatar${item.avatarClass ? ` ${item.avatarClass}` : ''}">${item.initials}</span> ${item.owner}</span>
+      <span class="workspace-label"><span class="workspace-swatch ${item.swatch}" aria-hidden="true"></span> ${item.workspace}</span>
+      <span class="status${item.statusClass ? ` ${item.statusClass}` : ''}">${item.status}</span>
+    </li>
+  `).join('');
+
+  const recentItems = searchModalRecents.map((item) => `
+    <button class="recent-search-item" type="button" data-recent-search="${item.query}">
+      <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 7v5l3 2M5 5v5h5M5.7 14A7 7 0 1 0 7 7.1L5 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>
+        <strong>${item.query}</strong>
+        <small>${item.meta}</small>
+      </span>
+    </button>
+  `).join('');
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <div class="modal-backdrop search-modal-backdrop" data-search-modal hidden>
+      <section class="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+        <div class="search-modal-head">
+          <h2 id="search-modal-title">Search Content Hub</h2>
+          <button class="icon-btn" type="button" aria-label="Close search" data-search-modal-close>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="search-shell search-modal-shell" data-search-page>
+          <form class="search-command" data-search-form>
+            <label class="sr-only" for="modal-content-search">Search Content Hub</label>
+            <svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <input id="modal-content-search" type="search" placeholder="Search content" autocomplete="off" data-global-search>
+            <button class="search-clear" type="button" aria-label="Clear search" data-search-clear hidden>
+              <svg width="25" height="25" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </form>
+
+          <section class="search-recents" data-search-recents aria-label="Recent searches">
+            <h3>Recent searches</h3>
+            <div class="search-recent-list">
+              ${recentItems}
+            </div>
+          </section>
+
+          <div class="content-filter-head search-filter-head">
+            <div class="content-filter-bar" aria-label="Search filters">
+              <details class="filter-menu" data-search-filter-menu="type">
+                <summary class="filter-pill" aria-label="Filter by type">
+                  <span data-filter-label>Type</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="currentColor"/></svg>
+                </summary>
+                <div class="filter-popover" role="menu" aria-label="Type options">
+                  <button class="filter-option with-icon" type="button" role="menuitem" data-search-filter="type" data-filter-value="document"><span class="doc-icon"></span><span>Document</span></button>
+                  <button class="filter-option with-icon" type="button" role="menuitem" data-search-filter="type" data-filter-value="spreadsheet"><span class="doc-icon"></span><span>Spreadsheet</span></button>
+                  <button class="filter-option with-icon" type="button" role="menuitem" data-search-filter="type" data-filter-value="folder"><span class="task-folder-icon"></span><span>Folder</span></button>
+                  <button class="filter-option with-icon" type="button" role="menuitem" data-search-filter="type" data-filter-value="file"><span class="doc-icon"></span><span>File</span></button>
+                  <button class="filter-option with-icon" type="button" role="menuitem" data-search-filter="type" data-filter-value="website"><span class="doc-icon"></span><span>Website</span></button>
+                  <button class="filter-option with-icon" type="button" role="menuitem" data-search-filter="type" data-filter-value="image"><span class="doc-icon"></span><span>Image</span></button>
+                </div>
+              </details>
+
+              <details class="filter-menu" data-search-filter-menu="people">
+                <summary class="filter-pill" aria-label="Filter by people">
+                  <span data-filter-label>People</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="currentColor"/></svg>
+                </summary>
+                <div class="filter-popover" role="menu" aria-label="People options">
+                  <label class="filter-search">
+                    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.4-4.4M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                    <input type="search" aria-label="Search people" placeholder="Search">
+                  </label>
+                  <button class="filter-option with-avatar" type="button" role="menuitem" data-search-filter="people" data-filter-value="Ali P."><span class="filter-avatar">AP</span><span>Ali P.</span></button>
+                  <button class="filter-option with-avatar" type="button" role="menuitem" data-search-filter="people" data-filter-value="Maya Stone"><span class="filter-avatar violet">MS</span><span>Maya Stone</span></button>
+                  <button class="filter-option with-avatar" type="button" role="menuitem" data-search-filter="people" data-filter-value="Arman Kaya"><span class="filter-avatar green">AK</span><span>Arman Kaya</span></button>
+                </div>
+              </details>
+
+              <details class="filter-menu" data-search-filter-menu="workspace">
+                <summary class="filter-pill" aria-label="Filter by workspace">
+                  <span data-filter-label>Workspace</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="currentColor"/></svg>
+                </summary>
+                <div class="filter-popover wide" role="menu" aria-label="Workspace options">
+                  <button class="filter-option with-dot" type="button" role="menuitem" data-search-filter="workspace" data-filter-value="Knowledge Base"><span class="workspace-swatch knowledge" aria-hidden="true"></span><span>Knowledge Base</span></button>
+                  <button class="filter-option with-dot" type="button" role="menuitem" data-search-filter="workspace" data-filter-value="Learning Content"><span class="workspace-swatch learning" aria-hidden="true"></span><span>Learning Content</span></button>
+                  <button class="filter-option with-dot" type="button" role="menuitem" data-search-filter="workspace" data-filter-value="Manufacturer Contract Workspace"><span class="workspace-swatch research" aria-hidden="true"></span><span>Manufacturer Contract Workspace</span></button>
+                  <button class="filter-option with-dot" type="button" role="menuitem" data-search-filter="workspace" data-filter-value="Compliance Library"><span class="workspace-swatch compliance" aria-hidden="true"></span><span>Compliance Library</span></button>
+                </div>
+              </details>
+
+              <details class="filter-menu" data-search-filter-menu="status">
+                <summary class="filter-pill" aria-label="Filter by status">
+                  <span data-filter-label>Status</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="currentColor"/></svg>
+                </summary>
+                <div class="filter-popover" role="menu" aria-label="Status options">
+                  <button class="filter-option" type="button" role="menuitem" data-search-filter="status" data-filter-value="Approved">Approved</button>
+                  <button class="filter-option" type="button" role="menuitem" data-search-filter="status" data-filter-value="Drafting">Drafting</button>
+                  <button class="filter-option" type="button" role="menuitem" data-search-filter="status" data-filter-value="Needs review">Needs review</button>
+                  <button class="filter-option" type="button" role="menuitem" data-search-filter="status" data-filter-value="In review">In review</button>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <div class="panel search-results-panel" data-search-results-panel hidden>
+            <ul class="task-list search-results-list" aria-label="Search results">
+              ${resultItems}
+            </ul>
+            <div class="search-empty" data-search-empty hidden>No results</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  `);
+};
+
+createSearchModal();
+
 document.querySelectorAll('.row-more-menu').forEach((menu) => {
   menu.addEventListener('toggle', () => {
     if (!menu.open) return;
@@ -159,6 +313,32 @@ document.querySelectorAll('.filter-option').forEach((option) => {
   });
 });
 
+document.querySelectorAll('.content-filter-head:not(.search-filter-head)').forEach((head) => {
+  const filterBar = head.querySelector('.content-filter-bar');
+  const section = head.closest('.section');
+  const rows = [...(section?.querySelectorAll('.task-list .task-row:not(.task-header)') || [])];
+  if (!filterBar || !rows.length || filterBar.querySelector('[data-contextual-search]')) return;
+
+  const search = document.createElement('label');
+  search.className = 'contextual-search';
+  search.innerHTML = `
+    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m21 21-4.4-4.4M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <input type="search" aria-label="Search this list" placeholder="Search" data-contextual-search>
+  `;
+
+  filterBar.prepend(search);
+
+  const input = search.querySelector('[data-contextual-search]');
+  input?.addEventListener('input', () => {
+    const query = input.value.trim().toLowerCase();
+    rows.forEach((row) => {
+      row.hidden = Boolean(query) && !row.textContent.toLowerCase().includes(query);
+    });
+  });
+});
+
 document.querySelectorAll('.selection-style-option').forEach((option) => {
   option.addEventListener('click', () => {
     option.closest('.selection-style-menu')?.removeAttribute('open');
@@ -170,6 +350,7 @@ document.querySelectorAll('[data-search-page]').forEach((page) => {
   const clear = page.querySelector('[data-search-clear]');
   const panel = page.querySelector('[data-search-results-panel]');
   const empty = page.querySelector('[data-search-empty]');
+  const recents = page.querySelector('[data-search-recents]');
   const results = [...page.querySelectorAll('[data-search-result]')];
   const activeFilters = {
     type: '',
@@ -183,6 +364,7 @@ document.querySelectorAll('[data-search-page]').forEach((page) => {
   const applySearch = () => {
     const query = normalize(input?.value);
     const hasActiveFilter = Object.values(activeFilters).some(Boolean);
+    const shouldShowResults = Boolean(query) || hasActiveFilter;
     let visibleCount = 0;
 
     results.forEach((result) => {
@@ -190,7 +372,7 @@ document.querySelectorAll('[data-search-page]').forEach((page) => {
       const matchesFilters = Object.entries(activeFilters).every(([key, value]) => {
         return !value || normalize(result.dataset[key]) === normalize(value);
       });
-      const isVisible = (Boolean(query) || hasActiveFilter) && matchesQuery && matchesFilters;
+      const isVisible = shouldShowResults && matchesQuery && matchesFilters;
       result.hidden = !isVisible;
       if (isVisible) {
         visibleCount += 1;
@@ -198,7 +380,11 @@ document.querySelectorAll('[data-search-page]').forEach((page) => {
     });
 
     if (panel) {
-      panel.hidden = !query && !hasActiveFilter;
+      panel.hidden = !shouldShowResults;
+    }
+
+    if (recents) {
+      recents.hidden = shouldShowResults;
     }
 
     if (empty) {
@@ -244,11 +430,47 @@ document.querySelectorAll('[data-search-page]').forEach((page) => {
     applySearch();
   });
 
+  page.querySelectorAll('[data-recent-search]').forEach((recent) => {
+    recent.addEventListener('click', () => {
+      if (!input) return;
+      input.value = recent.dataset.recentSearch || '';
+      input.focus();
+      applySearch();
+    });
+  });
+
   page.querySelector('[data-search-form]')?.addEventListener('submit', (event) => {
     event.preventDefault();
   });
 
   applySearch();
+});
+
+document.querySelectorAll('[data-search-modal]').forEach((modal) => {
+  const input = modal.querySelector('[data-global-search]');
+  const closeButtons = [...modal.querySelectorAll('[data-search-modal-close]')];
+
+  const closeModal = () => {
+    modal.hidden = true;
+  };
+
+  document.querySelectorAll('[data-open-search-modal]').forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      modal.hidden = false;
+      input?.focus();
+    });
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener('click', closeModal);
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
 });
 
 document.querySelectorAll('.workspace-more-option').forEach((option) => {
@@ -454,6 +676,9 @@ document.addEventListener('keydown', (event) => {
     modal.hidden = true;
   });
   document.querySelectorAll('[data-change-request-modal]:not([hidden])').forEach((modal) => {
+    modal.hidden = true;
+  });
+  document.querySelectorAll('[data-search-modal]:not([hidden])').forEach((modal) => {
     modal.hidden = true;
   });
 });
@@ -1064,6 +1289,93 @@ if (previewRoot) {
   if (body) {
     body.innerHTML = sections.map(renderSection).join('');
   }
+
+  const editableRegions = [
+    ...document.querySelectorAll('.article-editor [data-doc-title], .article-editor [data-doc-subtitle], .article-editor [data-doc-summary], [data-doc-body]')
+  ];
+  const saveButtons = document.querySelectorAll('[data-save-document]');
+  const draftStorageKey = `content-hub-document-draft:${documentId}`;
+  const readFallbackDrafts = () => {
+    try {
+      const store = JSON.parse(window.name || '{}');
+      return store && typeof store === 'object' ? store : {};
+    } catch {
+      return {};
+    }
+  };
+  const writeFallbackDraft = (draft) => {
+    const drafts = readFallbackDrafts();
+    drafts[draftStorageKey] = draft;
+    window.name = JSON.stringify(drafts);
+  };
+  const readSavedDraft = () => {
+    try {
+      return JSON.parse(window.localStorage.getItem(draftStorageKey) || 'null');
+    } catch {
+      return readFallbackDrafts()[draftStorageKey] || null;
+    }
+  };
+  const applySavedDraft = (draft) => {
+    if (!draft) return;
+    if (draft.title) {
+      setText('[data-doc-title]', draft.title);
+    }
+    if (draft.subtitle) {
+      setText('[data-doc-subtitle]', draft.subtitle);
+    }
+    if (draft.summary) {
+      setText('[data-doc-summary]', draft.summary);
+    }
+    if (draft.body && body) {
+      body.innerHTML = draft.body;
+    }
+  };
+  const currentDraft = () => ({
+    title: document.querySelector('.article-editor [data-doc-title]')?.textContent.trim() || documentData.title,
+    subtitle: document.querySelector('.article-editor [data-doc-subtitle]')?.textContent.trim() || documentData.subtitle,
+    summary: document.querySelector('.article-editor [data-doc-summary]')?.textContent.trim() || documentData.summary,
+    body: body?.innerHTML || ''
+  });
+  const saveDraft = () => {
+    const draft = currentDraft();
+    try {
+      window.localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+    } catch {
+      writeFallbackDraft(draft);
+    }
+    setText('[data-doc-title]', draft.title);
+    setText('[data-doc-subtitle]', draft.subtitle);
+    setText('[data-doc-summary]', draft.summary);
+  };
+  const insertPlainText = (text) => {
+    if (document.queryCommandSupported?.('insertText')) {
+      document.execCommand('insertText', false, text);
+      return;
+    }
+
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(document.createTextNode(text));
+    range.collapse(false);
+  };
+
+  applySavedDraft(readSavedDraft());
+  editableRegions.forEach((region) => {
+    region.setAttribute('contenteditable', 'true');
+    region.setAttribute('spellcheck', 'true');
+    region.setAttribute('aria-label', region.dataset.docBody !== undefined ? 'Document body' : `Edit ${region.textContent.trim().slice(0, 40) || 'text'}`);
+    region.addEventListener('paste', (event) => {
+      const text = event.clipboardData?.getData('text/plain');
+      if (!text) return;
+      event.preventDefault();
+      insertPlainText(text);
+    });
+  });
+  saveButtons.forEach((button) => {
+    button.addEventListener('click', saveDraft);
+  });
 
   const backButton = document.querySelector('[data-preview-back]');
   backButton?.addEventListener('click', () => {
