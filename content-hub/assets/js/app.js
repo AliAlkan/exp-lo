@@ -224,7 +224,7 @@ const toDefaultFilterLabel = (menu) => {
 };
 
 const getOptionLabel = (option) => {
-  const textTarget = option?.querySelector('span:not(.filter-avatar):not(.workspace-swatch)') || option;
+  const textTarget = option?.querySelector?.('span:not(.filter-avatar):not(.workspace-swatch)') || option;
   return option?.dataset.filterValue || textTarget?.textContent?.trim() || '';
 };
 
@@ -267,6 +267,55 @@ const setFilterMenuState = (menu, option = null) => {
   }
 };
 
+document.querySelectorAll('.content-filter-head:not(.search-filter-head)').forEach((head) => {
+  const filterBar = head.querySelector('.content-filter-bar');
+  if (!filterBar || filterBar.querySelector('[data-date-filter-menu="modified"]')) return;
+
+  const filterScope = head.closest('.section, .workspace-all-files') || head;
+  if (!filterScope.textContent.includes('Date modified')) return;
+
+  const modifiedFilter = document.createElement('details');
+  modifiedFilter.className = 'filter-menu';
+  modifiedFilter.dataset.dateFilterMenu = 'modified';
+  modifiedFilter.innerHTML = `
+    <summary class="filter-pill" aria-label="Filter by modified date">
+      <span data-filter-label>Modified</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m7 10 5 5 5-5" fill="currentColor"/>
+      </svg>
+    </summary>
+    <div class="filter-popover date-filter-popover" role="group" aria-label="Modified date range">
+      <label class="date-filter-field">
+        <span class="sr-only">Modified after</span>
+        <input type="text" inputmode="numeric" placeholder="After" aria-label="Modified after">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3v4M17 3v4M4 9h16M6 5h12a2 2 0 0 1 2 2v12H4V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </label>
+      <label class="date-filter-field">
+        <span class="sr-only">Modified before</span>
+        <input type="text" inputmode="numeric" placeholder="Before" aria-label="Modified before">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 3v4M17 3v4M4 9h16M6 5h12a2 2 0 0 1 2 2v12H4V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </label>
+    </div>
+  `;
+
+  const statusFilter = [...filterBar.querySelectorAll('.filter-menu')].find((menu) => {
+    const label = getFilterLabel(menu)?.textContent?.trim();
+    return label === 'Status';
+  });
+
+  if (statusFilter) {
+    statusFilter.before(modifiedFilter);
+  } else {
+    filterBar.append(modifiedFilter);
+  }
+});
+
 document.querySelectorAll('.filter-menu').forEach((menu) => {
   ensureFilterReset(menu);
   if (!menu.classList.contains('sort-menu')) {
@@ -299,6 +348,27 @@ document.querySelectorAll('.filter-menu').forEach((menu) => {
     if (!resetEvent.defaultPrevented) {
       setFilterMenuState(menu);
     }
+  });
+});
+
+document.querySelectorAll('[data-date-filter-menu]').forEach((menu) => {
+  const inputs = [...menu.querySelectorAll('.date-filter-field input')];
+
+  const syncDateFilterState = () => {
+    const hasValue = inputs.some((input) => input.value.trim());
+    setFilterMenuState(menu, hasValue ? { dataset: { filterValue: 'Modified' } } : null);
+  };
+
+  inputs.forEach((input) => {
+    input.addEventListener('input', syncDateFilterState);
+  });
+
+  menu.addEventListener('filter-reset', (event) => {
+    event.preventDefault();
+    inputs.forEach((input) => {
+      input.value = '';
+    });
+    setFilterMenuState(menu);
   });
 });
 

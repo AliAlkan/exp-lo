@@ -12,11 +12,11 @@
   --line-strong: #525252;
   --nav: #0a0a0a;
   --nav-2: #171717;
-  --brand: #2dd4bf;
-  --brand-dark: #14b8a6;
+  --brand: #932794;
+  --brand-dark: #7d1f7e;
   --blue: #60a5fa;
   --blue-soft: rgba(96, 165, 250, .16);
-  --teal-soft: rgba(45, 212, 191, .16);
+  --teal-soft: rgba(147, 39, 148, .16);
   --green: #86efac;
   --green-soft: rgba(134, 239, 172, .15);
   --amber: #fbbf24;
@@ -28,7 +28,7 @@
   --shadow: 0 18px 46px rgba(0, 0, 0, .34);
   --shadow-soft: 0 5px 16px rgba(0, 0, 0, .22);
   --radius: 8px;
-  --focus: 0 0 0 3px rgba(45, 212, 191, .22);
+  --focus: 0 0 0 3px rgba(147, 39, 148, .24);
 }
 
 * {
@@ -959,7 +959,7 @@ button {
 }
 
 .nav-button.active .nav-count {
-  background: rgba(45, 212, 191, .18);
+  background: rgba(147, 39, 148, .18);
   color: var(--ink);
 }
 
@@ -1699,7 +1699,7 @@ button {
 .send {
   border-color: transparent;
   background: var(--brand);
-  color: #042f2e;
+  color: #fff;
   box-shadow: none;
 }
 
@@ -1917,6 +1917,50 @@ button {
   width: 248px;
 }
 
+.date-filter-popover {
+  width: 270px;
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+}
+
+.date-filter-field {
+  min-height: 44px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--muted);
+}
+
+.date-filter-field:focus-within {
+  border-color: var(--brand);
+  color: var(--ink);
+  box-shadow: var(--focus);
+}
+
+.date-filter-field input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 760;
+}
+
+.date-filter-field input::placeholder {
+  color: var(--muted);
+}
+
+.date-filter-field svg {
+  color: currentColor;
+}
+
 .sort-popover {
   right: 0;
   left: auto;
@@ -2008,7 +2052,7 @@ button {
 }
 
 .sort-popover .filter-option.selected svg {
-  color: #bae6fd;
+  color: #fff;
 }
 
 .sort-group {
@@ -2919,7 +2963,7 @@ button {
 }
 
 .doc-more-option:hover .doc-more-count {
-  background: rgba(45, 212, 191, .18);
+  background: rgba(147, 39, 148, .18);
   color: var(--brand);
 }
 
@@ -2977,8 +3021,8 @@ button {
 
 .doc-action.publish {
   border-color: transparent;
-  background: var(--green-soft);
-  color: var(--green);
+  background: var(--teal-soft);
+  color: var(--brand);
 }
 
 .doc-action:hover {
