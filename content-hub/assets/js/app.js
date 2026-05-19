@@ -6,6 +6,63 @@ document.addEventListener('click', (event) => {
   });
 });
 
+document.addEventListener('click', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const button = target?.closest('[data-attention-filter]');
+  if (!button) return;
+  const filters = button.closest('.attention-filters');
+  const section = filters?.closest('.section');
+  const rows = [...(section?.querySelectorAll('.task-list .task-row') || [])];
+  if (!filters || !rows.length) return;
+
+  const getAttentionStatus = (row) => {
+    const status = row.querySelector('.status')?.textContent.trim().toLowerCase() || '';
+    if (status.includes('draft')) return 'draft';
+    if (status === 'in review') return 'in-review';
+    if (status.includes('needs review') || status.includes('approval')) return 'approval-pending';
+    return 'other';
+  };
+
+  const activeFilter = button.dataset.attentionFilter || 'all';
+  filters.querySelectorAll('[data-attention-filter]').forEach((candidate) => {
+    const isActive = candidate === button;
+    candidate.classList.toggle('active', isActive);
+    candidate.setAttribute('aria-pressed', String(isActive));
+  });
+  rows.forEach((row) => {
+    row.hidden = activeFilter !== 'all' && getAttentionStatus(row) !== activeFilter;
+  });
+}, true);
+
+document.addEventListener('click', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const button = target?.closest('[data-review-status-filter]');
+  if (!button) return;
+  const filters = button.closest('.review-status-filters');
+  const section = filters?.closest('.section');
+  const rows = [...(section?.querySelectorAll('.task-list .task-row:not(.task-header)') || [])];
+  if (!filters || !rows.length) return;
+
+  const getReviewStatus = (row) => {
+    const status = row.querySelector('.status')?.textContent.trim().toLowerCase() || '';
+    if (status === 'approved') return 'approved';
+    if (status === 'changes requested') return 'changes-requested';
+    if (status === 'in review' || status === 'needs review') return 'needs-review';
+    if (status === 'rejected' || status === 'closed' || status === 'rejected / closed') return 'closed';
+    return 'other';
+  };
+
+  const activeFilter = button.dataset.reviewStatusFilter || 'all';
+  filters.querySelectorAll('[data-review-status-filter]').forEach((candidate) => {
+    const isActive = candidate === button;
+    candidate.classList.toggle('active', isActive);
+    candidate.setAttribute('aria-pressed', String(isActive));
+  });
+  rows.forEach((row) => {
+    row.hidden = activeFilter !== 'all' && getReviewStatus(row) !== activeFilter;
+  });
+}, true);
+
 document.querySelectorAll('.command').forEach((form) => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -175,6 +232,157 @@ const createSearchModal = () => {
 };
 
 createSearchModal();
+
+const createFolderModal = () => {
+  const folderTriggers = [...document.querySelectorAll('.create-option')].filter((option) => {
+    return option.textContent.trim() === 'New folder';
+  });
+  if (!folderTriggers.length || document.querySelector('[data-folder-modal]')) return;
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <div class="modal-backdrop" data-folder-modal hidden>
+      <section class="workspace-modal folder-modal" role="dialog" aria-modal="true" aria-labelledby="folder-modal-title">
+        <div class="workspace-modal-head">
+          <h2 id="folder-modal-title">New folder</h2>
+          <button class="icon-btn" type="button" aria-label="Close new folder" data-folder-modal-close>
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <form class="workspace-modal-form" data-folder-modal-form>
+          <label for="folder-name">Folder name</label>
+          <input id="folder-name" type="text" name="folder-name" placeholder="Name this folder" autocomplete="off" required data-folder-name-input>
+          <div class="workspace-modal-actions">
+            <button class="secondary-btn" type="button" data-folder-modal-close>Cancel</button>
+            <button class="primary-btn" type="submit">Create</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  `);
+};
+
+createFolderModal();
+
+document.querySelectorAll('[data-folder-modal]').forEach((modal) => {
+  const input = modal.querySelector('[data-folder-name-input]');
+  const form = modal.querySelector('[data-folder-modal-form]');
+  const closeButtons = [...modal.querySelectorAll('[data-folder-modal-close]')];
+
+  const closeModal = () => {
+    modal.hidden = true;
+    form?.reset();
+  };
+
+  [...document.querySelectorAll('.create-option')].filter((option) => {
+    return option.textContent.trim() === 'New folder';
+  }).forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      trigger.closest('.create-menu')?.removeAttribute('open');
+      modal.hidden = false;
+      input?.focus();
+    });
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener('click', closeModal);
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    closeModal();
+  });
+});
+
+const createUploadPanel = () => {
+  const uploadTriggers = [...document.querySelectorAll('.create-option')].filter((option) => {
+    return ['Upload file', 'Upload files', 'Upload folder'].includes(option.textContent.trim());
+  });
+  if (!uploadTriggers.length || document.querySelector('[data-upload-panel]')) return;
+
+  document.body.insertAdjacentHTML('beforeend', `
+    <aside class="upload-panel" data-upload-panel hidden aria-label="Upload status">
+      <header class="upload-panel-head">
+        <h2>Uploading 2 items</h2>
+        <div class="upload-panel-actions">
+          <button class="upload-cancel-all" type="button">Cancel all</button>
+          <button class="upload-icon-button" type="button" data-upload-collapse aria-label="Collapse uploads">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="upload-icon-button" type="button" data-upload-close aria-label="Close uploads">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+      <div class="upload-panel-body">
+        <p class="upload-destination">Uploading to <a href="my-content.html">My content</a></p>
+        <div class="upload-list">
+          <article class="upload-item uploading">
+            <span class="upload-item-icon loader" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="M21 12a9 9 0 1 1-6.2-8.6" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <div class="upload-item-main">
+              <strong>Supplier references packet</strong>
+              <span><b>PDF</b> Uploading - 4.3mb / 8.4mb - 3 seconds left...</span>
+              <div class="upload-progress" aria-label="Upload progress"><span style="width: 52%"></span></div>
+            </div>
+            <button class="upload-row-action" type="button">Cancel</button>
+          </article>
+          <article class="upload-item complete">
+            <span class="upload-item-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24">
+                <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div class="upload-item-main">
+              <strong>Policy archive index</strong>
+              <span><b>HTML</b> Uploaded to <a href="my-content.html">My content</a></span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </aside>
+  `);
+};
+
+createUploadPanel();
+
+document.querySelectorAll('[data-upload-panel]').forEach((panel) => {
+  const close = panel.querySelector('[data-upload-close]');
+  const collapse = panel.querySelector('[data-upload-collapse]');
+
+  [...document.querySelectorAll('.create-option')].filter((option) => {
+    return ['Upload file', 'Upload files', 'Upload folder'].includes(option.textContent.trim());
+  }).forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      trigger.closest('.create-menu')?.removeAttribute('open');
+      panel.hidden = false;
+      panel.classList.remove('is-collapsed');
+    });
+  });
+
+  close?.addEventListener('click', () => {
+    panel.hidden = true;
+  });
+
+  collapse?.addEventListener('click', () => {
+    const isCollapsed = panel.classList.toggle('is-collapsed');
+    collapse.setAttribute('aria-label', isCollapsed ? 'Expand uploads' : 'Collapse uploads');
+  });
+});
 
 document.querySelectorAll('.row-more-menu').forEach((menu) => {
   menu.addEventListener('toggle', () => {
@@ -393,6 +601,9 @@ document.querySelectorAll('.content-filter-head:not(.search-filter-head)').forEa
   ];
   if (!filterBar || !rows.length || filterBar.querySelector('[data-contextual-search]')) return;
 
+  const isWorkspaceDocuments = Boolean(workspaceFiles);
+  let activeWorkspaceContentFilter = 'all';
+
   const search = document.createElement('label');
   search.className = 'contextual-search';
   search.innerHTML = `
@@ -404,14 +615,72 @@ document.querySelectorAll('.content-filter-head:not(.search-filter-head)').forEa
 
   filterBar.prepend(search);
 
-  const input = search.querySelector('[data-contextual-search]');
-  input?.addEventListener('input', () => {
-    const query = input.value.trim().toLowerCase();
+  const inferWorkspaceContentType = (row) => {
+    if (row.dataset.contentType) return row.dataset.contentType;
+    if (row.dataset.status === 'folder') return 'files';
+
+    const searchable = `${row.dataset.search || ''} ${row.textContent}`.toLowerCase();
+    if (/\b(site|website)\b/.test(searchable)) return 'sites';
+    if (/\b(page|portal)\b/.test(searchable)) return 'pages';
+    return 'files';
+  };
+
+  if (isWorkspaceDocuments) {
+    head.classList.add('workspace-content-filter-head');
+
+    const quickFilters = document.createElement('div');
+    quickFilters.className = 'workspace-content-filters';
+    quickFilters.setAttribute('aria-label', 'Filter documents by content type');
+    quickFilters.innerHTML = `
+      <button class="workspace-content-filter active" type="button" data-workspace-content-filter="all" aria-pressed="true">All content</button>
+      <button class="workspace-content-filter" type="button" data-workspace-content-filter="pages" aria-pressed="false">Pages</button>
+      <button class="workspace-content-filter" type="button" data-workspace-content-filter="files" aria-pressed="false">Files</button>
+      <button class="workspace-content-filter" type="button" data-workspace-content-filter="sites" aria-pressed="false">Sites</button>
+      <button class="workspace-content-filter" type="button" data-workspace-content-filter="published" aria-pressed="false">Published</button>
+    `;
+    head.append(quickFilters);
+
+    quickFilters.querySelectorAll('[data-workspace-content-filter]').forEach((button) => {
+      button.addEventListener('click', () => {
+        activeWorkspaceContentFilter = button.dataset.workspaceContentFilter || 'all';
+        quickFilters.querySelectorAll('[data-workspace-content-filter]').forEach((candidate) => {
+          const isActive = candidate === button;
+          candidate.classList.toggle('active', isActive);
+          candidate.setAttribute('aria-pressed', String(isActive));
+        });
+        applyContextualFilters();
+      });
+    });
+  }
+
+  const matchesWorkspaceContentFilter = (row) => {
+    if (!isWorkspaceDocuments || activeWorkspaceContentFilter === 'all') return true;
+    if (activeWorkspaceContentFilter === 'published') return row.dataset.status === 'published';
+    return inferWorkspaceContentType(row) === activeWorkspaceContentFilter;
+  };
+
+  const applyContextualFilters = () => {
+    const query = input?.value.trim().toLowerCase() || '';
+    let visibleCount = 0;
+
     rows.forEach((row) => {
       const searchable = `${row.dataset.search || ''} ${row.textContent}`.toLowerCase();
-      row.hidden = Boolean(query) && !searchable.includes(query);
+      const matchesSearch = !query || searchable.includes(query);
+      const isVisible = matchesSearch && matchesWorkspaceContentFilter(row);
+      row.hidden = !isVisible;
+      if (isVisible) {
+        visibleCount += 1;
+      }
     });
-  });
+
+    const empty = workspaceFiles?.querySelector('[data-workspace-empty]');
+    if (empty) {
+      empty.hidden = visibleCount > 0;
+    }
+  };
+
+  const input = search.querySelector('[data-contextual-search]');
+  input?.addEventListener('input', applyContextualFilters);
 });
 
 document.querySelectorAll('.selection-style-option').forEach((option) => {
@@ -519,6 +788,64 @@ document.querySelectorAll('[data-search-page]').forEach((page) => {
   });
 
   applySearch();
+});
+
+document.querySelectorAll('[data-people-directory]').forEach((directory) => {
+  const search = directory.querySelector('[data-people-search]');
+  const rows = [...directory.querySelectorAll('[data-people-row]')];
+  const empty = directory.querySelector('[data-people-empty]');
+  const activeFilters = {
+    role: '',
+    status: ''
+  };
+  const normalize = (value) => (value || '').trim().toLowerCase();
+
+  const applyPeopleFilters = () => {
+    const query = normalize(search?.value);
+    let visibleCount = 0;
+
+    rows.forEach((row) => {
+      const matchesQuery = !query || normalize(`${row.dataset.search || ''} ${row.textContent}`).includes(query);
+      const matchesFilters = Object.entries(activeFilters).every(([key, value]) => {
+        return !value || normalize(row.dataset[`people${key.charAt(0).toUpperCase()}${key.slice(1)}`]) === normalize(value);
+      });
+      const isVisible = matchesQuery && matchesFilters;
+      row.hidden = !isVisible;
+      if (isVisible) {
+        visibleCount += 1;
+      }
+    });
+
+    if (empty) {
+      empty.hidden = visibleCount > 0;
+    }
+  };
+
+  search?.addEventListener('input', applyPeopleFilters);
+
+  directory.querySelectorAll('[data-people-filter]').forEach((option) => {
+    option.addEventListener('click', () => {
+      const key = option.dataset.peopleFilter;
+      if (!key) return;
+      const value = option.dataset.filterValue || '';
+      activeFilters[key] = activeFilters[key] === value ? '' : value;
+      applyPeopleFilters();
+    });
+  });
+
+  directory.querySelectorAll('[data-people-filter-menu]').forEach((menu) => {
+    menu.addEventListener('filter-reset', (event) => {
+      event.preventDefault();
+      const key = menu.dataset.peopleFilterMenu;
+      if (key) {
+        activeFilters[key] = '';
+      }
+      setFilterMenuState(menu);
+      applyPeopleFilters();
+    });
+  });
+
+  applyPeopleFilters();
 });
 
 document.querySelectorAll('[data-search-modal]').forEach((modal) => {
@@ -815,6 +1142,69 @@ document.querySelectorAll('[data-change-request-modal]').forEach((modal) => {
   });
 });
 
+document.querySelectorAll('[data-site-package-modal]').forEach((modal) => {
+  const search = modal.querySelector('[data-site-package-search]');
+  const rows = [...modal.querySelectorAll('[data-package-file]')];
+  const empty = modal.querySelector('[data-package-empty]');
+  const closeButtons = [...modal.querySelectorAll('[data-close-site-package]')];
+  let activeFilter = 'all';
+
+  const closeModal = () => {
+    modal.hidden = true;
+  };
+
+  const applyPackageFilters = () => {
+    const query = search?.value.trim().toLowerCase() || '';
+    let visibleCount = 0;
+
+    rows.forEach((row) => {
+      const matchesType = activeFilter === 'all' || row.dataset.packageType === activeFilter;
+      const searchable = `${row.dataset.packageSearch || ''} ${row.textContent}`.toLowerCase();
+      const matchesSearch = !query || searchable.includes(query);
+      const isVisible = matchesType && matchesSearch;
+      row.hidden = !isVisible;
+      if (isVisible) visibleCount += 1;
+    });
+
+    if (empty) {
+      empty.hidden = visibleCount > 0;
+    }
+  };
+
+  document.querySelectorAll('[data-open-site-package]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      trigger.closest('.doc-more-menu')?.removeAttribute('open');
+      modal.hidden = false;
+      search?.focus();
+      applyPackageFilters();
+    });
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener('click', closeModal);
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  search?.addEventListener('input', applyPackageFilters);
+
+  modal.querySelectorAll('[data-package-filter]').forEach((button) => {
+    button.addEventListener('click', () => {
+      activeFilter = button.dataset.packageFilter || 'all';
+      modal.querySelectorAll('[data-package-filter]').forEach((candidate) => {
+        const isActive = candidate === button;
+        candidate.classList.toggle('active', isActive);
+        candidate.setAttribute('aria-pressed', String(isActive));
+      });
+      applyPackageFilters();
+    });
+  });
+});
+
 document.querySelectorAll('.workspace-tabs').forEach((tablist) => {
   const viewTabs = [...tablist.querySelectorAll('[data-workspace-view]')];
   if (!viewTabs.length) return;
@@ -856,6 +1246,16 @@ document.addEventListener('keydown', (event) => {
   });
   document.querySelectorAll('[data-search-modal]:not([hidden])').forEach((modal) => {
     modal.hidden = true;
+  });
+  document.querySelectorAll('[data-folder-modal]:not([hidden])').forEach((modal) => {
+    modal.hidden = true;
+    modal.querySelector('[data-folder-modal-form]')?.reset();
+  });
+  document.querySelectorAll('[data-site-package-modal]:not([hidden])').forEach((modal) => {
+    modal.hidden = true;
+  });
+  document.querySelectorAll('[data-upload-panel]:not([hidden])').forEach((panel) => {
+    panel.hidden = true;
   });
 });
 
@@ -930,13 +1330,16 @@ const documents = {
     ]
   },
   'summer-launch-kit': {
-    title: 'Summer Launch Kit',
-    subtitle: 'Campaign-ready messaging, review notes, and publishing checklist for the summer content release.',
+    title: 'Summer Launch Kit.pdf',
+    subtitle: 'PDF file for campaign-ready messaging, review notes, and the publishing checklist.',
     owner: 'Lara Novak',
-    workspace: 'Learning Content',
+    workspace: 'Manufacturer Contract Workspace',
     status: 'Drafting',
     updated: 'May 15, 2026',
-    summary: 'This kit gathers the narrative, content modules, and cross-team dependencies needed for the upcoming summer launch.',
+    summary: 'PDF preview is not available in Content Hub.',
+    previewUnavailable: true,
+    downloadUrl: 'assets/files/summer-launch-kit.pdf',
+    downloadLabel: 'Download PDF',
     steps: [
       ['Validate the message set', 'Confirm that the primary launch themes match the latest academic calendar and partner commitments.'],
       ['Package assets', 'Group copy, thumbnail art, supporting references, and review notes by publishing destination.'],
@@ -1039,6 +1442,25 @@ const documents = {
       ['Update ratings', 'Enter the latest scores for each review category using the approved scoring scale.'],
       ['Attach evidence', 'Link performance notes, delivery records, and compliance artifacts to each score.'],
       ['Prepare decision notes', 'Summarize whether the supplier should be renewed, watched, or escalated.']
+    ]
+  },
+  'knowledge-base-microsite': {
+    title: 'Knowledge Base Microsite',
+    contentType: 'site',
+    subtitle: 'Site preview for the public-facing Knowledge Base entry point and reusable policy pathways.',
+    owner: 'Maya Stone',
+    workspace: 'Knowledge Base',
+    status: 'Drafting',
+    updated: 'May 23, 2026',
+    summary: 'Mini website preview is not available in Content Hub yet.',
+    previewUnavailable: true,
+    hidePreviewHeader: true,
+    previewUnavailableLabel: 'Preview is not available',
+    previewUnavailableNote: 'Preview will be available after safety check',
+    steps: [
+      ['Map the entry points', 'Group the policy, research, and supplier pathways into a site navigation model.'],
+      ['Draft landing sections', 'Shape the home page, featured links, and reuse guidance for viewers.'],
+      ['Prepare site preview', 'Publish the mini website preview once the site renderer is available.']
     ]
   }
 };
@@ -1372,7 +1794,7 @@ document.querySelectorAll('.pickup-card, .task-row').forEach((item) => {
     return;
   }
 
-  const documentId = slugify(title);
+  const documentId = item.dataset.documentId || slugify(title);
   item.dataset.documentId = documentId;
   item.dataset.documentTitle = title;
   item.tabIndex = 0;
@@ -1380,7 +1802,7 @@ document.querySelectorAll('.pickup-card, .task-row').forEach((item) => {
   item.setAttribute('aria-label', `Open ${title}`);
 
   const openDocument = () => {
-    const target = `${documentPreviewPath}?doc=${encodeURIComponent(documentId)}`;
+    const target = `${documentPreviewPath}?rev=pdf-preview&doc=${encodeURIComponent(documentId)}`;
     window.location.href = target;
   };
 
@@ -1423,6 +1845,22 @@ if (previewRoot) {
   setText('[data-details-uploaded]', documentData.updated);
   setText('[data-details-item-id]', detailIdFor(documentId));
 
+  if (documentData.previewUnavailable || documentData.hidePreviewHeader) {
+    document.querySelectorAll('.article-title-row, .article-subtitle, .article-divider').forEach((element) => {
+      element.hidden = true;
+    });
+  }
+
+  if (documentData.previewUnavailable) {
+    document.querySelectorAll('[data-doc-summary]').forEach((element) => {
+      element.hidden = true;
+    });
+  }
+
+  document.querySelectorAll('[data-site-package-option]').forEach((element) => {
+    element.hidden = documentData.contentType !== 'site';
+  });
+
   const editorAvatars = document.querySelectorAll('[data-doc-editor-avatar]');
   const initials = documentData.owner
     .split(' ')
@@ -1463,7 +1901,26 @@ if (previewRoot) {
   `;
 
   if (body) {
-    body.innerHTML = sections.map(renderSection).join('');
+    if (documentData.previewUnavailable) {
+      const downloadAction = documentData.downloadUrl ? `
+        <a class="preview-download-button" href="${documentData.downloadUrl}" download>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>${documentData.downloadLabel || 'Download'}</span>
+        </a>
+      ` : '';
+
+      body.innerHTML = `
+        <section class="preview-unavailable" aria-label="File preview">
+          <h2>${documentData.previewUnavailableLabel || 'Preview is not available'}</h2>
+          ${documentData.previewUnavailableNote ? `<p>${documentData.previewUnavailableNote}</p>` : ''}
+          ${downloadAction}
+        </section>
+      `;
+    } else {
+      body.innerHTML = sections.map(renderSection).join('');
+    }
   }
 
   const editableRegions = [
@@ -1537,8 +1994,18 @@ if (previewRoot) {
     range.collapse(false);
   };
 
-  applySavedDraft(readSavedDraft());
+  if (!documentData.previewUnavailable) {
+    applySavedDraft(readSavedDraft());
+  } else {
+    saveButtons.forEach((button) => {
+      button.hidden = true;
+    });
+  }
+
   editableRegions.forEach((region) => {
+    if (documentData.previewUnavailable) {
+      return;
+    }
     region.setAttribute('contenteditable', 'true');
     region.setAttribute('spellcheck', 'true');
     region.setAttribute('aria-label', region.dataset.docBody !== undefined ? 'Document body' : `Edit ${region.textContent.trim().slice(0, 40) || 'text'}`);

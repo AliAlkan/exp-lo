@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Document Preview - Content Hub</title>
-  <link rel="stylesheet" href="assets/css/global.css">
-  <script src="assets/js/app.js" defer></script>
+  <link rel="stylesheet" href="assets/css/global.css?v=pdf-preview">
+  <script src="assets/js/app.js?v=site-package-modal-1" defer></script>
 </head>
 <body class="document-body" data-document-preview>
   <header class="document-bar" aria-label="Document actions">
     <div class="document-bar-left">
-      <button class="document-back" type="button" data-preview-back aria-label="Go back">
+      <button class="document-back" type="button" data-preview-back aria-label="Close preview">
         <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
         </svg>
       </button>
       <span class="document-title-stack">
@@ -81,6 +81,12 @@
               <path d="M10 13a5 5 0 0 0 7.1 0l1.9-1.9a5 5 0 0 0-7.1-7.1L11 4.9M14 11a5 5 0 0 0-7.1 0L5 12.9A5 5 0 0 0 12.1 20l.9-.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span>Show connected sources</span>
+          </button>
+          <button class="doc-more-option" type="button" role="menuitem" data-site-package-option data-open-site-package hidden>
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h6l2 2h8v9H4zM8 13h8M8 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Show package content</span>
           </button>
           <button class="doc-more-option" type="button" role="menuitem">
             <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
@@ -194,6 +200,88 @@
           <button class="primary-btn" type="submit">Send request</button>
         </div>
       </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" data-site-package-modal hidden>
+    <section class="package-modal" role="dialog" aria-modal="true" aria-labelledby="package-modal-title">
+      <div class="package-modal-head">
+        <div>
+          <h2 id="package-modal-title">Package content</h2>
+          <p>Knowledge Base Microsite files</p>
+        </div>
+        <div class="package-modal-actions">
+          <a class="package-download-button" href="#" download="knowledge-base-microsite-package.zip">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4v10m0 0 4-4m-4 4-4-4M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Download package</span>
+          </a>
+          <button class="icon-btn light" type="button" data-close-site-package aria-label="Close package content">
+            <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="package-modal-body">
+        <label class="package-search">
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m21 21-4.4-4.4M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <input type="search" placeholder="Search package content" aria-label="Search package content" data-site-package-search>
+        </label>
+        <div class="package-filter-row" aria-label="Package file filters">
+          <button class="package-filter active" type="button" data-package-filter="all" aria-pressed="true">All</button>
+          <button class="package-filter" type="button" data-package-filter="html" aria-pressed="false">HTML</button>
+          <button class="package-filter" type="button" data-package-filter="css" aria-pressed="false">CSS</button>
+          <button class="package-filter" type="button" data-package-filter="js" aria-pressed="false">JS</button>
+          <button class="package-filter" type="button" data-package-filter="asset" aria-pressed="false">Assets</button>
+        </div>
+        <div class="package-file-list" role="list" aria-label="Package files">
+          <article class="package-file-row" role="listitem" data-package-file data-package-type="html" data-package-search="index.html html entry page homepage">
+            <span class="doc-icon" aria-hidden="true"></span>
+            <div class="package-file-main">
+              <strong>index.html</strong>
+              <span>Entry page · 18 KB</span>
+            </div>
+            <span class="status neutral">HTML</span>
+          </article>
+          <article class="package-file-row" role="listitem" data-package-file data-package-type="css" data-package-search="style.css css styles layout theme">
+            <span class="doc-icon" aria-hidden="true"></span>
+            <div class="package-file-main">
+              <strong>style.css</strong>
+              <span>Site styles · 24 KB</span>
+            </div>
+            <span class="status blue">CSS</span>
+          </article>
+          <article class="package-file-row" role="listitem" data-package-file data-package-type="js" data-package-search="script.js javascript navigation interactions">
+            <span class="doc-icon" aria-hidden="true"></span>
+            <div class="package-file-main">
+              <strong>script.js</strong>
+              <span>Navigation interactions · 9 KB</span>
+            </div>
+            <span class="status amber">JS</span>
+          </article>
+          <article class="package-file-row" role="listitem" data-package-file data-package-type="asset" data-package-search="assets logo svg brand imagery">
+            <span class="doc-icon" aria-hidden="true"></span>
+            <div class="package-file-main">
+              <strong>assets/logo.svg</strong>
+              <span>Brand mark · 4 KB</span>
+            </div>
+            <span class="status">Asset</span>
+          </article>
+          <article class="package-file-row" role="listitem" data-package-file data-package-type="asset" data-package-search="assets policy-card png preview image">
+            <span class="doc-icon" aria-hidden="true"></span>
+            <div class="package-file-main">
+              <strong>assets/policy-card.png</strong>
+              <span>Preview image · 312 KB</span>
+            </div>
+            <span class="status">Asset</span>
+          </article>
+        </div>
+        <p class="package-empty" data-package-empty hidden>No package files found</p>
+      </div>
     </section>
   </div>
 
