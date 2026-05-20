@@ -182,7 +182,7 @@
               <button class="workspace-more-option" type="button" role="menuitem">Duplicate workspace</button>
               <button class="workspace-more-option" type="button" role="menuitem">Export files</button>
               <button class="workspace-more-option" type="button" role="menuitem">View activity</button>
-              <button class="workspace-more-option" type="button" role="menuitem">Workspace settings</button>
+              <button class="workspace-more-option" type="button" role="menuitem" data-open-workspace-settings>Workspace settings</button>
             </div>
           </details>
         </div>
@@ -225,32 +225,6 @@
             <button class="prompt-sample" type="button" data-prompt-sample="What learning content is ready to publish?">What learning content is ready to publish?</button>
           </div>
         </div>
-        <section class="workspace-summary-section" data-workspace-panel="overview" aria-labelledby="workspace-summary-heading-learning-content">
-          <div class="section-head">
-            <div class="section-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M9 19v-8M14 19V8M19 19v-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 19h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <span id="workspace-summary-heading-learning-content">Summary</span>
-            </div>
-          </div>
-          <div class="workspace-summary-grid">
-            <article class="workspace-summary-card">
-              <span>Activity</span>
-              <strong>6 updates this week</strong>
-              <p>Modules and teaching references are seeing steady edits.</p>
-            </article>
-            <article class="workspace-summary-card">
-              <span>Review focus</span>
-              <strong>3 drafts in progress</strong>
-              <p>Launch kits and module content need publishing readiness checks.</p>
-            </article>
-            <article class="workspace-summary-card">
-              <span>Coverage</span>
-              <strong>36 files across 6 pages</strong>
-              <p>Modules, launch campaigns, and references are organized for course teams.</p>
-            </article>
-          </div>
-        </section>
-
         <section class="workspace-browser-section workspace-recents" data-workspace-panel="overview" aria-labelledby="workspace-recents-heading">
           <div class="section-head">
             <div class="section-title">
@@ -289,6 +263,89 @@
               </div>
               <span class="pickup-activity">May 20, 2026</span>
             </article>
+            <article class="pickup-card">
+              <span class="pickup-icon learning" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Campaign assets</h2>
+                <span class="pickup-workspace">Folder</span>
+              </div>
+              <span class="pickup-activity">May 23, 2026</span>
+            </article>
+            <article class="pickup-card" data-document-card="document-preview.html?doc=sample-handling-sop">
+              <span class="pickup-icon learning" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Sample Handling SOP</h2>
+                <span class="pickup-workspace">Procedure</span>
+              </div>
+              <span class="pickup-activity">May 13, 2026</span>
+            </article>
+            <article class="pickup-card">
+              <span class="pickup-icon learning" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Module Publishing Checklist</h2>
+                <span class="pickup-workspace">Checklist</span>
+              </div>
+              <span class="pickup-activity">May 22, 2026</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="workspace-summary-section" data-workspace-panel="overview" aria-labelledby="workspace-summary-heading-learning-content">
+          <div class="section-head">
+            <div class="section-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M9 19v-8M14 19V8M19 19v-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 19h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span id="workspace-summary-heading-learning-content">Summary</span>
+            </div>
+          </div>
+          <div class="workspace-status-panel panel" aria-label="Content status breakdown">
+            <div class="workspace-status-copy">
+              <span class="workspace-status-kicker">Content status</span>
+              <h2>36 content items</h2>
+              <p>Learning drafts, review modules, approved references, and published course content stay visible for course teams.</p>
+              <div class="workspace-status-metrics" aria-label="Workspace summary numbers">
+                <div class="workspace-status-metric">
+                  <span>Activity</span>
+                  <strong>6</strong>
+                </div>
+                <div class="workspace-status-metric">
+                  <span>Review</span>
+                  <strong>3</strong>
+                </div>
+                <div class="workspace-status-metric">
+                  <span>Coverage</span>
+                  <strong>36</strong>
+                </div>
+              </div>
+            </div>
+            <div class="workspace-status-chart">
+              <div class="status-pie" role="img" aria-label="Content statuses: 11 draft, 6 in review, 10 approved, 9 published." style="--draft-end: 30.6%; --review-end: 47.2%; --approved-end: 75.0%;">
+                <span>36<small>items</small></span>
+              </div>
+              <dl class="status-legend">
+                <div class="status-legend-item draft">
+                  <dt>Draft</dt>
+                  <dd>11</dd>
+                </div>
+                <div class="status-legend-item review">
+                  <dt>In review</dt>
+                  <dd>6</dd>
+                </div>
+                <div class="status-legend-item approved">
+                  <dt>Approved</dt>
+                  <dd>10</dd>
+                </div>
+                <div class="status-legend-item published">
+                  <dt>Published</dt>
+                  <dd>9</dd>
+                </div>
+              </dl>
+            </div>
           </div>
         </section>
 
@@ -635,6 +692,44 @@
         <div class="workspace-modal-actions">
           <button class="secondary-btn" type="button" data-workspace-modal-close>Cancel</button>
           <button class="primary-btn" type="submit">Create</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <div class="modal-backdrop" data-workspace-settings-modal hidden>
+    <section class="workspace-settings-modal" role="dialog" aria-modal="true" aria-labelledby="workspace-settings-title">
+      <div class="workspace-modal-head">
+        <h2 id="workspace-settings-title">Workspace settings</h2>
+        <button class="icon-btn" type="button" aria-label="Close workspace settings" data-workspace-settings-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <form class="workspace-settings-form" data-workspace-settings-form>
+        <section class="workspace-settings-section">
+          <label for="workspace-settings-name">Workspace name</label>
+          <input id="workspace-settings-name" type="text" name="workspace-settings-name" value="Learning Content" autocomplete="off" required data-workspace-settings-name>
+        </section>
+        <section class="workspace-settings-section">
+          <label class="workspace-settings-check">
+            <input type="checkbox" checked>
+            <span>
+              <strong>Require review before publishing</strong>
+              <small>Content must be approved before it can move into Published.</small>
+            </span>
+          </label>
+        </section>
+        <section class="workspace-settings-danger" aria-label="Danger zone">
+          <div>
+            <strong>Delete workspace</strong>
+            <p>Remove this workspace and its current organization settings.</p>
+          </div>
+          <button class="danger-btn" type="button">Delete</button>
+        </section>
+        <div class="workspace-modal-actions">
+          <button class="secondary-btn" type="button" data-workspace-settings-close>Cancel</button>
+          <button class="primary-btn" type="submit">Save settings</button>
         </div>
       </form>
     </section>

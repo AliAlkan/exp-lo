@@ -12,7 +12,7 @@ document.addEventListener('click', (event) => {
   if (!button) return;
   const filters = button.closest('.attention-filters');
   const section = filters?.closest('.section');
-  const rows = [...(section?.querySelectorAll('.task-list .task-row') || [])];
+  const rows = [...(section?.querySelectorAll('.task-list .task-row:not(.task-header)') || [])];
   if (!filters || !rows.length) return;
 
   const getAttentionStatus = (row) => {
@@ -60,6 +60,20 @@ document.addEventListener('click', (event) => {
   });
   rows.forEach((row) => {
     row.hidden = activeFilter !== 'all' && getReviewStatus(row) !== activeFilter;
+  });
+}, true);
+
+document.addEventListener('click', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const button = target?.closest('[data-recents-tab]');
+  if (!button) return;
+  const tablist = button.closest('.recents-tabs');
+  if (!tablist) return;
+
+  tablist.querySelectorAll('[data-recents-tab]').forEach((candidate) => {
+    const isActive = candidate === button;
+    candidate.classList.toggle('active', isActive);
+    candidate.setAttribute('aria-selected', String(isActive));
   });
 }, true);
 
@@ -633,6 +647,7 @@ document.querySelectorAll('.content-filter-head:not(.search-filter-head)').forEa
     quickFilters.setAttribute('aria-label', 'Filter documents by content type');
     quickFilters.innerHTML = `
       <button class="workspace-content-filter active" type="button" data-workspace-content-filter="all" aria-pressed="true">All content</button>
+      <button class="workspace-content-filter" type="button" data-workspace-content-filter="recents" aria-pressed="false">Recents</button>
       <button class="workspace-content-filter" type="button" data-workspace-content-filter="pages" aria-pressed="false">Pages</button>
       <button class="workspace-content-filter" type="button" data-workspace-content-filter="files" aria-pressed="false">Files</button>
       <button class="workspace-content-filter" type="button" data-workspace-content-filter="sites" aria-pressed="false">Sites</button>
@@ -655,6 +670,7 @@ document.querySelectorAll('.content-filter-head:not(.search-filter-head)').forEa
 
   const matchesWorkspaceContentFilter = (row) => {
     if (!isWorkspaceDocuments || activeWorkspaceContentFilter === 'all') return true;
+    if (activeWorkspaceContentFilter === 'recents') return rows.indexOf(row) < 5;
     if (activeWorkspaceContentFilter === 'published') return row.dataset.status === 'published';
     return inferWorkspaceContentType(row) === activeWorkspaceContentFilter;
   };
@@ -915,6 +931,43 @@ document.querySelectorAll('[data-workspace-modal]').forEach((modal) => {
 
   form?.addEventListener('submit', (event) => {
     event.preventDefault();
+    closeModal();
+  });
+});
+
+document.querySelectorAll('[data-workspace-settings-modal]').forEach((modal) => {
+  const input = modal.querySelector('[data-workspace-settings-name]');
+  const form = modal.querySelector('[data-workspace-settings-form]');
+  const closeButtons = [...modal.querySelectorAll('[data-workspace-settings-close]')];
+
+  const closeModal = () => {
+    modal.hidden = true;
+  };
+
+  document.querySelectorAll('[data-open-workspace-settings]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      modal.hidden = false;
+      input?.focus();
+      input?.select();
+    });
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener('click', closeModal);
+  });
+
+  modal.addEventListener('click', (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const nextName = input?.value.trim();
+    if (nextName) {
+      document.querySelector('.workspace-page h1').textContent = nextName;
+    }
     closeModal();
   });
 });
@@ -1250,6 +1303,9 @@ document.addEventListener('keydown', (event) => {
   document.querySelectorAll('[data-folder-modal]:not([hidden])').forEach((modal) => {
     modal.hidden = true;
     modal.querySelector('[data-folder-modal-form]')?.reset();
+  });
+  document.querySelectorAll('[data-workspace-settings-modal]:not([hidden])').forEach((modal) => {
+    modal.hidden = true;
   });
   document.querySelectorAll('[data-site-package-modal]:not([hidden])').forEach((modal) => {
     modal.hidden = true;

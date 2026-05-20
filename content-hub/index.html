@@ -172,7 +172,7 @@
 
       <section class="workspace" aria-label="Content Hub home">
         <div class="intro">
-          <h1>Content Hub</h1>
+          <h1>Hello Adam</h1>
         </div>
 
         <form class="command">
@@ -201,7 +201,62 @@
           <button class="prompt-sample" type="button" data-prompt-sample="Summarize recent workspace activity.">Summarize recent workspace activity.</button>
         </div>
 
-        <section class="section" aria-labelledby="pickup-heading">
+        <section class="section" aria-labelledby="recent-heading">
+          <div class="section-head">
+            <div class="section-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 7v5l3 2M21 12a9 9 0 1 1-2.6-6.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span id="recent-heading">Recently visited workspaces</span>
+            </div>
+          </div>
+
+          <div class="recent-grid">
+            <article class="content-card">
+              <div class="workspace-strip knowledge"></div>
+              <div class="card-body">
+                <span class="card-kicker">Workspace</span>
+                <h2 class="card-title">Knowledge Base</h2>
+                <span class="card-meta">42 recently updated</span>
+              </div>
+            </article>
+            <article class="content-card">
+              <div class="workspace-strip faculty"></div>
+              <div class="card-body">
+                <span class="card-kicker">Workspace</span>
+                <h2 class="card-title">Faculty Newsroom</h2>
+                <span class="card-meta">18 recently updated</span>
+              </div>
+            </article>
+            <article class="content-card">
+              <div class="workspace-strip student"></div>
+              <div class="card-body">
+                <span class="card-kicker">Workspace</span>
+                <h2 class="card-title">Student Affairs</h2>
+                <span class="card-meta">11 recently updated</span>
+              </div>
+            </article>
+            <article class="content-card">
+              <div class="workspace-strip manufacturer"></div>
+              <div class="card-body">
+                <span class="card-kicker">Workspace</span>
+                <h2 class="card-title">Manufacturer Contract Workspace</h2>
+                <span class="card-meta">7 recently updated</span>
+              </div>
+            </article>
+            <article class="content-card">
+              <div class="workspace-strip compliance"></div>
+              <div class="card-body">
+                <span class="card-kicker">Workspace</span>
+                <h2 class="card-title">Compliance Library</h2>
+                <span class="card-meta">5 recently updated</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <div class="home-workstream-lists">
+        <section class="section home-list-section" aria-labelledby="pickup-heading">
           <div class="section-head">
             <div class="section-title">
               <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
@@ -284,62 +339,102 @@
               </div>
               <span class="pickup-activity">Edited yesterday</span>
             </article>
+            <a class="home-list-view-all" href="my-content.html">Load more</a>
           </div>
         </section>
 
-        <section class="section" aria-labelledby="recent-heading">
+        <section class="section home-list-section" aria-labelledby="recents-heading">
           <div class="section-head">
             <div class="section-title">
               <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 7v5l3 2M21 12a9 9 0 1 1-2.6-6.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 6v6l4 2M5 4v5h5M5.6 9A7.5 7.5 0 1 0 8 5.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <span id="recent-heading">Recently accessed</span>
+              <span id="recents-heading">Recents</span>
+            </div>
+            <div class="recents-tabs" role="tablist" aria-label="Recents scope">
+              <button class="recents-tab active" type="button" role="tab" aria-selected="true" data-recents-tab="me">By me</button>
+              <button class="recents-tab" type="button" role="tab" aria-selected="false" data-recents-tab="everyone">By everyone</button>
             </div>
           </div>
 
-          <div class="recent-grid">
-            <article class="content-card">
-              <div class="workspace-strip knowledge"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Knowledge Base</h2>
-                <span class="card-meta">42 recently updated</span>
+          <div class="pickup-grid">
+            <article class="pickup-card">
+              <span class="pickup-icon" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Lab Access Policy v2</h2>
+                <span class="pickup-workspace">Learning Content</span>
               </div>
+              <span class="pickup-activity">Edited 8 min ago</span>
             </article>
-            <article class="content-card">
-              <div class="workspace-strip faculty"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Faculty Newsroom</h2>
-                <span class="card-meta">18 recently updated</span>
+            <article class="pickup-card">
+              <span class="pickup-icon faculty" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Sample Handling SOP</h2>
+                <span class="pickup-workspace">Faculty Newsroom</span>
               </div>
+              <span class="pickup-activity">Commented 14 min ago</span>
             </article>
-            <article class="content-card">
-              <div class="workspace-strip student"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Student Affairs</h2>
-                <span class="card-meta">11 recently updated</span>
+            <article class="pickup-card" data-document-id="summer-launch-kit">
+              <span class="pickup-icon manufacturer" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Summer Launch Kit.pdf</h2>
+                <span class="pickup-workspace">Manufacturer Contract Workspace</span>
               </div>
+              <span class="pickup-activity">Edited 26 min ago</span>
             </article>
-            <article class="content-card">
-              <div class="workspace-strip manufacturer"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Manufacturer Contract Workspace</h2>
-                <span class="card-meta">7 recently updated</span>
+            <article class="pickup-card">
+              <span class="pickup-icon student" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Course Module: Botanical Extraction</h2>
+                <span class="pickup-workspace">Student Affairs</span>
               </div>
+              <span class="pickup-activity">Commented 1 hr ago</span>
             </article>
-            <article class="content-card">
-              <div class="workspace-strip compliance"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Compliance Library</h2>
-                <span class="card-meta">5 recently updated</span>
+            <article class="pickup-card">
+              <span class="pickup-icon compliance" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Student Portal Welcome Page</h2>
+                <span class="pickup-workspace">Compliance Library</span>
               </div>
+              <span class="pickup-activity">Edited 2 hrs ago</span>
             </article>
+            <article class="pickup-card">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24">
+                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Q3 Editorial Narrative</h2>
+                <span class="pickup-workspace">Knowledge Base</span>
+              </div>
+              <span class="pickup-activity">Edited yesterday</span>
+            </article>
+            <a class="home-list-view-all" href="my-content.html">Load more</a>
           </div>
         </section>
+
+        </div>
 
         <section class="section" aria-labelledby="tasks-heading">
           <div class="section-head">
@@ -372,6 +467,14 @@
 
           <div class="panel">
             <ul class="task-list">
+              <li class="task-row task-header" aria-hidden="true">
+                <span></span>
+                <span>Name</span>
+                <span>Date modified</span>
+                <span>Owner</span>
+                <span>Workspace</span>
+                <span>Status</span>
+              </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
