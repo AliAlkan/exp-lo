@@ -129,7 +129,7 @@ button {
   min-height: 44px;
   padding: 7px 9px;
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: 8px;
   background: var(--ink);
   color: var(--bg);
   font-weight: 820;
@@ -165,7 +165,7 @@ button {
   width: 232px;
   padding: 6px;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 8px;
   background: var(--surface);
   box-shadow: var(--shadow);
 }
@@ -1150,30 +1150,168 @@ button {
   position: relative;
 }
 
-.share-role-select select {
-  width: 100%;
-  min-height: 48px;
-  padding: 0 34px 0 14px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  appearance: none;
-  background:
-    linear-gradient(45deg, transparent 50%, currentColor 50%) right 17px center / 6px 6px no-repeat,
-    linear-gradient(135deg, currentColor 50%, transparent 50%) right 13px center / 6px 6px no-repeat,
-    var(--bg);
-  color: var(--ink);
-  font-weight: 760;
+.role-menu {
+  position: relative;
 }
 
-.share-role-select select:focus-visible {
+.role-menu-trigger {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 760;
+  text-align: left;
+  transition: border-color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+
+.share-role-select.role-menu .role-menu-trigger,
+.share-access-role.role-menu .role-menu-trigger,
+.share-role-select.role-menu .role-menu-trigger:hover,
+.share-access-role.role-menu .role-menu-trigger:hover,
+.share-role-select.role-menu .role-menu-trigger:focus-visible,
+.share-access-role.role-menu .role-menu-trigger:focus-visible,
+.share-role-select.role-menu.is-open .role-menu-trigger,
+.share-access-role.role-menu.is-open .role-menu-trigger {
+  border-radius: 8px;
+}
+
+.role-menu-trigger span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-menu-trigger svg {
+  flex: 0 0 auto;
+  color: var(--muted);
+  transition: transform .16s ease, color .16s ease;
+}
+
+.role-menu-trigger:hover,
+.role-menu-trigger:focus-visible,
+.role-menu.is-open .role-menu-trigger {
   border-color: var(--line-strong);
+  background: var(--surface-soft);
+}
+
+.role-menu-trigger:focus-visible {
+  box-shadow: var(--focus);
+}
+
+.role-menu.is-open .role-menu-trigger svg {
+  color: var(--ink);
+  transform: rotate(180deg);
+}
+
+.role-menu-popover {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max(100%, 184px);
+  max-width: min(240px, calc(100vw - 32px));
+  display: grid;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.share-role-select.role-menu .role-menu-popover,
+.share-access-role.role-menu .role-menu-popover {
+  border-radius: 8px;
+}
+
+.share-access-role .role-menu-popover {
+  top: auto;
+  bottom: calc(100% + 8px);
+}
+
+.role-menu-option {
+  width: 100%;
+  min-height: 36px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 760;
+  text-align: left;
+}
+
+.role-menu-option span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.role-menu-option svg {
+  opacity: 0;
+  color: var(--blue);
+}
+
+.role-menu-option:hover,
+.role-menu-option:focus-visible {
+  background: var(--surface-soft);
+  color: var(--ink);
+  outline: none;
+}
+
+.role-menu-option.selected {
+  border-radius: 8px;
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+
+.role-menu-option.selected svg {
+  opacity: 1;
+}
+
+.role-menu-option.danger {
+  color: var(--red);
+}
+
+.role-menu-option.danger.selected {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.role-menu-option.danger.selected svg {
+  color: var(--red);
+}
+
+.role-menu-option.danger:hover,
+.role-menu-option.danger:focus-visible {
+  background: var(--red-soft);
 }
 
 .share-submit {
   min-width: 96px;
   height: 48px;
   min-height: 48px;
-  border-radius: 999px;
+  border-radius: 8px;
+}
+
+.secondary-btn.share-submit {
+  border-radius: 8px;
 }
 
 .share-empty-state {
@@ -1257,31 +1395,15 @@ button {
   text-align: right;
 }
 
-.share-access-role select {
-  min-height: 40px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface-soft);
-  color: var(--ink);
-  font-weight: 760;
-}
-
 .share-access-role {
   min-width: 0;
+  position: relative;
 }
 
-.share-access-role select {
-  width: 100%;
-  padding: 0 32px 0 12px;
-  appearance: none;
-  background:
-    linear-gradient(45deg, transparent 50%, currentColor 50%) right 17px center / 6px 6px no-repeat,
-    linear-gradient(135deg, currentColor 50%, transparent 50%) right 13px center / 6px 6px no-repeat,
-    var(--surface-soft);
-}
-
-.share-access-role select:focus-visible {
-  border-color: var(--line-strong);
+.share-access-role .role-menu-trigger {
+  min-height: 40px;
+  padding: 0 12px;
+  background: var(--surface-soft);
 }
 
 .workspace-modal-form label {
@@ -5813,6 +5935,14 @@ a[class*="btn"] {
 
 button.prompt-sample {
   border-radius: var(--radius) !important;
+}
+
+.share-role-select.role-menu .role-menu-trigger,
+.share-access-role.role-menu .role-menu-trigger,
+.share-role-select.role-menu .role-menu-option,
+.share-access-role.role-menu .role-menu-option,
+.secondary-btn.share-submit {
+  border-radius: 8px !important;
 }
 
 @media (max-width: 980px) {

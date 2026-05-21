@@ -1,9 +1,117 @@
+const closeRoleMenus = (exceptMenu) => {
+  document.querySelectorAll('[data-role-menu].is-open').forEach((menu) => {
+    if (menu === exceptMenu) return;
+    menu.classList.remove('is-open');
+    menu.querySelector('[data-role-menu-trigger]')?.setAttribute('aria-expanded', 'false');
+    const popover = menu.querySelector('.role-menu-popover');
+    if (popover) {
+      popover.hidden = true;
+    }
+  });
+};
+
+const openRoleMenu = (menu) => {
+  closeRoleMenus(menu);
+  menu.classList.add('is-open');
+  menu.querySelector('[data-role-menu-trigger]')?.setAttribute('aria-expanded', 'true');
+  const popover = menu.querySelector('.role-menu-popover');
+  if (popover) {
+    popover.hidden = false;
+  }
+};
+
+const updateRoleMenu = (menu, value) => {
+  menu.dataset.roleValue = value;
+  menu.querySelector('[data-role-menu-label]').textContent = value;
+  const input = menu.querySelector('[data-role-menu-input]');
+  if (input) {
+    input.value = value;
+  }
+  menu.querySelectorAll('[data-role-option]').forEach((option) => {
+    const isSelected = option.dataset.roleOption === value;
+    option.classList.toggle('selected', isSelected);
+    option.setAttribute('aria-selected', String(isSelected));
+  });
+};
+
 document.addEventListener('click', (event) => {
   document.querySelectorAll('.create-menu[open], .doc-more-menu[open], .row-more-menu[open], .workspace-more-menu[open], .comment-more-menu[open], .filter-menu[open], .selection-style-menu[open]').forEach((menu) => {
     if (!menu.contains(event.target)) {
       menu.removeAttribute('open');
     }
   });
+
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  if (!target?.closest('[data-role-menu]')) {
+    closeRoleMenus();
+  }
+});
+
+document.addEventListener('click', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const trigger = target?.closest('[data-role-menu-trigger]');
+  if (trigger) {
+    const menu = trigger.closest('[data-role-menu]');
+    if (!menu) return;
+    event.preventDefault();
+    if (menu.classList.contains('is-open')) {
+      closeRoleMenus();
+    } else {
+      openRoleMenu(menu);
+    }
+    return;
+  }
+
+  const option = target?.closest('[data-role-option]');
+  if (!option) return;
+  const menu = option.closest('[data-role-menu]');
+  if (!menu) return;
+  updateRoleMenu(menu, option.dataset.roleOption || option.textContent.trim());
+  closeRoleMenus();
+  menu.querySelector('[data-role-menu-trigger]')?.focus();
+});
+
+document.addEventListener('keydown', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const trigger = target?.closest('[data-role-menu-trigger]');
+  const option = target?.closest('[data-role-option]');
+  const menu = target?.closest('[data-role-menu]');
+
+  if (event.key === 'Escape') {
+    closeRoleMenus();
+    menu?.querySelector('[data-role-menu-trigger]')?.focus();
+    return;
+  }
+
+  if (trigger && ['Enter', ' ', 'ArrowDown', 'ArrowUp'].includes(event.key)) {
+    event.preventDefault();
+    const currentMenu = trigger.closest('[data-role-menu]');
+    if (!currentMenu) return;
+    openRoleMenu(currentMenu);
+    const options = [...currentMenu.querySelectorAll('[data-role-option]')];
+    const selectedIndex = options.findIndex((item) => item.classList.contains('selected'));
+    const nextIndex = event.key === 'ArrowUp' ? options.length - 1 : Math.max(selectedIndex, 0);
+    options[nextIndex]?.focus();
+    return;
+  }
+
+  if (!option || !menu || !['Enter', ' ', 'ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) return;
+  event.preventDefault();
+  const options = [...menu.querySelectorAll('[data-role-option]')];
+  const currentIndex = options.indexOf(option);
+  if (event.key === 'Enter' || event.key === ' ') {
+    updateRoleMenu(menu, option.dataset.roleOption || option.textContent.trim());
+    closeRoleMenus();
+    menu.querySelector('[data-role-menu-trigger]')?.focus();
+    return;
+  }
+  const nextIndex = {
+    ArrowDown: Math.min(currentIndex + 1, options.length - 1),
+    ArrowUp: Math.max(currentIndex - 1, 0),
+    Home: 0,
+    End: options.length - 1,
+  }[event.key];
+  options[nextIndex]?.focus();
 });
 
 document.addEventListener('click', (event) => {
@@ -972,6 +1080,50 @@ document.querySelectorAll('[data-workspace-settings-modal]').forEach((modal) => 
   });
 });
 
+const createRoleMenuMarkup = ({ label, selected = 'Viewer', includeRemove = false, inputName = '' }) => {
+  const options = ['Viewer', 'Commenter', 'Editor', 'Admin', ...(includeRemove ? ['Remove'] : [])];
+  const input = inputName ? `<input type="hidden" name="${inputName}" value="${selected}" data-role-menu-input>` : '';
+
+  return `
+    <div class="${includeRemove ? 'share-access-role' : 'share-role-select'} role-menu" data-role-menu data-role-value="${selected}">
+      <button class="role-menu-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="${label}" data-role-menu-trigger>
+        <span data-role-menu-label>${selected}</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m7 10 5 5 5-5" fill="currentColor"/>
+        </svg>
+      </button>
+      ${input}
+      <div class="role-menu-popover" role="listbox" aria-label="${label} options" hidden>
+        ${options.map((option) => `
+          <button class="role-menu-option${option === selected ? ' selected' : ''}${option === 'Remove' ? ' danger' : ''}" type="button" role="option" aria-selected="${option === selected}" data-role-option="${option}">
+            <span>${option}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+};
+
+const upgradeNativeRoleMenus = () => {
+  document.querySelectorAll('.share-role-select select, .share-access-role select').forEach((select) => {
+    const wrapper = select.closest('.share-role-select, .share-access-role');
+    if (!wrapper || wrapper.matches('[data-role-menu]')) return;
+
+    const isAccessRole = wrapper.classList.contains('share-access-role');
+    const selectedOption = select.options[select.selectedIndex] || select.options[0];
+    const label = select.getAttribute('aria-label') || 'Permission role';
+    wrapper.outerHTML = createRoleMenuMarkup({
+      label,
+      selected: selectedOption?.textContent.trim() || 'Viewer',
+      includeRemove: isAccessRole,
+      inputName: isAccessRole ? '' : 'permission-role',
+    });
+  });
+};
+
 const createShareModal = () => {
   if (!document.querySelector('[data-open-share-modal]') || document.querySelector('[data-share-modal]')) return;
 
@@ -1001,15 +1153,7 @@ const createShareModal = () => {
                 </label>
                 <div class="share-suggestions" id="share-suggestions-document" data-share-suggestions hidden></div>
               </div>
-              <label class="share-role-select">
-                <span class="sr-only">Permission role</span>
-                <select aria-label="Permission role">
-                  <option>Viewer</option>
-                  <option>Commenter</option>
-                  <option>Editor</option>
-                  <option>Admin</option>
-                </select>
-              </label>
+              ${createRoleMenuMarkup({ label: 'Permission role', inputName: 'permission-role' })}
               <button class="secondary-btn share-submit" type="submit">Share</button>
             </form>
           </section>
@@ -1030,15 +1174,7 @@ const createShareModal = () => {
                   <strong>Jonah Blake</strong>
                   <span>jonah.blake@example.com</span>
                 </span>
-                <label class="share-access-role">
-                  <span class="sr-only">Jonah Blake permission role</span>
-                  <select aria-label="Jonah Blake permission role">
-                    <option>Viewer</option>
-                    <option>Commenter</option>
-                    <option>Editor</option>
-                    <option>Admin</option>
-                  </select>
-                </label>
+                ${createRoleMenuMarkup({ label: 'Jonah Blake permission role', includeRemove: true })}
               </div>
               <div class="share-access-row">
                 <span class="share-access-avatar group">PR</span>
@@ -1046,15 +1182,7 @@ const createShareModal = () => {
                   <strong>Procurement Review</strong>
                   <span>Group · 6 members</span>
                 </span>
-                <label class="share-access-role">
-                  <span class="sr-only">Procurement Review permission role</span>
-                  <select aria-label="Procurement Review permission role">
-                    <option>Viewer</option>
-                    <option>Commenter</option>
-                    <option selected>Editor</option>
-                    <option>Admin</option>
-                  </select>
-                </label>
+                ${createRoleMenuMarkup({ label: 'Procurement Review permission role', selected: 'Editor', includeRemove: true })}
               </div>
             </div>
           </section>
@@ -1065,6 +1193,7 @@ const createShareModal = () => {
 };
 
 createShareModal();
+upgradeNativeRoleMenus();
 
 const openShareModal = () => {
   const modal = document.querySelector('[data-share-modal]');

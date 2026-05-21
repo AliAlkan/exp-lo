@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Knowledge Base - Content Hub</title>
-  <link rel="stylesheet" href="assets/css/global.css?v=upload-panel-2">
+  <link rel="stylesheet" href="assets/css/global.css?v=role-radius-8b">
   <script src="assets/js/app.js?v=upload-labels-3" defer></script>
 </head>
 <body>
@@ -1019,15 +1019,41 @@
               </label>
               <div class="share-suggestions" id="share-suggestions-knowledge-base" data-share-suggestions hidden></div>
             </div>
-            <label class="share-role-select">
-              <span class="sr-only">Permission role</span>
-              <select aria-label="Permission role">
-                <option>Viewer</option>
-                <option>Commenter</option>
-                <option>Editor</option>
-                <option>Admin</option>
-              </select>
-            </label>
+            <div class="share-role-select role-menu" data-role-menu data-role-value="Viewer">
+              <button class="role-menu-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Permission role" data-role-menu-trigger>
+                <span data-role-menu-label>Viewer</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                </svg>
+              </button>
+              <input type="hidden" name="permission-role" value="Viewer" data-role-menu-input>
+              <div class="role-menu-popover" role="listbox" aria-label="Permission role options" hidden>
+                <button class="role-menu-option selected" type="button" role="option" aria-selected="true" data-role-option="Viewer">
+                  <span>Viewer</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Commenter">
+                  <span>Commenter</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Editor">
+                  <span>Editor</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Admin">
+                  <span>Admin</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
             <button class="secondary-btn share-submit" type="submit">Share</button>
           </form>
         </section>
@@ -1048,15 +1074,46 @@
                 <strong>Jonah Blake</strong>
                 <span>jonah.blake@example.com</span>
               </span>
-              <label class="share-access-role">
-                <span class="sr-only">Jonah Blake permission role</span>
-                <select aria-label="Jonah Blake permission role">
-                  <option>Viewer</option>
-                  <option>Commenter</option>
-                  <option>Editor</option>
-                  <option>Admin</option>
-                </select>
-              </label>
+              <div class="share-access-role role-menu" data-role-menu data-role-value="Viewer">
+                <button class="role-menu-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Jonah Blake permission role" data-role-menu-trigger>
+                  <span data-role-menu-label>Viewer</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                  </svg>
+                </button>
+                <div class="role-menu-popover" role="listbox" aria-label="Jonah Blake permission role options" hidden>
+                  <button class="role-menu-option selected" type="button" role="option" aria-selected="true" data-role-option="Viewer">
+                    <span>Viewer</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Commenter">
+                    <span>Commenter</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Editor">
+                    <span>Editor</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Admin">
+                    <span>Admin</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option danger" type="button" role="option" aria-selected="false" data-role-option="Remove">
+                    <span>Remove</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
             <div class="share-access-row">
               <span class="share-access-avatar group">PR</span>
@@ -1064,15 +1121,46 @@
                 <strong>Procurement Review</strong>
                 <span>Group · 6 members</span>
               </span>
-              <label class="share-access-role">
-                <span class="sr-only">Procurement Review permission role</span>
-                <select aria-label="Procurement Review permission role">
-                  <option>Viewer</option>
-                  <option>Commenter</option>
-                  <option>Editor</option>
-                  <option>Admin</option>
-                </select>
-              </label>
+              <div class="share-access-role role-menu" data-role-menu data-role-value="Viewer">
+                <button class="role-menu-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Procurement Review permission role" data-role-menu-trigger>
+                  <span data-role-menu-label>Viewer</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                  </svg>
+                </button>
+                <div class="role-menu-popover" role="listbox" aria-label="Procurement Review permission role options" hidden>
+                  <button class="role-menu-option selected" type="button" role="option" aria-selected="true" data-role-option="Viewer">
+                    <span>Viewer</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Commenter">
+                    <span>Commenter</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Editor">
+                    <span>Editor</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Admin">
+                    <span>Admin</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option danger" type="button" role="option" aria-selected="false" data-role-option="Remove">
+                    <span>Remove</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
