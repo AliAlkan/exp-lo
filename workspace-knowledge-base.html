@@ -1,0 +1,1171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knowledge Base - Content Hub</title>
+  <link rel="stylesheet" href="assets/css/global.css?v=upload-panel-2">
+  <script src="assets/js/app.js?v=upload-labels-3" defer></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="Content Hub navigation">
+      <div class="brand">
+        <details class="create-menu">
+          <summary aria-label="Create content">
+            <span class="create-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24">
+                <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <span>New</span>
+          </summary>
+          <div class="create-popover" role="menu" aria-label="Create options">
+            <button class="create-option" type="button" role="menuitem">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 7h6l2 2h8v9H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+              <span>New folder</span>
+            </button>
+            <button class="create-option" type="button" role="menuitem">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 4h7l4 4v12H7zM14 4v5h5M10 13h6M10 17h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>New page</span>
+            </button>
+            <div class="create-separator" role="separator"></div>
+            <button class="create-option" type="button" role="menuitem">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 4h7l3 3v13H7zM14 4v4h4M12 16V9m0 0-3 3m3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Upload file</span>
+            </button>
+            <button class="create-option" type="button" role="menuitem">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 8h6l2 2h8v8H4zM12 16v-5m0 0-2 2m2-2 2 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Upload folder</span>
+            </button>
+            <div class="create-separator" role="separator"></div>
+            <button class="create-option" type="button" role="menuitem">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 8h6l2 2h8v8H4zM8 15h8M12 11v8M12 4a8 8 0 0 1 0 16M12 4a8 8 0 0 0 0 16M4 12h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Upload site</span>
+            </button>
+          </div>
+        </details>
+      </div>
+
+      <nav class="nav-section" aria-label="Primary">
+        <button class="nav-button" type="button" data-open-search-modal>
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span>Search</span>
+        </button>
+        <a class="nav-button" href="index.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+          <span>Home</span>
+          <span class="nav-count">12</span>
+        </a>
+        <a class="nav-button" href="activity.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 10a5 5 0 0 1 10 0v4l2 3H5l2-3zM10 20h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Notifications</span>
+          <span class="nav-count">4</span>
+        </a>
+        <a class="nav-button" href="my-content.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h6l2 2h8v10H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>My content</span>
+        </a>
+        <a class="nav-button" href="shared-with-me.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM7 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12 19c.6-2.3 2-4 4-4s3.4 1.7 4 4M3 19c.5-2.1 1.8-3.5 4-3.5 1.2 0 2.1.4 2.8 1.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Shared with me</span>
+        </a>
+        <div class="nav-title-row">
+          <p class="nav-title">Workflows</p>
+        </div>
+        <a class="nav-button" href="reviews.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 4h14v16H5zM8 9h8M8 13h5M8 17h4M15 15l1.5 1.5L20 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Reviews</span>
+        </a>
+        <a class="nav-button" href="published.html">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 12.5 10 17 19 7M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Published</span>
+        </a>
+      </nav>
+
+      <nav class="nav-section" aria-label="Workspaces">
+        <div class="nav-title-row">
+          <p class="nav-title">Workspaces</p>
+        </div>
+        <a class="nav-button active" href="workspace-knowledge-base.html">
+          <span class="workspace-swatch knowledge" aria-hidden="true"></span>
+          <span>Knowledge Base</span>
+          <span class="nav-count">9</span>
+        </a>
+        <a class="nav-button" href="workspace-faculty-newsroom.html">
+          <span class="workspace-swatch faculty" aria-hidden="true"></span>
+          <span>Faculty Newsroom</span>
+          <span class="nav-count">5</span>
+        </a>
+        <a class="nav-button" href="workspace-student-affairs.html">
+          <span class="workspace-swatch student" aria-hidden="true"></span>
+          <span>Student Affairs</span>
+        </a>
+        <a class="nav-button" href="workspace-manufacturer-contract-workspace.html">
+          <span class="workspace-swatch research" aria-hidden="true"></span>
+          <span>Manufacturer Contract Workspace</span>
+          <span class="nav-count">3</span>
+        </a>
+        <a class="nav-button" href="workspace-compliance-library.html">
+          <span class="workspace-swatch compliance" aria-hidden="true"></span>
+          <span>Compliance Library</span>
+        </a>
+        <a class="nav-button" href="workspace-learning-content.html">
+          <span class="workspace-swatch learning" aria-hidden="true"></span>
+          <span>Learning Content</span>
+          <span class="nav-count">6</span>
+        </a>
+        <button class="nav-button workspace-create-row" type="button" data-workspace-create>
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+          <span>Create workspace</span>
+        </button>
+      </nav>
+
+      <nav class="nav-section" aria-label="Admin">
+        <button class="nav-button">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 7h14M9 7V5h6v2M8 10v8M12 10v8M16 10v8M7 7l1 14h8l1-14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Archive</span>
+        </button>
+        <button class="nav-button">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M19 12a7.2 7.2 0 0 0-.1-1.1l2-1.5-2-3.4-2.4 1a7 7 0 0 0-1.9-1.1L14.3 3h-4.6l-.4 2.9A7 7 0 0 0 7.4 7L5 6 3 9.4l2 1.5A7.2 7.2 0 0 0 5 12c0 .4 0 .7.1 1.1l-2 1.5 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.9h4.6l.4-2.9a7 7 0 0 0 1.9-1.1l2.4 1 2-3.4-2-1.5c.1-.4.1-.7.1-1.1Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar" aria-label="Workspace actions">
+        <div class="workspace-top-actions">
+        <button class="workspace-share" type="button" data-open-share-modal>
+          <span>Shared</span>
+        </button>
+          <details class="workspace-more-menu">
+            <summary aria-label="More workspace options">
+              <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM19 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM5 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="currentColor"/>
+              </svg>
+            </summary>
+            <div class="workspace-more-popover" role="menu" aria-label="More workspace options">
+              <button class="workspace-more-option" type="button" role="menuitem">Rename workspace</button>
+              <button class="workspace-more-option" type="button" role="menuitem">Duplicate workspace</button>
+              <button class="workspace-more-option" type="button" role="menuitem">Export files</button>
+              <button class="workspace-more-option" type="button" role="menuitem">View activity</button>
+              <button class="workspace-more-option" type="button" role="menuitem" data-open-workspace-settings>Workspace settings</button>
+            </div>
+          </details>
+        </div>
+      </header>
+
+      <section class="workspace workspace-page" aria-label="Knowledge Base" data-workspace-browser>
+        <div class="workspace-page-head">
+          <div>
+            <span class="workspace-page-kicker"><span class="workspace-swatch knowledge" aria-hidden="true"></span> Workspace</span>
+            <h1>Knowledge Base</h1>
+            <p class="workspace-meta-line">12 members · 47 files · 6 documents</p>
+          </div>
+        </div>
+        <div class="workspace-tabs" role="tablist" aria-label="Knowledge Base workspace sections">
+          <button class="workspace-tab active" type="button" role="tab" aria-selected="true" data-workspace-view="overview">Overview</button>
+          <button class="workspace-tab" type="button" role="tab" aria-selected="false" data-workspace-view="documents">Documents</button>
+          <button class="workspace-tab" type="button" role="tab" aria-selected="false" data-workspace-view="people">People</button>
+          <button class="workspace-tab" type="button" role="tab" aria-selected="false" data-workspace-view="activity">Activity</button>
+        </div>
+
+
+        <div class="workspace-command-module" data-workspace-panel="overview">
+          <form class="command">
+            <label class="sr-only" for="workspace-command-knowledge-base">Ask or find anything in Knowledge Base</label>
+            <input id="workspace-command-knowledge-base" type="search" placeholder="Ask about Knowledge Base files, folders, or activity..." data-command-input>
+            <div class="command-actions">
+              <div class="inline-actions">
+                <button class="icon-btn light send" type="submit" aria-label="Submit">
+                  <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 14-7-4 14-3-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="prompt-samples" aria-label="Knowledge Base prompt samples">
+            <button class="prompt-sample" type="button" data-prompt-sample="Which knowledge base items changed this week?">Which knowledge base items changed this week?</button>
+            <button class="prompt-sample" type="button" data-prompt-sample="Show draft policy files in Knowledge Base.">Show draft policy files in Knowledge Base.</button>
+            <button class="prompt-sample" type="button" data-prompt-sample="Summarize recent folder activity in this workspace.">Summarize recent folder activity in this workspace.</button>
+          </div>
+        </div>
+        <section class="workspace-browser-section workspace-recents" data-workspace-panel="overview" aria-labelledby="workspace-recents-heading">
+          <div class="section-head">
+            <div class="section-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+              <span id="workspace-recents-heading">Recents</span>
+            </div>
+          </div>
+          <div class="pickup-grid">
+            <article class="pickup-card" data-document-card="document-preview.html?doc=lab-access-policy-v2">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Lab Access Policy v2</h2>
+                <span class="pickup-workspace">Policy</span>
+              </div>
+              <span class="pickup-activity">May 11, 2026</span>
+            </article>
+            <article class="pickup-card" data-document-card="document-preview.html?doc=q3-editorial-narrative">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Q3 Editorial Narrative</h2>
+                <span class="pickup-workspace">Editorial brief</span>
+              </div>
+              <span class="pickup-activity">May 18, 2026</span>
+            </article>
+            <article class="pickup-card" data-document-card="document-preview.html?doc=supplier-scorecard-xlsx">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Supplier Scorecard.xlsx</h2>
+                <span class="pickup-workspace">Spreadsheet</span>
+              </div>
+              <span class="pickup-activity">May 22, 2026</span>
+            </article>
+            <article class="pickup-card">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Policies</h2>
+                <span class="pickup-workspace">Folder</span>
+              </div>
+              <span class="pickup-activity">Updated today</span>
+            </article>
+            <article class="pickup-card">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Research summaries</h2>
+                <span class="pickup-workspace">Folder</span>
+              </div>
+              <span class="pickup-activity">May 19, 2026</span>
+            </article>
+            <article class="pickup-card">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Knowledge Base Microsite</h2>
+                <span class="pickup-workspace">Site draft</span>
+              </div>
+              <span class="pickup-activity">May 23, 2026</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="workspace-summary-section" data-workspace-panel="overview" aria-labelledby="workspace-summary-heading-knowledge-base">
+          <div class="section-head">
+            <div class="section-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V5M9 19v-8M14 19V8M19 19v-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 19h18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <span id="workspace-summary-heading-knowledge-base">Summary</span>
+            </div>
+          </div>
+          <div class="workspace-status-panel panel" aria-label="Content status breakdown">
+            <div class="workspace-status-copy">
+              <span class="workspace-status-kicker">Content status</span>
+              <h2>47 content items</h2>
+              <p>Draft, review, approved, and published content are balanced across the workspace.</p>
+              <div class="workspace-status-metrics" aria-label="Workspace summary numbers">
+                <div class="workspace-status-metric">
+                  <span>Activity</span>
+                  <strong>9</strong>
+                </div>
+                <div class="workspace-status-metric">
+                  <span>Review</span>
+                  <strong>2</strong>
+                </div>
+                <div class="workspace-status-metric">
+                  <span>Coverage</span>
+                  <strong>47</strong>
+                </div>
+              </div>
+            </div>
+            <div class="workspace-status-chart">
+              <div class="status-pie" role="img" aria-label="Content statuses: 12 draft, 8 in review, 17 approved, 10 published." style="--draft-end: 25.5%; --review-end: 42.6%; --approved-end: 78.7%;">
+                <span>47<small>items</small></span>
+              </div>
+              <dl class="status-legend">
+                <div class="status-legend-item draft">
+                  <dt>Draft</dt>
+                  <dd>12</dd>
+                </div>
+                <div class="status-legend-item review">
+                  <dt>In review</dt>
+                  <dd>8</dd>
+                </div>
+                <div class="status-legend-item approved">
+                  <dt>Approved</dt>
+                  <dd>17</dd>
+                </div>
+                <div class="status-legend-item published">
+                  <dt>Published</dt>
+                  <dd>10</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-browser-section workspace-recently-published" data-workspace-panel="overview" aria-labelledby="workspace-recently-published-heading">
+          <div class="section-head">
+            <div class="section-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+              <span id="workspace-recently-published-heading">Recently published</span>
+            </div>
+          </div>
+          <div class="pickup-grid">
+            <article class="pickup-card" data-document-card="document-preview.html?doc=lab-access-policy-v2">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Lab Access Policy v2</h2>
+                <span class="pickup-workspace">Policy</span>
+              </div>
+              <span class="pickup-activity">May 11, 2026</span>
+            </article>
+            <article class="pickup-card" data-document-card="document-preview.html?doc=q3-editorial-narrative">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Q3 Editorial Narrative</h2>
+                <span class="pickup-workspace">Editorial brief</span>
+              </div>
+              <span class="pickup-activity">May 18, 2026</span>
+            </article>
+            <article class="pickup-card" data-document-card="document-preview.html?doc=supplier-scorecard-xlsx">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Supplier Scorecard.xlsx</h2>
+                <span class="pickup-workspace">Spreadsheet</span>
+              </div>
+              <span class="pickup-activity">May 22, 2026</span>
+            </article>
+            <article class="pickup-card">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Policies</h2>
+                <span class="pickup-workspace">Folder</span>
+              </div>
+              <span class="pickup-activity">Updated today</span>
+            </article>
+            <article class="pickup-card">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Research summaries</h2>
+                <span class="pickup-workspace">Folder</span>
+              </div>
+              <span class="pickup-activity">May 19, 2026</span>
+            </article>
+            <article class="pickup-card">
+              <span class="pickup-icon knowledge" aria-hidden="true">
+                <svg width="19" height="19" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div class="pickup-main">
+                <h2 class="pickup-title">Knowledge Base Microsite</h2>
+                <span class="pickup-workspace">Site draft</span>
+              </div>
+              <span class="pickup-activity">May 23, 2026</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="workspace-browser-section workspace-all-files" data-workspace-panel="documents" hidden aria-labelledby="all-files-heading">
+          <h2 id="all-files-heading" class="sr-only">All files</h2>
+          <div class="section-head content-filter-head">
+            <div class="content-filter-bar" aria-label="Filter Knowledge Base files">
+              <details class="filter-menu">
+                <summary class="filter-pill" aria-label="Filter by type">
+                  <span>Type</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                  </svg>
+                </summary>
+                <div class="filter-popover" role="menu" aria-label="Type options">
+                  <button class="filter-option with-icon" type="button" role="menuitem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M7 4h7l4 4v12H7zM14 4v5h5M10 13h6M10 17h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Document</span>
+                  </button>
+                  <button class="filter-option with-icon" type="button" role="menuitem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M5 5h14v14H5zM5 10h14M10 5v14M14 5v14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+                    </svg>
+                    <span>Spreadsheet</span>
+                  </button>
+                  <button class="filter-option with-icon" type="button" role="menuitem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M4 7h6l2 2h8v9H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Folder</span>
+                  </button>
+                  <button class="filter-option with-icon" type="button" role="menuitem">
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M8 4h8v16H8zM10 8h4M10 12h4M10 16h3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>File</span>
+                  </button>
+                </div>
+              </details>
+              <details class="filter-menu">
+                <summary class="filter-pill" aria-label="Filter by people">
+                  <span>People</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                  </svg>
+                </summary>
+                <div class="filter-popover" role="menu" aria-label="People options">
+                  <label class="filter-search">
+                    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m21 21-4.4-4.4M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                    <input type="search" aria-label="Search people" placeholder="Search">
+                  </label>
+                  <button class="filter-option with-avatar" type="button" role="menuitem">
+                    <span class="filter-avatar">MS</span>
+                    <span>Maya Stone</span>
+                  </button>
+                  <button class="filter-option with-avatar" type="button" role="menuitem">
+                    <span class="filter-avatar violet">JB</span>
+                    <span>Jonah Blake</span>
+                  </button>
+                  <button class="filter-option with-avatar" type="button" role="menuitem">
+                    <span class="filter-avatar green">OS</span>
+                    <span>Omar Silva</span>
+                  </button>
+                </div>
+              </details>
+              <details class="filter-menu">
+                <summary class="filter-pill" aria-label="Filter by workspace">
+                  <span>Workspace</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                  </svg>
+                </summary>
+                <div class="filter-popover wide" role="menu" aria-label="Workspace options">
+                  <button class="filter-option with-dot" type="button" role="menuitem">
+                    <span class="workspace-swatch knowledge" aria-hidden="true"></span>
+                    <span>Knowledge Base</span>
+                  </button>
+                </div>
+              </details>
+              <details class="filter-menu">
+                <summary class="filter-pill" aria-label="Filter by status">
+                  <span>Status</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                  </svg>
+                </summary>
+                <div class="filter-popover" role="menu" aria-label="Status options">
+                  <button class="filter-option" type="button" role="menuitem">Approved</button>
+                  <button class="filter-option" type="button" role="menuitem">In review</button>
+                  <button class="filter-option" type="button" role="menuitem">Drafting</button>
+                  <button class="filter-option" type="button" role="menuitem">Folder</button>
+                </div>
+              </details>
+            </div>
+            <details class="filter-menu sort-menu">
+              <summary class="filter-pill sort-pill" aria-label="Sort content">
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 7h12M4 12h8M4 17h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Sort</span>
+              </summary>
+              <div class="filter-popover sort-popover" role="menu" aria-label="Sort options">
+                <div class="sort-group">
+                  <div class="sort-label">Sort by</div>
+                  <button class="filter-option selected" type="button" role="menuitem">
+                    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Date modified</span>
+                  </button>
+                  <button class="filter-option" type="button" role="menuitem"><span>Name</span></button>
+                </div>
+                <div class="sort-group">
+                  <div class="sort-label">Sort direction</div>
+                  <button class="filter-option selected" type="button" role="menuitem">
+                    <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>New to old</span>
+                  </button>
+                  <button class="filter-option" type="button" role="menuitem"><span>Old to new</span></button>
+                </div>
+              </div>
+            </details>
+          </div>
+          <div class="workspace-file-list panel">
+            <div class="workspace-file-row workspace-file-header" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span>Name</span>
+              <span>Date modified</span>
+              <span>Owner</span>
+              <span>Status</span>
+              <span></span>
+            </div>
+            <article class="workspace-file-row workspace-folder-row" data-workspace-item data-status="folder" data-search="policies 12 items updated today knowledge base folder">
+              <input class="workspace-checkbox" type="checkbox" aria-label="Select Policies folder">
+              <span class="folder-icon knowledge" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h6l2 2h8v9H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="workspace-file-name">Policies<small>Folder · 12 items</small></span>
+              <span class="muted">Updated today</span>
+              <span class="owner"><span class="owner-avatar">KB</span> Workspace</span>
+              <span class="status neutral">Folder</span>
+              <details class="row-more-menu">
+                <summary aria-label="More options for Policies">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </summary>
+                <div class="row-more-popover" role="menu" aria-label="Options for Policies">
+                  <button class="row-more-option" type="button" role="menuitem">Rename</button>
+                  <button class="row-more-option" type="button" role="menuitem">Move to</button>
+                  <button class="row-more-option" type="button" role="menuitem">Make a copy</button>
+                  <button class="row-more-option" type="button" role="menuitem">Download</button>
+                  <button class="row-more-option" type="button" role="menuitem">Show details</button>
+                </div>
+              </details>
+            </article>
+            <article class="workspace-file-row workspace-folder-row" data-workspace-item data-status="folder" data-search="research summaries 8 items updated may 19 knowledge base folder">
+              <input class="workspace-checkbox" type="checkbox" aria-label="Select Research summaries folder">
+              <span class="folder-icon knowledge" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h6l2 2h8v9H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="workspace-file-name">Research summaries<small>Folder · 8 items</small></span>
+              <span class="muted">Updated May 19</span>
+              <span class="owner"><span class="owner-avatar">KB</span> Workspace</span>
+              <span class="status neutral">Folder</span>
+              <details class="row-more-menu">
+                <summary aria-label="More options for Research summaries">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </summary>
+                <div class="row-more-popover" role="menu" aria-label="Options for Research summaries">
+                  <button class="row-more-option" type="button" role="menuitem">Rename</button>
+                  <button class="row-more-option" type="button" role="menuitem">Move to</button>
+                  <button class="row-more-option" type="button" role="menuitem">Make a copy</button>
+                  <button class="row-more-option" type="button" role="menuitem">Download</button>
+                  <button class="row-more-option" type="button" role="menuitem">Show details</button>
+                </div>
+              </details>
+            </article>
+            <article class="workspace-file-row workspace-folder-row" data-workspace-item data-status="folder" data-search="supplier references 6 items updated may 22 knowledge base folder">
+              <input class="workspace-checkbox" type="checkbox" aria-label="Select Supplier references folder">
+              <span class="folder-icon knowledge" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h6l2 2h8v9H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span class="workspace-file-name">Supplier references<small>Folder · 6 items</small></span>
+              <span class="muted">Updated May 22</span>
+              <span class="owner"><span class="owner-avatar">KB</span> Workspace</span>
+              <span class="status neutral">Folder</span>
+              <details class="row-more-menu">
+                <summary aria-label="More options for Supplier references">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </summary>
+                <div class="row-more-popover" role="menu" aria-label="Options for Supplier references">
+                  <button class="row-more-option" type="button" role="menuitem">Rename</button>
+                  <button class="row-more-option" type="button" role="menuitem">Move to</button>
+                  <button class="row-more-option" type="button" role="menuitem">Make a copy</button>
+                  <button class="row-more-option" type="button" role="menuitem">Download</button>
+                  <button class="row-more-option" type="button" role="menuitem">Show details</button>
+                </div>
+              </details>
+            </article>
+            <article class="workspace-file-row" data-workspace-item data-status="published" data-search="lab access policy v2 policy maya stone may 11, 2026 approved">
+              <input class="workspace-checkbox" type="checkbox" aria-label="Select Lab Access Policy v2">
+              <span class="doc-icon" aria-hidden="true"></span>
+              <a class="workspace-file-name" href="document-preview.html?doc=lab-access-policy-v2" aria-label="Open Lab Access Policy v2">Lab Access Policy v2<small>Policy</small></a>
+              <span class="muted">May 11, 2026</span>
+              <span class="owner"><span class="owner-avatar">MS</span> Maya Stone</span>
+              <span class="status">Approved</span>
+              <details class="row-more-menu">
+                <summary aria-label="More options for Lab Access Policy v2">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </summary>
+                <div class="row-more-popover" role="menu" aria-label="Options for Lab Access Policy v2">
+                  <button class="row-more-option" type="button" role="menuitem">Rename</button>
+                  <button class="row-more-option" type="button" role="menuitem">Move to</button>
+                  <button class="row-more-option" type="button" role="menuitem">Make a copy</button>
+                  <button class="row-more-option" type="button" role="menuitem">Download</button>
+                  <button class="row-more-option" type="button" role="menuitem">Show details</button>
+                </div>
+              </details>
+            </article>
+            <article class="workspace-file-row" data-workspace-item data-status="in-review" data-search="q3 editorial narrative editorial brief jonah blake may 18, 2026 in review">
+              <input class="workspace-checkbox" type="checkbox" aria-label="Select Q3 Editorial Narrative">
+              <span class="doc-icon" aria-hidden="true"></span>
+              <a class="workspace-file-name" href="document-preview.html?doc=q3-editorial-narrative" aria-label="Open Q3 Editorial Narrative">Q3 Editorial Narrative<small>Editorial brief</small></a>
+              <span class="muted">May 18, 2026</span>
+              <span class="owner"><span class="owner-avatar">JB</span> Jonah Blake</span>
+              <span class="status amber">In review</span>
+              <details class="row-more-menu">
+                <summary aria-label="More options for Q3 Editorial Narrative">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </summary>
+                <div class="row-more-popover" role="menu" aria-label="Options for Q3 Editorial Narrative">
+                  <button class="row-more-option" type="button" role="menuitem">Rename</button>
+                  <button class="row-more-option" type="button" role="menuitem">Move to</button>
+                  <button class="row-more-option" type="button" role="menuitem">Make a copy</button>
+                  <button class="row-more-option" type="button" role="menuitem">Download</button>
+                  <button class="row-more-option" type="button" role="menuitem">Show details</button>
+                </div>
+              </details>
+            </article>
+            <article class="workspace-file-row" data-workspace-item data-status="draft" data-search="supplier scorecard.xlsx spreadsheet omar silva may 22, 2026 drafting">
+              <input class="workspace-checkbox" type="checkbox" aria-label="Select Supplier Scorecard.xlsx">
+              <span class="doc-icon" aria-hidden="true"></span>
+              <a class="workspace-file-name" href="document-preview.html?doc=supplier-scorecard-xlsx" aria-label="Open Supplier Scorecard.xlsx">Supplier Scorecard.xlsx<small>Spreadsheet</small></a>
+              <span class="muted">May 22, 2026</span>
+              <span class="owner"><span class="owner-avatar">OS</span> Omar Silva</span>
+              <span class="status blue">Drafting</span>
+              <details class="row-more-menu">
+                <summary aria-label="More options for Supplier Scorecard.xlsx">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </summary>
+                <div class="row-more-popover" role="menu" aria-label="Options for Supplier Scorecard.xlsx">
+                  <button class="row-more-option" type="button" role="menuitem">Rename</button>
+                  <button class="row-more-option" type="button" role="menuitem">Move to</button>
+                  <button class="row-more-option" type="button" role="menuitem">Make a copy</button>
+                  <button class="row-more-option" type="button" role="menuitem">Download</button>
+                  <button class="row-more-option" type="button" role="menuitem">Show details</button>
+                </div>
+              </details>
+            </article>
+            <article class="workspace-file-row" data-workspace-item data-content-type="sites" data-status="draft" data-search="knowledge base microsite site maya stone may 23, 2026 drafting website">
+              <input class="workspace-checkbox" type="checkbox" aria-label="Select Knowledge Base Microsite">
+              <span class="site-icon" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 4l11 11-5.1.8 2.8 4.9-2.8 1.5-2.8-5-3.1 3.7V4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <a class="workspace-file-name" href="document-preview.html?doc=knowledge-base-microsite" aria-label="Open Knowledge Base Microsite">Knowledge Base Microsite<small>Site</small></a>
+              <span class="muted">May 23, 2026</span>
+              <span class="owner"><span class="owner-avatar">MS</span> Maya Stone</span>
+              <span class="status blue">Drafting</span>
+              <details class="row-more-menu">
+                <summary aria-label="More options for Knowledge Base Microsite">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </summary>
+                <div class="row-more-popover" role="menu" aria-label="Options for Knowledge Base Microsite">
+                  <button class="row-more-option" type="button" role="menuitem">Rename</button>
+                  <button class="row-more-option" type="button" role="menuitem">Move to</button>
+                  <button class="row-more-option" type="button" role="menuitem">Make a copy</button>
+                  <button class="row-more-option" type="button" role="menuitem">Download</button>
+                  <button class="row-more-option" type="button" role="menuitem">Show details</button>
+                </div>
+              </details>
+            </article>
+          </div>
+          <p class="workspace-empty" data-workspace-empty hidden>No folders or files match this view.</p>
+        </section>
+
+        <section class="workspace-browser-section workspace-people-panel" data-workspace-panel="people" hidden aria-labelledby="workspace-people-heading">
+          <h2 id="workspace-people-heading" class="sr-only">People</h2>
+          <div class="people-access-summary panel" aria-label="Knowledge Base access summary">
+            <div class="people-stat-grid">
+              <div class="people-stat">
+                <strong>2</strong>
+                <span>Admin</span>
+              </div>
+              <div class="people-stat">
+                <strong>4</strong>
+                <span>Contributor</span>
+              </div>
+              <div class="people-stat">
+                <strong>5</strong>
+                <span>Viewer</span>
+              </div>
+              <div class="people-stat with-divider">
+                <strong>1</strong>
+                <span>Unassigned</span>
+              </div>
+              <div class="people-stat">
+                <strong>12</strong>
+                <span>Total</span>
+              </div>
+            </div>
+            <div class="people-summary-actions">
+              <details class="workspace-more-menu people-more-menu">
+                <summary aria-label="More people options">
+                  <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM12 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM12 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" fill="currentColor"/>
+                  </svg>
+                </summary>
+                <div class="workspace-more-popover" role="menu" aria-label="More people options">
+                  <button class="workspace-more-option" type="button" role="menuitem">Export members</button>
+                  <button class="workspace-more-option" type="button" role="menuitem">Review pending invites</button>
+                  <button class="workspace-more-option" type="button" role="menuitem">Access settings</button>
+                </div>
+              </details>
+              <button class="people-invite-button" type="button" data-open-share-modal>
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M16 19a4 4 0 0 0-8 0M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM19 8v6M22 11h-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <span>Invite</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="people-directory panel" data-people-directory>
+            <div class="people-directory-toolbar">
+              <label class="people-search">
+                <span class="sr-only">Search members</span>
+                <input type="search" placeholder="Search members" data-people-search>
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </label>
+              <div class="people-filter-actions">
+                <span>Filter by</span>
+                <details class="filter-menu" data-people-filter-menu="role">
+                  <summary class="filter-pill" aria-label="Filter people by role">
+                    <span data-filter-label>Role</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="currentColor"/></svg>
+                  </summary>
+                  <div class="filter-popover" role="menu" aria-label="Role options">
+                    <button class="filter-option" type="button" role="menuitem" data-people-filter="role" data-filter-value="admin">Admin</button>
+                    <button class="filter-option" type="button" role="menuitem" data-people-filter="role" data-filter-value="contributor">Contributor</button>
+                    <button class="filter-option" type="button" role="menuitem" data-people-filter="role" data-filter-value="viewer">Viewer</button>
+                    <button class="filter-option" type="button" role="menuitem" data-people-filter="role" data-filter-value="unassigned">Unassigned</button>
+                  </div>
+                </details>
+                <details class="filter-menu" data-people-filter-menu="status">
+                  <summary class="filter-pill" aria-label="Filter people by status">
+                    <span data-filter-label>Status</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5" fill="currentColor"/></svg>
+                  </summary>
+                  <div class="filter-popover" role="menu" aria-label="Status options">
+                    <button class="filter-option" type="button" role="menuitem" data-people-filter="status" data-filter-value="active">Active</button>
+                    <button class="filter-option" type="button" role="menuitem" data-people-filter="status" data-filter-value="pending">Pending</button>
+                    <button class="filter-option" type="button" role="menuitem" data-people-filter="status" data-filter-value="paused">Paused</button>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="people-table" role="table" aria-label="Knowledge Base members">
+              <div class="people-table-row people-table-head" role="row">
+                <span role="columnheader">Name</span>
+                <span role="columnheader">Role</span>
+                <span role="columnheader">Status</span>
+                <span role="columnheader">Last activity</span>
+                <span role="columnheader" class="sr-only">Actions</span>
+              </div>
+              <article class="people-table-row" role="row" data-people-row data-people-role="admin" data-people-status="active" data-search="maya stone maya.stone@example.com admin active">
+                <span class="people-member" role="cell">
+                  <span class="people-avatar">MS</span>
+                  <span><strong>Maya Stone</strong><small>maya.stone@example.com</small></span>
+                </span>
+                <span class="people-role" role="cell">Admin</span>
+                <span class="people-status active" role="cell">Active</span>
+                <span class="people-last-activity" role="cell">8 min ago</span>
+                <details class="row-more-menu people-row-menu">
+                  <summary aria-label="More options for Maya Stone"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></summary>
+                  <div class="row-more-popover" role="menu" aria-label="Options for Maya Stone"><button class="row-more-option" type="button" role="menuitem">View profile</button><button class="row-more-option" type="button" role="menuitem">Change role</button><button class="row-more-option" type="button" role="menuitem">Remove access</button></div>
+                </details>
+              </article>
+              <article class="people-table-row" role="row" data-people-row data-people-role="contributor" data-people-status="active" data-search="jonah blake jonah.blake@example.com contributor active">
+                <span class="people-member" role="cell">
+                  <span class="people-avatar violet">JB</span>
+                  <span><strong>Jonah Blake</strong><small>jonah.blake@example.com</small></span>
+                </span>
+                <span class="people-role" role="cell">Contributor</span>
+                <span class="people-status active" role="cell">Active</span>
+                <span class="people-last-activity" role="cell">Today</span>
+                <details class="row-more-menu people-row-menu">
+                  <summary aria-label="More options for Jonah Blake"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></summary>
+                  <div class="row-more-popover" role="menu" aria-label="Options for Jonah Blake"><button class="row-more-option" type="button" role="menuitem">View profile</button><button class="row-more-option" type="button" role="menuitem">Change role</button><button class="row-more-option" type="button" role="menuitem">Remove access</button></div>
+                </details>
+              </article>
+              <article class="people-table-row" role="row" data-people-row data-people-role="viewer" data-people-status="active" data-search="omar silva omar.silva@example.com viewer active">
+                <span class="people-member" role="cell">
+                  <span class="people-avatar amber">OS</span>
+                  <span><strong>Omar Silva</strong><small>omar.silva@example.com</small></span>
+                </span>
+                <span class="people-role" role="cell">Viewer</span>
+                <span class="people-status active" role="cell">Active</span>
+                <span class="people-last-activity" role="cell">May 22</span>
+                <details class="row-more-menu people-row-menu">
+                  <summary aria-label="More options for Omar Silva"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></summary>
+                  <div class="row-more-popover" role="menu" aria-label="Options for Omar Silva"><button class="row-more-option" type="button" role="menuitem">View profile</button><button class="row-more-option" type="button" role="menuitem">Change role</button><button class="row-more-option" type="button" role="menuitem">Remove access</button></div>
+                </details>
+              </article>
+              <article class="people-table-row" role="row" data-people-row data-people-role="viewer" data-people-status="pending" data-search="nina patel nina.patel@example.com viewer pending">
+                <span class="people-member muted" role="cell">
+                  <span class="people-avatar pending">NP</span>
+                  <span><strong>Nina Patel</strong><small>nina.patel@example.com</small></span>
+                </span>
+                <span class="people-role" role="cell">Viewer</span>
+                <span class="people-status pending" role="cell">Pending</span>
+                <span class="people-last-activity" role="cell">Invited May 20</span>
+                <details class="row-more-menu people-row-menu">
+                  <summary aria-label="More options for Nina Patel"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></summary>
+                  <div class="row-more-popover" role="menu" aria-label="Options for Nina Patel"><button class="row-more-option" type="button" role="menuitem">Resend invite</button><button class="row-more-option" type="button" role="menuitem">Change role</button><button class="row-more-option" type="button" role="menuitem">Cancel invite</button></div>
+                </details>
+              </article>
+              <article class="people-table-row" role="row" data-people-row data-people-role="unassigned" data-people-status="paused" data-search="policy interns group unassigned paused">
+                <span class="people-member muted" role="cell">
+                  <span class="people-avatar group">PI</span>
+                  <span><strong>Policy Interns</strong><small>Group · 3 members</small></span>
+                </span>
+                <span class="people-role" role="cell">Unassigned</span>
+                <span class="people-status paused" role="cell">Paused</span>
+                <span class="people-last-activity" role="cell">May 16</span>
+                <details class="row-more-menu people-row-menu">
+                  <summary aria-label="More options for Policy Interns"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></summary>
+                  <div class="row-more-popover" role="menu" aria-label="Options for Policy Interns"><button class="row-more-option" type="button" role="menuitem">Assign role</button><button class="row-more-option" type="button" role="menuitem">View group</button><button class="row-more-option" type="button" role="menuitem">Remove access</button></div>
+                </details>
+              </article>
+            </div>
+            <p class="people-empty" data-people-empty hidden>No members match this view.</p>
+          </div>
+        </section>
+
+        <section class="workspace-browser-section" data-workspace-panel="activity" hidden aria-labelledby="workspace-activity-heading">
+          <div class="section-head">
+            <div class="section-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v5l3 2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+              <span id="workspace-activity-heading">Activity</span>
+            </div>
+          </div>
+          <div class="workspace-activity-feed panel" aria-label="Knowledge Base activity">
+            <article class="workspace-activity-row">
+              <span class="workspace-activity-avatar violet">MS</span>
+              <div class="workspace-activity-main">
+                <p><strong>Maya Stone</strong> approved <a href="document-preview.html?doc=lab-access-policy-v2">Lab Access Policy v2</a> on May 11, 2026.</p>
+                <span class="workspace-activity-meta">Policy · Approved</span>
+              </div>
+            </article>
+            <article class="workspace-activity-row">
+              <span class="workspace-activity-avatar">JB</span>
+              <div class="workspace-activity-main">
+                <p><strong>Jonah Blake</strong> reviewed <a href="document-preview.html?doc=q3-editorial-narrative">Q3 Editorial Narrative</a> on May 18, 2026.</p>
+                <span class="workspace-activity-meta">Editorial brief · In review</span>
+              </div>
+            </article>
+            <article class="workspace-activity-row">
+              <span class="workspace-activity-avatar amber">OS</span>
+              <div class="workspace-activity-main">
+                <p><strong>Omar Silva</strong> updated <a href="document-preview.html?doc=supplier-scorecard-xlsx">Supplier Scorecard.xlsx</a> on May 22, 2026.</p>
+                <span class="workspace-activity-meta">Spreadsheet · Drafting</span>
+              </div>
+            </article>
+            <article class="workspace-activity-row">
+              <span class="workspace-activity-avatar green">LN</span>
+              <div class="workspace-activity-main">
+                <p><strong>Lara Novak</strong> added a comment to <strong>Supplier references</strong> on May 22, 2026.</p>
+                <div class="workspace-activity-comment">Can we keep the source URL beside every vendor claim before this folder is shared with reviewers?</div>
+                <span class="workspace-activity-meta">Folder · Comment</span>
+              </div>
+            </article>
+            <article class="workspace-activity-row">
+              <span class="workspace-activity-avatar">AP</span>
+              <div class="workspace-activity-main">
+                <p><strong>Ali P.</strong> deleted <strong>Retired lab entry template</strong> on May 20, 2026.</p>
+                <span class="workspace-activity-meta">Template · Deleted</span>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <div class="modal-backdrop" data-workspace-modal hidden>
+    <section class="workspace-modal" role="dialog" aria-modal="true" aria-labelledby="workspace-modal-title">
+      <div class="workspace-modal-head">
+        <h2 id="workspace-modal-title">Create workspace</h2>
+        <button class="icon-btn" type="button" aria-label="Close create workspace" data-workspace-modal-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <form class="workspace-modal-form" data-workspace-modal-form>
+        <label for="workspace-name">Workspace name</label>
+        <input id="workspace-name" type="text" name="workspace-name" placeholder="Name this workspace" autocomplete="off" required data-workspace-name-input>
+        <div class="workspace-modal-actions">
+          <button class="secondary-btn" type="button" data-workspace-modal-close>Cancel</button>
+          <button class="primary-btn" type="submit">Create</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <div class="modal-backdrop" data-workspace-settings-modal hidden>
+    <section class="workspace-settings-modal" role="dialog" aria-modal="true" aria-labelledby="workspace-settings-title">
+      <div class="workspace-modal-head">
+        <h2 id="workspace-settings-title">Workspace settings</h2>
+        <button class="icon-btn" type="button" aria-label="Close workspace settings" data-workspace-settings-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <form class="workspace-settings-form" data-workspace-settings-form>
+        <section class="workspace-settings-section">
+          <label for="workspace-settings-name">Workspace name</label>
+          <input id="workspace-settings-name" type="text" name="workspace-settings-name" value="Knowledge Base" autocomplete="off" required data-workspace-settings-name>
+        </section>
+        <section class="workspace-settings-section">
+          <label class="workspace-settings-check">
+            <input type="checkbox" checked>
+            <span>
+              <strong>Require review before publishing</strong>
+              <small>Content must be approved before it can move into Published.</small>
+            </span>
+          </label>
+        </section>
+        <section class="workspace-settings-danger" aria-label="Danger zone">
+          <div>
+            <strong>Delete workspace</strong>
+            <p>Remove this workspace and its current organization settings.</p>
+          </div>
+          <button class="danger-btn" type="button">Delete</button>
+        </section>
+        <div class="workspace-modal-actions">
+          <button class="secondary-btn" type="button" data-workspace-settings-close>Cancel</button>
+          <button class="primary-btn" type="submit">Save settings</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <div class="modal-backdrop" data-share-modal hidden>
+    <section class="share-modal" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+      <div class="share-modal-head">
+        <h2 id="share-modal-title">Invite to collaborate</h2>
+        <button class="icon-btn" type="button" aria-label="Close share workspace" data-share-modal-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="share-modal-body">
+        <section class="share-modal-section">
+          <h3>Share by workgroup</h3>
+          <form class="share-workgroup-form" data-share-form>
+            <div class="share-search-wrap">
+              <label class="share-search">
+                <span class="sr-only">Search for users or groups</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <input type="search" placeholder="Search for users or groups" data-share-search aria-controls="share-suggestions-knowledge-base" autocomplete="off">
+              </label>
+              <div class="share-suggestions" id="share-suggestions-knowledge-base" data-share-suggestions hidden></div>
+            </div>
+            <div class="share-role-select role-menu" data-role-menu data-role-value="Viewer">
+              <button class="role-menu-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Permission role" data-role-menu-trigger>
+                <span data-role-menu-label>Viewer</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                </svg>
+              </button>
+              <input type="hidden" name="permission-role" value="Viewer" data-role-menu-input>
+              <div class="role-menu-popover" role="listbox" aria-label="Permission role options" hidden>
+                <button class="role-menu-option selected" type="button" role="option" aria-selected="true" data-role-option="Viewer">
+                  <span>Viewer</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Commenter">
+                  <span>Commenter</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Editor">
+                  <span>Editor</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Admin">
+                  <span>Admin</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <button class="secondary-btn share-submit" type="submit">Share</button>
+          </form>
+        </section>
+        <section class="share-modal-section">
+          <h3>Who can access</h3>
+          <div class="share-access-list">
+            <div class="share-access-row">
+              <span class="share-access-avatar">MS</span>
+              <span class="share-access-person">
+                <strong>Maya Stone</strong>
+                <span>maya.stone@example.com</span>
+              </span>
+              <span class="share-role-pill">Owner</span>
+            </div>
+            <div class="share-access-row">
+              <span class="share-access-avatar violet">JB</span>
+              <span class="share-access-person">
+                <strong>Jonah Blake</strong>
+                <span>jonah.blake@example.com</span>
+              </span>
+              <div class="share-access-role role-menu" data-role-menu data-role-value="Viewer">
+                <button class="role-menu-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Jonah Blake permission role" data-role-menu-trigger>
+                  <span data-role-menu-label>Viewer</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                  </svg>
+                </button>
+                <div class="role-menu-popover" role="listbox" aria-label="Jonah Blake permission role options" hidden>
+                  <button class="role-menu-option selected" type="button" role="option" aria-selected="true" data-role-option="Viewer">
+                    <span>Viewer</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Commenter">
+                    <span>Commenter</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Editor">
+                    <span>Editor</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Admin">
+                    <span>Admin</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option danger" type="button" role="option" aria-selected="false" data-role-option="Remove">
+                    <span>Remove</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="share-access-row">
+              <span class="share-access-avatar group">PR</span>
+              <span class="share-access-person">
+                <strong>Procurement Review</strong>
+                <span>Group · 6 members</span>
+              </span>
+              <div class="share-access-role role-menu" data-role-menu data-role-value="Viewer">
+                <button class="role-menu-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Procurement Review permission role" data-role-menu-trigger>
+                  <span data-role-menu-label>Viewer</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
+                  </svg>
+                </button>
+                <div class="role-menu-popover" role="listbox" aria-label="Procurement Review permission role options" hidden>
+                  <button class="role-menu-option selected" type="button" role="option" aria-selected="true" data-role-option="Viewer">
+                    <span>Viewer</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Commenter">
+                    <span>Commenter</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Editor">
+                    <span>Editor</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option" type="button" role="option" aria-selected="false" data-role-option="Admin">
+                    <span>Admin</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button class="role-menu-option danger" type="button" role="option" aria-selected="false" data-role-option="Remove">
+                    <span>Remove</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
