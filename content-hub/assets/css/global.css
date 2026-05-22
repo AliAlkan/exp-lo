@@ -4468,6 +4468,10 @@ button {
   grid-template-columns: 34px minmax(260px, 1fr) 128px 156px 38px;
 }
 
+.shared-content-list .task-row {
+  grid-template-columns: 34px minmax(260px, 1fr) 128px 156px;
+}
+
 .private-content-list .row-more-menu {
   justify-self: end;
 }
@@ -4501,6 +4505,34 @@ button {
   border: 1px solid var(--line-strong);
   border-radius: 5px;
   background: var(--surface-muted);
+}
+
+.checkbox[role="checkbox"] {
+  cursor: pointer;
+}
+
+.checkbox[role="checkbox"]:focus-visible {
+  outline: 0;
+  box-shadow: var(--focus);
+}
+
+.checkbox.is-selected {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.checkbox.is-selected::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border: 2px solid var(--bg);
+  border-top: 0;
+  border-right: 0;
+  transform: rotate(-45deg) translateY(-1px);
+}
+
+.task-row.is-selected {
+  background: rgba(96, 165, 250, .08);
 }
 
 .task-name {

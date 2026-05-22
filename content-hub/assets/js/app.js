@@ -507,6 +507,14 @@ document.querySelectorAll('[data-upload-panel]').forEach((panel) => {
 });
 
 document.querySelectorAll('.row-more-menu').forEach((menu) => {
+  menu.addEventListener('click', (event) => {
+    event.stopPropagation();
+  });
+
+  menu.addEventListener('keydown', (event) => {
+    event.stopPropagation();
+  });
+
   menu.addEventListener('toggle', () => {
     if (!menu.open) return;
     document.querySelectorAll('.row-more-menu[open]').forEach((otherMenu) => {
@@ -514,6 +522,36 @@ document.querySelectorAll('.row-more-menu').forEach((menu) => {
         otherMenu.removeAttribute('open');
       }
     });
+  });
+});
+
+document.querySelectorAll('.task-row:not(.task-header) .checkbox').forEach((checkbox) => {
+  const row = checkbox.closest('.task-row');
+  const title = row?.querySelector('.task-name')?.textContent?.trim();
+
+  checkbox.setAttribute('role', 'checkbox');
+  checkbox.setAttribute('tabindex', '0');
+  checkbox.setAttribute('aria-checked', 'false');
+  checkbox.setAttribute('aria-label', title ? `Select ${title}` : 'Select item');
+
+  const toggleSelected = () => {
+    const isSelected = checkbox.getAttribute('aria-checked') === 'true';
+    checkbox.setAttribute('aria-checked', String(!isSelected));
+    checkbox.classList.toggle('is-selected', !isSelected);
+    row?.classList.toggle('is-selected', !isSelected);
+  };
+
+  checkbox.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    toggleSelected();
+  });
+
+  checkbox.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    event.stopPropagation();
+    toggleSelected();
   });
 });
 
@@ -1970,6 +2008,7 @@ const detailIdFor = (value) => {
 };
 
 const documentPreviewPath = 'document-preview.html';
+const rowNavigationIgnoreSelector = 'a, button, input, select, textarea, summary, details, .checkbox, [role="checkbox"], .row-more-menu';
 
 document.querySelectorAll('.pickup-card, .task-row').forEach((item) => {
   const titleElement = item.querySelector('.pickup-title, .task-name');
@@ -1992,7 +2031,8 @@ document.querySelectorAll('.pickup-card, .task-row').forEach((item) => {
   };
 
   item.addEventListener('click', (event) => {
-    if (event.target.closest('a, button, input, select, textarea')) {
+    const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+    if (target?.closest(rowNavigationIgnoreSelector)) {
       return;
     }
 
@@ -2000,6 +2040,11 @@ document.querySelectorAll('.pickup-card, .task-row').forEach((item) => {
   });
 
   item.addEventListener('keydown', (event) => {
+    const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+    if (target?.closest(rowNavigationIgnoreSelector)) {
+      return;
+    }
+
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       openDocument();

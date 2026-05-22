@@ -253,43 +253,30 @@
                   </button>
                 </div>
               </details>
-              <details class="filter-menu">
-                <summary class="filter-pill" aria-label="Filter by workspace">
-                  <span>Workspace</span>
+              <details class="filter-menu" data-date-filter-menu="modified">
+                <summary class="filter-pill" aria-label="Filter by modified date">
+                  <span data-filter-label>Modified</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="m7 10 5 5 5-5" fill="currentColor"/>
                   </svg>
                 </summary>
-                <div class="filter-popover wide" role="menu" aria-label="Workspace options">
-                  <button class="filter-option with-dot" type="button" role="menuitem">
-                    <span class="workspace-swatch knowledge" aria-hidden="true"></span>
-                    <span>Knowledge Base</span>
-                  </button>
-                  <button class="filter-option with-dot" type="button" role="menuitem">
-                    <span class="workspace-swatch learning" aria-hidden="true"></span>
-                    <span>Learning Content</span>
-                  </button>
-                  <button class="filter-option with-dot" type="button" role="menuitem">
-                    <span class="workspace-swatch research" aria-hidden="true"></span>
-                    <span>Manufacturer Contract Workspace</span>
-                  </button>
-                  <button class="filter-option with-dot" type="button" role="menuitem">
-                    <span class="workspace-swatch compliance" aria-hidden="true"></span>
-                    <span>Compliance Library</span>
-                  </button>
-                </div>
-              </details>
-              <details class="filter-menu">
-                <summary class="filter-pill" aria-label="Filter by status">
-                  <span>Status</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m7 10 5 5 5-5" fill="currentColor"/>
-                  </svg>
-                </summary>
-                <div class="filter-popover" role="menu" aria-label="Status options">
-                  <button class="filter-option" type="button" role="menuitem">Approved</button>
-                  <button class="filter-option" type="button" role="menuitem">Drafting</button>
-                  <button class="filter-option" type="button" role="menuitem">Needs review</button>
+                <div class="filter-popover date-filter-popover" role="group" aria-label="Modified date range">
+                  <label class="date-filter-field">
+                    <span class="sr-only">Modified after</span>
+                    <input type="text" inputmode="numeric" placeholder="After" aria-label="Modified after">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M7 3v4M17 3v4M4 9h16M6 5h12a2 2 0 0 1 2 2v12H4V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                    </svg>
+                  </label>
+                  <label class="date-filter-field">
+                    <span class="sr-only">Modified before</span>
+                    <input type="text" inputmode="numeric" placeholder="Before" aria-label="Modified before">
+                    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M7 3v4M17 3v4M4 9h16M6 5h12a2 2 0 0 1 2 2v12H4V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                    </svg>
+                  </label>
                 </div>
               </details>
             </div>
@@ -326,174 +313,132 @@
           </div>
 
           <div class="panel">
-            <ul class="task-list">
+            <ul class="task-list shared-content-list">
               <li class="task-row task-header" aria-hidden="true">
                 <span></span>
                 <span>Name</span>
                 <span>Date shared</span>
                 <span>Shared by</span>
-                <span>Workspace</span>
-                <span>Status</span>
               </li>
               <li class="task-row folder-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="task-folder-icon"></span> Orientation handoff</span>
                 <span class="muted">May 24, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">MS</span> Maya S.</span>
-                <span class="workspace-label"><span class="workspace-swatch student" aria-hidden="true"></span> Student Affairs</span>
-                <span class="status neutral">Folder</span>
               </li>
               <li class="task-row folder-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="task-folder-icon"></span> Audit packet draft</span>
                 <span class="muted">May 23, 2026</span>
                 <span class="owner"><span class="owner-avatar green">AK</span> Arman K.</span>
-                <span class="workspace-label"><span class="workspace-swatch compliance" aria-hidden="true"></span> Compliance Library</span>
-                <span class="status neutral">Folder</span>
               </li>
               <li class="task-row folder-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="task-folder-icon"></span> Procurement comparison</span>
                 <span class="muted">May 22, 2026</span>
                 <span class="owner"><span class="owner-avatar">AP</span> Ali P.</span>
-                <span class="workspace-label"><span class="workspace-swatch research" aria-hidden="true"></span> Manufacturer Contract Workspace</span>
-                <span class="status neutral">Folder</span>
               </li>
               <li class="task-row folder-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="task-folder-icon"></span> Teaching media inbox</span>
                 <span class="muted">May 21, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">MS</span> Maya S.</span>
-                <span class="workspace-label"><span class="workspace-swatch faculty" aria-hidden="true"></span> Faculty Newsroom</span>
-                <span class="status neutral">Folder</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Student Support Escalation Guide</span>
                 <span class="muted">May 24, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">MS</span> Maya S.</span>
-                <span class="workspace-label"><span class="workspace-swatch student" aria-hidden="true"></span> Student Affairs</span>
-                <span class="status amber">Needs review</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Faculty Event Recap Draft</span>
                 <span class="muted">May 23, 2026</span>
                 <span class="owner"><span class="owner-avatar green">AK</span> Arman K.</span>
-                <span class="workspace-label"><span class="workspace-swatch faculty" aria-hidden="true"></span> Faculty Newsroom</span>
-                <span class="status blue">Drafting</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Vendor Renewal Checklist</span>
                 <span class="muted">May 22, 2026</span>
                 <span class="owner"><span class="owner-avatar">AP</span> Ali P.</span>
-                <span class="workspace-label"><span class="workspace-swatch research" aria-hidden="true"></span> Manufacturer Contract Workspace</span>
-                <span class="status amber">Needs review</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Accessibility Review Notes</span>
                 <span class="muted">May 22, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">MS</span> Maya S.</span>
-                <span class="workspace-label"><span class="workspace-swatch compliance" aria-hidden="true"></span> Compliance Library</span>
-                <span class="status amber">In review</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Shared Lab Schedule.xlsx</span>
                 <span class="muted">May 21, 2026</span>
                 <span class="owner"><span class="owner-avatar green">AK</span> Arman K.</span>
-                <span class="workspace-label"><span class="workspace-swatch knowledge" aria-hidden="true"></span> Knowledge Base</span>
-                <span class="status">Approved</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Partner Intake Questions</span>
                 <span class="muted">May 20, 2026</span>
                 <span class="owner"><span class="owner-avatar">AP</span> Ali P.</span>
-                <span class="workspace-label"><span class="workspace-swatch research" aria-hidden="true"></span> Manufacturer Contract Workspace</span>
-                <span class="status blue">Drafting</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Welcome Email Variants</span>
                 <span class="muted">May 20, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">MS</span> Maya S.</span>
-                <span class="workspace-label"><span class="workspace-swatch student" aria-hidden="true"></span> Student Affairs</span>
-                <span class="status blue">Drafting</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Compliance Findings Summary</span>
                 <span class="muted">May 19, 2026</span>
                 <span class="owner"><span class="owner-avatar green">AK</span> Arman K.</span>
-                <span class="workspace-label"><span class="workspace-swatch compliance" aria-hidden="true"></span> Compliance Library</span>
-                <span class="status amber">In review</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Editorial Calendar Intake</span>
                 <span class="muted">May 18, 2026</span>
                 <span class="owner"><span class="owner-avatar">AP</span> Ali P.</span>
-                <span class="workspace-label"><span class="workspace-swatch faculty" aria-hidden="true"></span> Faculty Newsroom</span>
-                <span class="status">Approved</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Course Asset Request Form</span>
                 <span class="muted">May 17, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">MS</span> Maya S.</span>
-                <span class="workspace-label"><span class="workspace-swatch learning" aria-hidden="true"></span> Learning Content</span>
-                <span class="status amber">Needs review</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Supplier Pricing Snapshot.png</span>
                 <span class="muted">May 16, 2026</span>
                 <span class="owner"><span class="owner-avatar">AP</span> Ali P.</span>
-                <span class="workspace-label"><span class="workspace-swatch research" aria-hidden="true"></span> Manufacturer Contract Workspace</span>
-                <span class="status amber">Needs review</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Program FAQ Revisions</span>
                 <span class="muted">May 15, 2026</span>
                 <span class="owner"><span class="owner-avatar green">AK</span> Arman K.</span>
-                <span class="workspace-label"><span class="workspace-swatch student" aria-hidden="true"></span> Student Affairs</span>
-                <span class="status blue">Drafting</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Safety Photo References</span>
                 <span class="muted">May 14, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">MS</span> Maya S.</span>
-                <span class="workspace-label"><span class="workspace-swatch knowledge" aria-hidden="true"></span> Knowledge Base</span>
-                <span class="status">Approved</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Research Module Peer Notes</span>
                 <span class="muted">May 13, 2026</span>
                 <span class="owner"><span class="owner-avatar green">AK</span> Arman K.</span>
-                <span class="workspace-label"><span class="workspace-swatch learning" aria-hidden="true"></span> Learning Content</span>
-                <span class="status amber">In review</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Contract Terms Comparison</span>
                 <span class="muted">May 12, 2026</span>
                 <span class="owner"><span class="owner-avatar">AP</span> Ali P.</span>
-                <span class="workspace-label"><span class="workspace-swatch research" aria-hidden="true"></span> Manufacturer Contract Workspace</span>
-                <span class="status">Approved</span>
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Student Services Landing Copy</span>
                 <span class="muted">May 11, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">MS</span> Maya S.</span>
-                <span class="workspace-label"><span class="workspace-swatch student" aria-hidden="true"></span> Student Affairs</span>
-                <span class="status amber">In review</span>
               </li>
             </ul>
           </div>
