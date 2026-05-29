@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Evolve Content Overview</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css?v=row-hover-1" />
+    <link rel="stylesheet" href="./styles.css?v=rail-colors-1" />
   </head>
   <body>
     <main class="app" aria-label="Evolve content overview">
@@ -19,7 +19,7 @@
             <img class="icon-img" src="./assets/icons/messages-square.svg" alt="" />
           </button>
           <button class="rail-button active" type="button" aria-label="Content">
-            <img class="icon-img" src="./assets/icons/shapes.svg" alt="" />
+            <img class="icon-img" src="./assets/icons/shapes.svg?v=rail-colors-1" alt="" />
           </button>
           <button class="rail-button" type="button" aria-label="Health">
             <img class="icon-img" src="./assets/icons/heart-pulse.svg" alt="" />
@@ -30,7 +30,6 @@
           <button class="rail-button" type="button" aria-label="Gallery">
             <img class="icon-img" src="./assets/icons/gallery-vertical.svg" alt="" />
           </button>
-          <img class="rail-divider" src="./assets/icons/rail-divider.svg" alt="" />
           <button class="rail-button" type="button" aria-label="Apps">
             <img class="icon-img" src="./assets/icons/layout-grid.svg" alt="" />
           </button>
@@ -375,15 +374,17 @@
           <button class="ai-close" type="button" aria-label="Close Ask AI"><img class="icon-img" src="./assets/icons/x.svg" alt="" /></button>
         </header>
 
-        <div class="ai-empty">
-          <div class="sparkle-box"><img class="icon-img" src="./assets/icons/sparkle.svg" alt="" /></div>
-          <p>Ask questions across your content and workspaces</p>
-        </div>
+        <div class="ai-center-content">
+          <div class="ai-empty">
+            <div class="sparkle-box"><img class="icon-img" src="./assets/icons/sparkle.svg" alt="" /></div>
+            <p>Ask questions across your content and workspaces</p>
+          </div>
 
-        <div class="prompt-suggestions" aria-label="Suggested prompts">
-          <button type="button">What needs my action today?</button>
-          <button type="button">Which items need review or approval?</button>
-          <button type="button">Summarize recent activity across my workspaces.</button>
+          <div class="prompt-suggestions" aria-label="Suggested prompts">
+            <button type="button">What needs my action today?</button>
+            <button type="button">Which items need review or approval?</button>
+            <button type="button">Summarize recent activity across my workspaces.</button>
+          </div>
         </div>
 
         <form class="prompt-field">
