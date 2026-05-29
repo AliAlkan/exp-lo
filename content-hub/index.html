@@ -4,12 +4,73 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Content Hub</title>
-  <link rel="stylesheet" href="assets/css/global.css?v=attention-filters-1">
-  <script src="assets/js/app.js?v=attention-filters-6" defer></script>
+  <link rel="stylesheet" href="assets/css/global.css?v=home-action-dropdown-1">
+  <script src="assets/js/app.js?v=home-action-dropdown-1" defer></script>
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar" aria-label="Content Hub navigation">
+  <div class="app home-app">
+    <aside class="app-rail" aria-label="App switcher">
+      <a class="rail-logo" href="index.html" aria-label="Content Hub home">
+        <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+          <path d="M24 5 10 9M20 13 6 17m18 4-14 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M14 4C8 7 5 11 5 17s3 10 9 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+        </svg>
+      </a>
+      <nav class="rail-nav" aria-label="Apps">
+        <a class="rail-button" href="activity.html" aria-label="Messages">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 6h10a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3H9l-4 3v-3a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="M18 9h1a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3v2l-3-2h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="rail-button active" href="index.html" aria-label="Content">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 4 4 18h16z" fill="currentColor"/>
+            <circle cx="7.5" cy="17.5" r="2.5" fill="currentColor"/>
+            <rect x="14.5" y="14.5" width="5" height="5" rx="1" fill="currentColor"/>
+          </svg>
+        </a>
+        <a class="rail-button" href="reviews.html" aria-label="Reviews">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            <path d="m8 12 2.2 2.2L16 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="rail-button" href="workspace-knowledge-base.html" aria-label="Workspaces">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12 4 7.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="rail-button" href="my-content.html" aria-label="Files">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h16v12H4zM4 10h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <span class="rail-separator" aria-hidden="true"></span>
+        <button class="rail-button" type="button" aria-label="All apps">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h5v5h-5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </nav>
+      <div class="rail-bottom">
+        <button class="rail-button" type="button" aria-label="Help">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M9.8 9a2.3 2.3 0 0 1 4.4 1c0 1.7-2.2 1.8-2.2 3.4M12 17h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="rail-button" type="button" aria-label="Settings">
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M19 12a7.2 7.2 0 0 0-.1-1.1l2-1.5-2-3.4-2.4 1a7 7 0 0 0-1.9-1.1L14.3 3h-4.6l-.4 2.9A7 7 0 0 0 7.4 7L5 6 3 9.4l2 1.5A7.2 7.2 0 0 0 5 12c0 .4 0 .7.1 1.1l-2 1.5 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.9h4.6l.4-2.9a7 7 0 0 0 1.9-1.1l2.4 1 2-3.4-2-1.5c.1-.4.1-.7.1-1.1Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="avatar rail-avatar" aria-label="User avatar">AP</div>
+      </div>
+    </aside>
+
+    <aside class="sidebar home-sidebar" aria-label="Content Hub navigation">
       <div class="brand">
         <details class="create-menu">
           <summary aria-label="Create content">
@@ -70,20 +131,19 @@
             <path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
           </svg>
           <span>Home</span>
-          <span class="nav-count">12</span>
         </a>
         <a class="nav-button" href="activity.html">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M7 10a5 5 0 0 1 10 0v4l2 3H5l2-3zM10 20h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span>Notifications</span>
-          <span class="nav-count">4</span>
+          <span class="nav-count">12</span>
         </a>
         <a class="nav-button" href="my-content.html">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 6h6l2 2h8v10H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>My content</span>
+          <span>My files</span>
         </a>
         <a class="nav-button" href="shared-with-me.html">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -155,411 +215,373 @@
           </svg>
           <span>Archive</span>
         </button>
-        <button class="nav-button">
+        <button class="nav-button home-collapse-button" type="button">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
-            <path d="M19 12a7.2 7.2 0 0 0-.1-1.1l2-1.5-2-3.4-2.4 1a7 7 0 0 0-1.9-1.1L14.3 3h-4.6l-.4 2.9A7 7 0 0 0 7.4 7L5 6 3 9.4l2 1.5A7.2 7.2 0 0 0 5 12c0 .4 0 .7.1 1.1l-2 1.5 2 3.4 2.4-1a7 7 0 0 0 1.9 1.1l.4 2.9h4.6l.4-2.9a7 7 0 0 0 1.9-1.1l2.4 1 2-3.4-2-1.5c.1-.4.1-.7.1-1.1Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M5 5h14v14H5zM10 5v14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
           </svg>
-          <span>Settings</span>
+          <span>Collapse</span>
         </button>
       </nav>
     </aside>
 
-    <main class="main">
-      <header class="topbar" aria-label="Top actions">
-        <div class="avatar" aria-label="User avatar">AP</div>
-      </header>
+    <main class="main home-main">
+      <section class="home-dashboard" aria-label="Content Hub home">
+        <button class="home-ai-shortcut" type="button" aria-label="Ask AI" aria-controls="home-ai-drawer" aria-expanded="true" data-ai-drawer-toggle>
+          <span>Ask</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3.5c.9 4.3 2.2 5.6 6.5 6.5-4.3.9-5.6 2.2-6.5 6.5-.9-4.3-2.2-5.6-6.5-6.5 4.3-.9 5.6-2.2 6.5-6.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </button>
 
-      <section class="workspace" aria-label="Content Hub home">
-        <div class="intro">
-          <h1>Hello Adam</h1>
+        <div class="intro home-intro">
+          <h1>Hello Antonis</h1>
         </div>
 
-        <form class="command">
-          <label class="sr-only" for="hub-search">Ask or find anything in Content Hub</label>
-          <input id="hub-search" type="search" placeholder="Tell me more about recent additions in the last 24 hours...">
-          <div class="command-actions">
-            <div class="inline-actions">
-              <div class="source-picker">
-                <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-                <span>All sources</span>
-              </div>
-              <button class="icon-btn light send" type="submit" aria-label="Submit">
-                <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m5 12 14-7-4 14-3-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <section class="home-workspaces" aria-labelledby="home-workspaces-heading">
+          <div class="home-section-head">
+            <h2 id="home-workspaces-heading">Workspaces</h2>
+            <div class="home-workspace-actions">
+              <a href="workspace-knowledge-base.html">All workspaces</a>
+              <button class="icon-btn" type="button" aria-label="Previous workspaces" data-workspace-carousel-prev>
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m15 6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
-            </div>
-          </div>
-        </form>
-
-        <div class="prompt-samples" aria-label="Prompt samples">
-          <button class="prompt-sample" type="button" data-prompt-sample="What knowledge base items were published in the last 7 days?">What knowledge base items were published in the last 7 days?</button>
-          <button class="prompt-sample" type="button" data-prompt-sample="Which content needs my attention today?">Which content needs my attention today?</button>
-          <button class="prompt-sample" type="button" data-prompt-sample="Summarize recent workspace activity.">Summarize recent workspace activity.</button>
-        </div>
-
-        <section class="section" aria-labelledby="recent-heading">
-          <div class="section-head">
-            <div class="section-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 7v5l3 2M21 12a9 9 0 1 1-2.6-6.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span id="recent-heading">Recently visited workspaces</span>
-            </div>
-          </div>
-
-          <div class="recent-grid">
-            <article class="content-card">
-              <div class="workspace-strip knowledge"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Knowledge Base</h2>
-                <span class="card-meta">42 recently updated</span>
-              </div>
-            </article>
-            <article class="content-card">
-              <div class="workspace-strip faculty"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Faculty Newsroom</h2>
-                <span class="card-meta">18 recently updated</span>
-              </div>
-            </article>
-            <article class="content-card">
-              <div class="workspace-strip student"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Student Affairs</h2>
-                <span class="card-meta">11 recently updated</span>
-              </div>
-            </article>
-            <article class="content-card">
-              <div class="workspace-strip manufacturer"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Manufacturer Contract Workspace</h2>
-                <span class="card-meta">7 recently updated</span>
-              </div>
-            </article>
-            <article class="content-card">
-              <div class="workspace-strip compliance"></div>
-              <div class="card-body">
-                <span class="card-kicker">Workspace</span>
-                <h2 class="card-title">Compliance Library</h2>
-                <span class="card-meta">5 recently updated</span>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <div class="home-workstream-lists">
-        <section class="section home-list-section" aria-labelledby="pickup-heading">
-          <div class="section-head">
-            <div class="section-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 6v6l4 2M5 4v5h5M5.6 9A7.5 7.5 0 1 0 8 5.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span id="pickup-heading">Pickup where you left off</span>
-            </div>
-          </div>
-
-          <div class="pickup-grid">
-            <article class="pickup-card">
-              <span class="pickup-icon" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Lab Access Policy v2</h2>
-                <span class="pickup-workspace">Learning Content</span>
-              </div>
-              <span class="pickup-activity">Edited 8 min ago</span>
-            </article>
-            <article class="pickup-card">
-              <span class="pickup-icon faculty" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Sample Handling SOP</h2>
-                <span class="pickup-workspace">Faculty Newsroom</span>
-              </div>
-              <span class="pickup-activity">Commented 14 min ago</span>
-            </article>
-            <article class="pickup-card" data-document-id="summer-launch-kit">
-              <span class="pickup-icon manufacturer" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Summer Launch Kit.pdf</h2>
-                <span class="pickup-workspace">Manufacturer Contract Workspace</span>
-              </div>
-              <span class="pickup-activity">Edited 26 min ago</span>
-            </article>
-            <article class="pickup-card">
-              <span class="pickup-icon student" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Course Module: Botanical Extraction</h2>
-                <span class="pickup-workspace">Student Affairs</span>
-              </div>
-              <span class="pickup-activity">Commented 1 hr ago</span>
-            </article>
-            <article class="pickup-card">
-              <span class="pickup-icon compliance" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Student Portal Welcome Page</h2>
-                <span class="pickup-workspace">Compliance Library</span>
-              </div>
-              <span class="pickup-activity">Edited 2 hrs ago</span>
-            </article>
-            <article class="pickup-card">
-              <span class="pickup-icon knowledge" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Q3 Editorial Narrative</h2>
-                <span class="pickup-workspace">Knowledge Base</span>
-              </div>
-              <span class="pickup-activity">Edited yesterday</span>
-            </article>
-            <a class="home-list-view-all" href="my-content.html">Load more</a>
-          </div>
-        </section>
-
-        <section class="section home-list-section" aria-labelledby="recents-heading">
-          <div class="section-head">
-            <div class="section-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 6v6l4 2M5 4v5h5M5.6 9A7.5 7.5 0 1 0 8 5.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span id="recents-heading">Recents</span>
-            </div>
-            <div class="recents-tabs" role="tablist" aria-label="Recents scope">
-              <button class="recents-tab active" type="button" role="tab" aria-selected="true" data-recents-tab="me">By me</button>
-              <button class="recents-tab" type="button" role="tab" aria-selected="false" data-recents-tab="everyone">By everyone</button>
-            </div>
-          </div>
-
-          <div class="pickup-grid">
-            <article class="pickup-card">
-              <span class="pickup-icon" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Lab Access Policy v2</h2>
-                <span class="pickup-workspace">Learning Content</span>
-              </div>
-              <span class="pickup-activity">Edited 8 min ago</span>
-            </article>
-            <article class="pickup-card">
-              <span class="pickup-icon faculty" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Sample Handling SOP</h2>
-                <span class="pickup-workspace">Faculty Newsroom</span>
-              </div>
-              <span class="pickup-activity">Commented 14 min ago</span>
-            </article>
-            <article class="pickup-card" data-document-id="summer-launch-kit">
-              <span class="pickup-icon manufacturer" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Summer Launch Kit.pdf</h2>
-                <span class="pickup-workspace">Manufacturer Contract Workspace</span>
-              </div>
-              <span class="pickup-activity">Edited 26 min ago</span>
-            </article>
-            <article class="pickup-card">
-              <span class="pickup-icon student" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Course Module: Botanical Extraction</h2>
-                <span class="pickup-workspace">Student Affairs</span>
-              </div>
-              <span class="pickup-activity">Commented 1 hr ago</span>
-            </article>
-            <article class="pickup-card">
-              <span class="pickup-icon compliance" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Student Portal Welcome Page</h2>
-                <span class="pickup-workspace">Compliance Library</span>
-              </div>
-              <span class="pickup-activity">Edited 2 hrs ago</span>
-            </article>
-            <article class="pickup-card">
-              <span class="pickup-icon knowledge" aria-hidden="true">
-                <svg width="19" height="19" viewBox="0 0 24 24">
-                  <path d="M7 3h7l4 4v14H7zM14 3v5h5M10 12h6M10 16h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-              <div class="pickup-main">
-                <h2 class="pickup-title">Q3 Editorial Narrative</h2>
-                <span class="pickup-workspace">Knowledge Base</span>
-              </div>
-              <span class="pickup-activity">Edited yesterday</span>
-            </article>
-            <a class="home-list-view-all" href="my-content.html">Load more</a>
-          </div>
-        </section>
-
-        </div>
-
-        <section class="section" aria-labelledby="tasks-heading">
-          <div class="section-head">
-            <div class="section-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 4 3.5 19h17zM12 9v4M12 16h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              <span id="tasks-heading">Needs my attention</span>
-            </div>
-            <div class="task-toolbar">
-              <button class="icon-btn light" type="button" aria-label="Filter tasks">
-                <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4 6h16M7 12h10M10 18h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                </svg>
-              </button>
-              <button class="icon-btn light" type="button" aria-label="Sort tasks">
-                <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M8 5v14m0 0-3-3m3 3 3-3M16 19V5m0 0-3 3m3-3 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <button class="icon-btn" type="button" aria-label="Next workspaces" data-workspace-carousel-next>
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </button>
             </div>
           </div>
 
-          <div class="attention-filters" aria-label="Attention filters">
-            <button class="attention-filter active" type="button" data-attention-filter="all" aria-pressed="true">All</button>
-            <button class="attention-filter" type="button" data-attention-filter="draft" aria-pressed="false">Draft</button>
-            <button class="attention-filter" type="button" data-attention-filter="in-review" aria-pressed="false">In review</button>
-            <button class="attention-filter" type="button" data-attention-filter="approval-pending" aria-pressed="false">Approval pending</button>
+          <div class="home-workspace-row" data-workspace-carousel>
+            <a class="home-workspace-card knowledge" href="workspace-knowledge-base.html">
+              <span class="home-cube" aria-hidden="true"></span>
+              <span class="home-card-menu" aria-hidden="true">...</span>
+              <strong>Knowledge Base</strong>
+              <small>Modified yesterday</small>
+            </a>
+            <a class="home-workspace-card faculty" href="workspace-faculty-newsroom.html">
+              <span class="home-cube" aria-hidden="true"></span>
+              <span class="home-card-menu" aria-hidden="true">...</span>
+              <strong>Faculty Newsroom</strong>
+              <small>Modified yesterday</small>
+            </a>
+            <a class="home-workspace-card student" href="workspace-student-affairs.html">
+              <span class="home-cube" aria-hidden="true"></span>
+              <span class="home-card-menu" aria-hidden="true">...</span>
+              <strong>Student Affairs</strong>
+              <small>Modified yesterday</small>
+            </a>
+            <a class="home-workspace-card research" href="workspace-manufacturer-contract-workspace.html">
+              <span class="home-cube" aria-hidden="true"></span>
+              <span class="home-card-menu" aria-hidden="true">...</span>
+              <strong>Manufacturer Contract Workspace</strong>
+              <small>Modified yesterday</small>
+            </a>
+            <a class="home-workspace-card compliance" href="workspace-compliance-library.html">
+              <span class="home-cube" aria-hidden="true"></span>
+              <span class="home-card-menu" aria-hidden="true">...</span>
+              <strong>Compliance Library</strong>
+              <small>Modified yesterday</small>
+            </a>
+            <a class="home-workspace-card learning" href="workspace-learning-content.html">
+              <span class="home-cube" aria-hidden="true"></span>
+              <span class="home-card-menu" aria-hidden="true">...</span>
+              <strong>Learning Content</strong>
+              <small>Modified yesterday</small>
+            </a>
+          </div>
+        </section>
+
+        <section class="home-recents" aria-labelledby="home-recents-heading">
+          <div class="home-recents-top">
+            <div class="home-mode-tabs" role="tablist" aria-label="Home content">
+              <button class="home-mode-tab active" id="home-recents-heading" type="button" role="tab" aria-selected="true" data-recents-tab="recents">Recents</button>
+              <button class="home-mode-tab" type="button" role="tab" aria-selected="false" data-recents-tab="attention">Needs my attention</button>
+            </div>
+            <div class="recents-tabs home-scope-tabs" role="tablist" aria-label="Recents scope">
+              <button class="recents-tab" type="button" role="tab" aria-selected="false" data-recents-tab="me">By me</button>
+              <button class="recents-tab active" type="button" role="tab" aria-selected="true" data-recents-tab="everyone">By everyone</button>
+            </div>
+            <div class="home-attention-tools" hidden data-attention-tools>
+              <label class="home-attention-search">
+                <span class="sr-only">Search attention items</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="m16.5 16.5 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+                <input type="search" placeholder="Search" data-attention-search>
+              </label>
+              <details class="filter-menu home-action-menu" data-attention-action-menu data-attention-action="all">
+                <summary class="home-action-filter" aria-label="Filter by action needed">
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 12.5 10 17 19 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <span data-attention-action-label>All</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m7 10 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </summary>
+                <div class="home-action-popover" role="menu" aria-label="Action needed filters">
+                  <button class="home-action-option selected" type="button" role="menuitem" data-attention-action-filter="all">All</button>
+                  <button class="home-action-option" type="button" role="menuitem" data-attention-action-filter="in review">In review</button>
+                  <button class="home-action-option" type="button" role="menuitem" data-attention-action-filter="requires approval">Requires approval</button>
+                  <button class="home-action-option" type="button" role="menuitem" data-attention-action-filter="change requested">Change Requested</button>
+                </div>
+              </details>
+            </div>
           </div>
 
-          <div class="panel">
-            <ul class="task-list">
+          <div class="home-table-panel" data-home-panel="recents">
+            <ul class="task-list home-table">
               <li class="task-row task-header" aria-hidden="true">
-                <span></span>
+                <span class="checkbox"></span>
                 <span>Name</span>
-                <span>Date modified</span>
+                <span>Date mo... ↓</span>
                 <span>Owner</span>
-                <span>Workspace</span>
-                <span>Status</span>
+                <span>Location</span>
+                <span></span>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="everyone">
                 <span class="checkbox" aria-hidden="true"></span>
                 <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
-                <span class="muted">May 11, 2026</span>
-                <span class="owner"><span class="owner-avatar">MS</span> Maya Stone</span>
-                <span class="workspace-label"><span class="workspace-swatch knowledge" aria-hidden="true"></span> Knowledge Base</span>
-                <span class="status">Approved</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar amber">MS</span> Maya S...</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="me">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Sample Handling SOP</span>
-                <span class="muted">May 13, 2026</span>
-                <span class="owner"><span class="owner-avatar violet">AK</span> Arman Kaya</span>
-                <span class="workspace-label"><span class="workspace-swatch faculty" aria-hidden="true"></span> Faculty Newsroom</span>
-                <span class="status amber">In review</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <span class="workspace-label"><span class="folder-inline" aria-hidden="true"></span> My files</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="everyone">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Summer Launch Kit</span>
-                <span class="muted">May 15, 2026</span>
-                <span class="owner"><span class="owner-avatar green">LN</span> Lara Novak</span>
-                <span class="workspace-label"><span class="workspace-swatch learning" aria-hidden="true"></span> Learning Content</span>
-                <span class="status blue">Drafting</span>
+                <span class="task-name"><span class="task-folder-icon purple"></span> Supplier files</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar green">CS</span> Christo...</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="me">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Course Module: Botanical Extraction</span>
-                <span class="muted">May 16, 2026</span>
-                <span class="owner"><span class="owner-avatar">TD</span> Theo Demir</span>
-                <span class="workspace-label"><span class="workspace-swatch research" aria-hidden="true"></span> Manufacturer Contract Workspace</span>
-                <span class="status amber">Needs review</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2 <span class="shared-inline" aria-hidden="true"></span></span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Compliance L...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="everyone">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Student Portal Welcome Page</span>
-                <span class="muted">May 17, 2026</span>
-                <span class="owner"><span class="owner-avatar violet">PR</span> Priya Rao</span>
-                <span class="workspace-label"><span class="workspace-swatch compliance" aria-hidden="true"></span> Compliance Library</span>
-                <span class="status blue">Drafting</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar amber">MS</span> Maya S...</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="me">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Q3 Editorial Narrative</span>
-                <span class="muted">May 18, 2026</span>
-                <span class="owner"><span class="owner-avatar green">JB</span> Jonah Blake</span>
-                <span class="workspace-label"><span class="workspace-swatch learning" aria-hidden="true"></span> Learning Content</span>
-                <span class="status amber">In review</span>
+                <span class="task-name"><span class="send-inline" aria-hidden="true"></span> Sample Handling SOP <span class="shared-inline" aria-hidden="true"></span></span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <span class="workspace-label"><span class="folder-inline" aria-hidden="true"></span> My files</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="me">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Research Paper: Chlorogenic Acid Retention</span>
-                <span class="muted">May 19, 2026</span>
-                <span class="owner"><span class="owner-avatar">NC</span> Nadia Cole</span>
-                <span class="workspace-label"><span class="workspace-swatch student" aria-hidden="true"></span> Student Affairs</span>
-                <span class="status">Approved</span>
+                <span class="task-name"><span class="task-folder-icon purple"></span> Summer Launch Kit</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Manufacturer...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="everyone">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Paper Summary: Roasting Study Findings</span>
-                <span class="muted">May 20, 2026</span>
-                <span class="owner"><span class="owner-avatar violet">ES</span> Elias Sato</span>
-                <span class="workspace-label"><span class="workspace-swatch faculty" aria-hidden="true"></span> Faculty Newsroom</span>
-                <span class="status blue">Drafting</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar green">CS</span> Christo...</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="me">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Supplier Profile: GreenBean Labs</span>
-                <span class="muted">May 21, 2026</span>
-                <span class="owner"><span class="owner-avatar green">MR</span> Mina Ross</span>
-                <span class="workspace-label"><span class="workspace-swatch research" aria-hidden="true"></span> Manufacturer Contract Workspace</span>
-                <span class="status amber">Needs review</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <span class="workspace-label"><span class="folder-inline" aria-hidden="true"></span> My files</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
-              <li class="task-row">
+              <li class="task-row" data-recents-owner="me">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="task-name"><span class="doc-icon"></span> Supplier Scorecard.xlsx</span>
-                <span class="muted">May 22, 2026</span>
-                <span class="owner"><span class="owner-avatar">OS</span> Omar Silva</span>
-                <span class="workspace-label"><span class="workspace-swatch knowledge" aria-hidden="true"></span> Knowledge Base</span>
-                <span class="status blue">Drafting</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <span class="workspace-label"><span class="folder-inline" aria-hidden="true"></span> My files</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+            </ul>
+          </div>
+          <div class="home-table-panel" data-home-panel="attention" hidden>
+            <ul class="task-list home-table home-attention-table">
+              <li class="task-row task-header" aria-hidden="true">
+                <span class="checkbox"></span>
+                <span>Action needed</span>
+                <span>Name</span>
+                <span>Assigned ↓</span>
+                <span>Location</span>
+                <span>Requested by</span>
+                <span></span>
+              </li>
+              <li class="task-row" data-attention-action="in review">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">In review</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2 <span class="shared-inline" aria-hidden="true"></span></span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <span class="owner"><span class="owner-avatar orange">ER</span> EvoRe...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="requires approval">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">Requires approval</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <span class="owner"><span class="owner-avatar orange">ER</span> EvoRe...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="change requested">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">Change Requested</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="in review">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">In review</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Manufacturer...</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="in review">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">In review</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2 <span class="shared-inline" aria-hidden="true"></span></span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Manufacturer...</span>
+                <span class="owner"><span class="owner-avatar">AP</span> me</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="change requested">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">Change Requested</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <span class="owner"><span class="owner-avatar amber">MS</span> Maya S...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="change requested">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">Change Requested</span>
+                <span class="task-name"><span class="send-inline" aria-hidden="true"></span> Sample Handling SOP <span class="shared-inline" aria-hidden="true"></span></span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Manufacturer...</span>
+                <span class="owner"><span class="owner-avatar amber">MS</span> Maya S...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="in review">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">In review</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <span class="owner"><span class="owner-avatar green">CS</span> Christo...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="change requested">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">Change Requested</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <span class="owner"><span class="owner-avatar green">CS</span> Christo...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
+              </li>
+              <li class="task-row" data-attention-action="requires approval">
+                <span class="checkbox" aria-hidden="true"></span>
+                <span class="attention-chip">Requires Approval</span>
+                <span class="task-name"><span class="doc-icon"></span> Lab Access Policy v2</span>
+                <span class="muted">6 Jul 2024</span>
+                <span class="workspace-label"><span class="home-cube small" aria-hidden="true"></span> Knowledge B...</span>
+                <span class="owner"><span class="owner-avatar green">CS</span> Christo...</span>
+                <button class="row-more-button" type="button" aria-label="More actions">...</button>
               </li>
             </ul>
           </div>
         </section>
       </section>
     </main>
+
+    <aside class="ai-side-deck" id="home-ai-drawer" aria-labelledby="ai-side-title" data-ai-drawer>
+      <div class="ai-side-head">
+        <h2 id="ai-side-title">Ask AI</h2>
+        <button class="icon-btn" type="button" aria-label="Close Ask AI" data-ai-drawer-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="ai-side-center">
+        <div class="ai-side-empty" aria-hidden="true">
+          <div class="ai-side-illustration">
+            <span class="ai-side-orbit">
+              <svg width="48" height="48" viewBox="0 0 24 24">
+                <path d="M12 3.5c.9 4.3 2.2 5.6 6.5 6.5-4.3.9-5.6 2.2-6.5 6.5-.9-4.3-2.2-5.6-6.5-6.5 4.3-.9 5.6-2.2 6.5-6.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <p class="ai-side-copy">Ask questions across your content and workspaces</p>
+
+        <div class="prompt-samples ai-side-prompts" aria-label="Prompt samples">
+          <button class="prompt-sample" type="button" data-prompt-sample="What needs my action today?">What needs my action today?</button>
+          <button class="prompt-sample" type="button" data-prompt-sample="Which items need review or approval?">Which items need review or approval?</button>
+          <button class="prompt-sample" type="button" data-prompt-sample="Summarize recent activity across my workspaces.">Summarize recent activity across my workspaces.</button>
+        </div>
+      </div>
+
+      <form class="command ai-side-command">
+        <label class="sr-only" for="hub-search">Ask or find anything in Content Hub</label>
+        <input id="hub-search" type="search" placeholder="Ask about your content or workspaces">
+        <div class="command-actions">
+          <div class="inline-actions">
+            <button class="icon-btn" type="button" aria-label="Add attachment">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <button class="icon-btn light send" type="submit" aria-label="Submit">
+              <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 19V5m0 0-5 5m5-5 5 5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </form>
+    </aside>
   </div>
   <div class="modal-backdrop" data-workspace-modal hidden>
     <section class="workspace-modal" role="dialog" aria-modal="true" aria-labelledby="workspace-modal-title">

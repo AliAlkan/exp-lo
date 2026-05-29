@@ -154,8 +154,8 @@ document.addEventListener('click', (event) => {
   const getReviewStatus = (row) => {
     const status = row.querySelector('.status')?.textContent.trim().toLowerCase() || '';
     if (status === 'approved') return 'approved';
-    if (status === 'changes requested') return 'changes-requested';
-    if (status === 'in review' || status === 'needs review') return 'needs-review';
+    if (status === 'change requested' || status === 'changes requested') return 'changes-requested';
+    if (status === 'in review' || status === 'requires approval' || status === 'needs review') return 'needs-review';
     if (status === 'rejected' || status === 'closed' || status === 'rejected / closed') return 'closed';
     return 'other';
   };
@@ -175,7 +175,7 @@ document.addEventListener('click', (event) => {
   const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
   const button = target?.closest('[data-recents-tab]');
   if (!button) return;
-  const tablist = button.closest('.recents-tabs');
+  const tablist = button.closest('.recents-tabs, .home-mode-tabs');
   if (!tablist) return;
 
   tablist.querySelectorAll('[data-recents-tab]').forEach((candidate) => {
@@ -183,6 +183,116 @@ document.addEventListener('click', (event) => {
     candidate.classList.toggle('active', isActive);
     candidate.setAttribute('aria-selected', String(isActive));
   });
+
+  if (tablist.classList.contains('home-mode-tabs')) {
+    const mode = button.dataset.recentsTab || 'recents';
+    const homeSection = tablist.closest('.home-recents');
+    homeSection?.querySelectorAll('[data-home-panel]').forEach((panel) => {
+      panel.hidden = panel.dataset.homePanel !== mode;
+    });
+    const scopeTabs = homeSection?.querySelector('.home-scope-tabs');
+    const attentionTools = homeSection?.querySelector('[data-attention-tools]');
+    if (scopeTabs) {
+      scopeTabs.hidden = mode !== 'recents';
+    }
+    if (attentionTools) {
+      attentionTools.hidden = mode !== 'attention';
+    }
+  }
+
+  if (tablist.classList.contains('home-scope-tabs')) {
+    const scope = button.dataset.recentsTab || 'everyone';
+    const rows = [...(tablist.closest('.home-recents')?.querySelectorAll('[data-home-panel="recents"] .task-row:not(.task-header)') || [])];
+    rows.forEach((row) => {
+      row.hidden = scope === 'me' && row.dataset.recentsOwner !== 'me';
+    });
+  }
+}, true);
+
+const applyAttentionFilters = (homeSection) => {
+  if (!homeSection) return;
+  const query = homeSection.querySelector('[data-attention-search]')?.value.trim().toLowerCase() || '';
+  const action = homeSection.querySelector('[data-attention-action-menu]')?.dataset.attentionAction || 'all';
+  const rows = [...homeSection.querySelectorAll('[data-home-panel="attention"] .task-row:not(.task-header)')];
+
+  rows.forEach((row) => {
+    const matchesSearch = !query || row.textContent.toLowerCase().includes(query);
+    const matchesAction = action === 'all' || row.dataset.attentionAction === action;
+    row.hidden = !matchesSearch || !matchesAction;
+  });
+};
+
+document.addEventListener('input', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const input = target?.closest('[data-attention-search]');
+  if (!input) return;
+
+  applyAttentionFilters(input.closest('.home-recents'));
+}, true);
+
+document.addEventListener('click', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const option = target?.closest('[data-attention-action-filter]');
+  if (!option) return;
+
+  const menu = option.closest('[data-attention-action-menu]');
+  if (!menu) return;
+
+  menu.dataset.attentionAction = option.dataset.attentionActionFilter || 'all';
+  menu.querySelector('[data-attention-action-label]').textContent = option.textContent.trim();
+  menu.querySelectorAll('[data-attention-action-filter]').forEach((candidate) => {
+    const isSelected = candidate === option;
+    candidate.classList.toggle('selected', isSelected);
+    candidate.setAttribute('aria-current', String(isSelected));
+  });
+  menu.removeAttribute('open');
+  applyAttentionFilters(menu.closest('.home-recents'));
+}, true);
+
+document.addEventListener('click', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const previous = target?.closest('[data-workspace-carousel-prev]');
+  const next = target?.closest('[data-workspace-carousel-next]');
+  if (!previous && !next) return;
+
+  const section = target.closest('.home-workspaces');
+  const carousel = section?.querySelector('[data-workspace-carousel]');
+  const card = carousel?.querySelector('.home-workspace-card');
+  if (!carousel || !card) return;
+
+  const cardWidth = card.getBoundingClientRect().width;
+  const styles = getComputedStyle(carousel);
+  const gap = Number.parseFloat(styles.columnGap || styles.gap || '0') || 0;
+  const direction = next ? 1 : -1;
+  carousel.scrollBy({ left: direction * (cardWidth + gap), behavior: 'smooth' });
+}, true);
+
+const setHomeAiDrawer = (isOpen) => {
+  const app = document.querySelector('.home-app');
+  const drawer = document.querySelector('[data-ai-drawer]');
+  const toggles = document.querySelectorAll('[data-ai-drawer-toggle]');
+  if (!app || !drawer) return;
+
+  app.classList.toggle('ai-drawer-closed', !isOpen);
+  drawer.hidden = !isOpen;
+  drawer.setAttribute('aria-hidden', String(!isOpen));
+  toggles.forEach((toggle) => {
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+};
+
+document.addEventListener('click', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const toggle = target?.closest('[data-ai-drawer-toggle]');
+  if (toggle) {
+    const app = document.querySelector('.home-app');
+    setHomeAiDrawer(app?.classList.contains('ai-drawer-closed') ?? false);
+    return;
+  }
+
+  if (target?.closest('[data-ai-drawer-close]')) {
+    setHomeAiDrawer(false);
+  }
 }, true);
 
 document.querySelectorAll('.command').forEach((form) => {

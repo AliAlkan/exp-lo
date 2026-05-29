@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reviews - Content Hub</title>
+  <title>My actions - Content Hub</title>
   <link rel="stylesheet" href="assets/css/global.css?v=review-status-filters-1">
   <script src="assets/js/app.js?v=review-status-filters-1" defer></script>
 </head>
@@ -98,7 +98,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M5 4h14v16H5zM8 9h8M8 13h5M8 17h4M15 15l1.5 1.5L20 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Reviews</span>
+          <span>My actions</span>
         </a>
         <a class="nav-button" href="published.html">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -170,15 +170,15 @@
         <div class="avatar" aria-label="User avatar">AP</div>
       </header>
 
-      <section class="workspace" aria-label="Content Hub reviews">
+      <section class="workspace" aria-label="Content Hub my actions">
         <div class="intro">
-          <h1>Reviews</h1>
+          <h1>My actions</h1>
         </div>
 
         <section class="section" aria-labelledby="tasks-heading">
-          <h2 id="tasks-heading" class="sr-only">Reviews list</h2>
+          <h2 id="tasks-heading" class="sr-only">My actions list</h2>
           <div class="section-head content-filter-head">
-            <div class="content-filter-bar" aria-label="Filter reviews">
+            <div class="content-filter-bar" aria-label="Filter my actions">
               <details class="filter-menu">
                 <summary class="filter-pill" aria-label="Filter by type">
                   <span>Type</span>
@@ -269,15 +269,14 @@
                   </svg>
                 </summary>
                 <div class="filter-popover" role="menu" aria-label="Status options">
-                  <button class="filter-option" type="button" role="menuitem">Draft</button>
-                  <button class="filter-option" type="button" role="menuitem">In review</button>
-                  <button class="filter-option" type="button" role="menuitem">Changes requested</button>
-                  <button class="filter-option" type="button" role="menuitem">Approved</button>
+                  <button class="filter-option" type="button" role="menuitem">In Review</button>
+                  <button class="filter-option" type="button" role="menuitem">Requires Approval</button>
+                  <button class="filter-option" type="button" role="menuitem">Change Requested</button>
                 </div>
               </details>
             </div>
             <details class="filter-menu sort-menu">
-              <summary class="filter-pill sort-pill" aria-label="Sort reviews">
+              <summary class="filter-pill sort-pill" aria-label="Sort my actions">
                 <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M4 7h12M4 12h8M4 17h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
@@ -310,8 +309,8 @@
 
           <div class="review-status-filters" aria-label="Review status filters">
             <button class="review-status-filter active" type="button" data-review-status-filter="all" aria-pressed="true">All</button>
-            <button class="review-status-filter" type="button" data-review-status-filter="needs-review" aria-pressed="false">Needs review</button>
-            <button class="review-status-filter" type="button" data-review-status-filter="changes-requested" aria-pressed="false">Changes requested</button>
+            <button class="review-status-filter" type="button" data-review-status-filter="needs-review" aria-pressed="false">Requires Approval</button>
+            <button class="review-status-filter" type="button" data-review-status-filter="changes-requested" aria-pressed="false">Change Requested</button>
             <button class="review-status-filter" type="button" data-review-status-filter="approved" aria-pressed="false">Approved</button>
             <button class="review-status-filter" type="button" data-review-status-filter="closed" aria-pressed="false">Rejected / closed</button>
           </div>
@@ -320,7 +319,7 @@
             <ul class="task-list review-task-list">
               <li class="task-row task-header" aria-hidden="true">
                 <span></span>
-                <span>Action</span>
+                <span>Status</span>
                 <span>Name</span>
                 <span>Date modified</span>
                 <span>Owner</span>
@@ -336,7 +335,7 @@
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="status red">Changes requested</span>
+                <span class="status red">Change Requested</span>
                 <span class="task-name"><span class="doc-icon"></span> Sample Handling SOP</span>
                 <span class="muted">May 13, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">AK</span> Arman Kaya</span>
@@ -344,7 +343,7 @@
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="status blue">Draft</span>
+                <span class="status blue">Requires Approval</span>
                 <span class="task-name"><span class="doc-icon"></span> Summer Launch Kit</span>
                 <span class="muted">May 15, 2026</span>
                 <span class="owner"><span class="owner-avatar green">LN</span> Lara Novak</span>
@@ -352,7 +351,7 @@
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="status amber">In review</span>
+                <span class="status amber">In Review</span>
                 <span class="task-name"><span class="doc-icon"></span> Course Module: Botanical Extraction</span>
                 <span class="muted">May 16, 2026</span>
                 <span class="owner"><span class="owner-avatar">TD</span> Theo Demir</span>
@@ -360,7 +359,7 @@
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="status red">Changes requested</span>
+                <span class="status red">Change Requested</span>
                 <span class="task-name"><span class="doc-icon"></span> Student Portal Welcome Page</span>
                 <span class="muted">May 17, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">PR</span> Priya Rao</span>
@@ -376,7 +375,7 @@
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="status blue">Draft</span>
+                <span class="status blue">Requires Approval</span>
                 <span class="task-name"><span class="doc-icon"></span> Research Paper: Chlorogenic Acid Retention</span>
                 <span class="muted">May 19, 2026</span>
                 <span class="owner"><span class="owner-avatar">NC</span> Nadia Cole</span>
@@ -384,7 +383,7 @@
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="status amber">In review</span>
+                <span class="status amber">In Review</span>
                 <span class="task-name"><span class="doc-icon"></span> Paper Summary: Roasting Study Findings</span>
                 <span class="muted">May 20, 2026</span>
                 <span class="owner"><span class="owner-avatar violet">ES</span> Elias Sato</span>
@@ -392,7 +391,7 @@
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="status red">Changes requested</span>
+                <span class="status red">Change Requested</span>
                 <span class="task-name"><span class="doc-icon"></span> Supplier Profile: GreenBean Labs</span>
                 <span class="muted">May 21, 2026</span>
                 <span class="owner"><span class="owner-avatar green">MR</span> Mina Ross</span>
@@ -400,7 +399,7 @@
               </li>
               <li class="task-row">
                 <span class="checkbox" aria-hidden="true"></span>
-                <span class="status blue">Draft</span>
+                <span class="status blue">Requires Approval</span>
                 <span class="task-name"><span class="doc-icon"></span> Supplier Scorecard.xlsx</span>
                 <span class="muted">May 22, 2026</span>
                 <span class="owner"><span class="owner-avatar">OS</span> Omar Silva</span>
