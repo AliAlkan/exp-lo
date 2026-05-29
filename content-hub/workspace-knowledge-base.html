@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Knowledge Base - Content Hub</title>
-  <link rel="stylesheet" href="assets/css/global.css?v=role-radius-8b">
-  <script src="assets/js/app.js?v=upload-labels-3" defer></script>
+  <link rel="stylesheet" href="assets/css/global.css?v=workspace-modal-setup-1">
+  <script src="assets/js/app.js?v=workspace-modal-setup-1" defer></script>
 </head>
 <body>
-  <div class="app">
+  <div class="app workspace-ai-app">
     <aside class="sidebar" aria-label="Content Hub navigation">
       <div class="brand">
         <details class="create-menu">
@@ -98,7 +98,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M5 4h14v16H5zM8 9h8M8 13h5M8 17h4M15 15l1.5 1.5L20 13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>My actions</span>
+          <span>Tasks</span>
         </a>
         <a class="nav-button" href="published.html">
           <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
@@ -168,9 +168,15 @@
     <main class="main">
       <header class="topbar" aria-label="Workspace actions">
         <div class="workspace-top-actions">
-        <button class="workspace-share" type="button" data-open-share-modal>
-          <span>Shared</span>
-        </button>
+          <button class="workspace-ai-toggle" type="button" aria-label="Toggle Ask AI" aria-controls="workspace-ai-drawer" aria-expanded="true" data-ai-drawer-toggle>
+            <span>Ask</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3.5c.9 4.3 2.2 5.6 6.5 6.5-4.3.9-5.6 2.2-6.5 6.5-.9-4.3-2.2-5.6-6.5-6.5 4.3-.9 5.6-2.2 6.5-6.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="workspace-share" type="button" data-open-share-modal>
+            <span>Shared</span>
+          </button>
           <details class="workspace-more-menu">
             <summary aria-label="More workspace options">
               <svg width="19" height="19" viewBox="0 0 24 24" aria-hidden="true">
@@ -202,27 +208,6 @@
         </div>
 
 
-        <div class="workspace-command-module" data-workspace-panel="overview">
-          <form class="command">
-            <label class="sr-only" for="workspace-command-knowledge-base">Ask or find anything in Knowledge Base</label>
-            <input id="workspace-command-knowledge-base" type="search" placeholder="Ask about Knowledge Base files, folders, or activity..." data-command-input>
-            <div class="command-actions">
-              <div class="inline-actions">
-                <button class="icon-btn light send" type="submit" aria-label="Submit">
-                  <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m5 12 14-7-4 14-3-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </form>
-
-          <div class="prompt-samples" aria-label="Knowledge Base prompt samples">
-            <button class="prompt-sample" type="button" data-prompt-sample="Which knowledge base items changed this week?">Which knowledge base items changed this week?</button>
-            <button class="prompt-sample" type="button" data-prompt-sample="Show draft policy files in Knowledge Base.">Show draft policy files in Knowledge Base.</button>
-            <button class="prompt-sample" type="button" data-prompt-sample="Summarize recent folder activity in this workspace.">Summarize recent folder activity in this workspace.</button>
-          </div>
-        </div>
         <section class="workspace-browser-section workspace-recents" data-workspace-panel="overview" aria-labelledby="workspace-recents-heading">
           <div class="section-head">
             <div class="section-title">
@@ -933,6 +918,56 @@
         </section>
       </section>
     </main>
+
+    <aside class="ai-side-deck" id="workspace-ai-drawer" aria-labelledby="workspace-ai-title" data-ai-drawer>
+      <div class="ai-side-head">
+        <h2 id="workspace-ai-title">Ask AI</h2>
+        <button class="icon-btn" type="button" aria-label="Close Ask AI" data-ai-drawer-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="ai-side-center">
+        <div class="ai-side-empty" aria-hidden="true">
+          <div class="ai-side-illustration">
+            <span class="ai-side-orbit">
+              <svg width="48" height="48" viewBox="0 0 24 24">
+                <path d="M12 3.5c.9 4.3 2.2 5.6 6.5 6.5-4.3.9-5.6 2.2-6.5 6.5-.9-4.3-2.2-5.6-6.5-6.5 4.3-.9 5.6-2.2 6.5-6.5Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <p class="ai-side-copy">Ask questions about Knowledge Base files, folders, and activity</p>
+
+        <div class="prompt-samples ai-side-prompts" aria-label="Knowledge Base prompt samples">
+          <button class="prompt-sample" type="button" data-prompt-sample="Which knowledge base items changed this week?">Which knowledge base items changed this week?</button>
+          <button class="prompt-sample" type="button" data-prompt-sample="Show draft policy files in Knowledge Base.">Show draft policy files in Knowledge Base.</button>
+          <button class="prompt-sample" type="button" data-prompt-sample="Summarize recent folder activity in this workspace.">Summarize recent folder activity in this workspace.</button>
+        </div>
+      </div>
+
+      <form class="command ai-side-command">
+        <label class="sr-only" for="workspace-ai-command-knowledge-base">Ask or find anything in Knowledge Base</label>
+        <input id="workspace-ai-command-knowledge-base" type="search" placeholder="Ask about Knowledge Base files, folders, or activity..." data-command-input>
+        <div class="command-actions">
+          <div class="inline-actions">
+            <button class="icon-btn" type="button" aria-label="Add attachment">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <button class="icon-btn light send" type="submit" aria-label="Submit">
+              <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 19V5m0 0-5 5m5-5 5 5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </form>
+    </aside>
   </div>
   <div class="modal-backdrop" data-workspace-modal hidden>
     <section class="workspace-modal" role="dialog" aria-modal="true" aria-labelledby="workspace-modal-title">

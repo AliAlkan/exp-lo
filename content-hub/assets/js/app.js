@@ -267,10 +267,11 @@ document.addEventListener('click', (event) => {
   carousel.scrollBy({ left: direction * (cardWidth + gap), behavior: 'smooth' });
 }, true);
 
-const setHomeAiDrawer = (isOpen) => {
-  const app = document.querySelector('.home-app');
-  const drawer = document.querySelector('[data-ai-drawer]');
-  const toggles = document.querySelectorAll('[data-ai-drawer-toggle]');
+const getAiDrawerApp = (element) => element?.closest('.home-app, .workspace-ai-app') || document.querySelector('.home-app, .workspace-ai-app');
+
+const setAiDrawer = (app, isOpen) => {
+  const drawer = app?.querySelector('[data-ai-drawer]');
+  const toggles = app?.querySelectorAll('[data-ai-drawer-toggle]') || [];
   if (!app || !drawer) return;
 
   app.classList.toggle('ai-drawer-closed', !isOpen);
@@ -285,13 +286,13 @@ document.addEventListener('click', (event) => {
   const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
   const toggle = target?.closest('[data-ai-drawer-toggle]');
   if (toggle) {
-    const app = document.querySelector('.home-app');
-    setHomeAiDrawer(app?.classList.contains('ai-drawer-closed') ?? false);
+    const app = getAiDrawerApp(toggle);
+    setAiDrawer(app, app?.classList.contains('ai-drawer-closed') ?? false);
     return;
   }
 
   if (target?.closest('[data-ai-drawer-close]')) {
-    setHomeAiDrawer(false);
+    setAiDrawer(getAiDrawerApp(target), false);
   }
 }, true);
 
@@ -304,7 +305,8 @@ document.querySelectorAll('.command').forEach((form) => {
 document.querySelectorAll('[data-prompt-sample]').forEach((sample) => {
   sample.addEventListener('click', () => {
     const module = sample.closest('.workspace-command-module');
-    const input = module?.querySelector('[data-command-input]') || document.querySelector('#hub-search');
+    const drawer = sample.closest('[data-ai-drawer]');
+    const input = module?.querySelector('[data-command-input]') || drawer?.querySelector('[data-command-input]') || document.querySelector('#hub-search');
     if (!input) return;
     input.value = sample.dataset.promptSample || '';
     input.focus();
@@ -1159,7 +1161,80 @@ document.querySelectorAll('[data-document-card]').forEach((card) => {
   });
 });
 
+const workspaceSetupNote = 'You can change this later from workspace settings.';
+
+const workspaceSetupFields = () => `
+        <fieldset class="workspace-template-group">
+          <legend>Workspace setup</legend>
+          <label class="workspace-template-option">
+            <input type="radio" name="workspace-template" value="workflow" checked>
+            <span class="workspace-template-copy">
+              <strong>Workflow workspace</strong>
+              <span>Track items through Draft, In review, In approval, and Published.</span>
+            </span>
+          </label>
+          <label class="workspace-template-option">
+            <input type="radio" name="workspace-template" value="library">
+            <span class="workspace-template-copy">
+              <strong>Library workspace</strong>
+              <span>Keep content organized without item statuses or task stages.</span>
+            </span>
+          </label>
+          <p class="workspace-template-note">${workspaceSetupNote}</p>
+        </fieldset>
+`;
+
+const workspaceModalTemplate = () => `
+  <div class="modal-backdrop" data-workspace-modal hidden>
+    <section class="workspace-modal workspace-create-modal" role="dialog" aria-modal="true" aria-labelledby="workspace-modal-title">
+      <div class="workspace-modal-head">
+        <h2 id="workspace-modal-title">Create workspace</h2>
+        <button class="icon-btn" type="button" aria-label="Close create workspace" data-workspace-modal-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <form class="workspace-modal-form" data-workspace-modal-form>
+        <label for="workspace-name">Workspace name</label>
+        <input id="workspace-name" type="text" name="workspace-name" placeholder="Name this workspace" autocomplete="off" required data-workspace-name-input>
+${workspaceSetupFields()}        <div class="workspace-modal-actions">
+          <button class="secondary-btn" type="button" data-workspace-modal-close>Cancel</button>
+          <button class="primary-btn" type="submit">Create</button>
+        </div>
+      </form>
+    </section>
+  </div>
+`;
+
+const ensureWorkspaceModal = () => {
+  if (!document.querySelector('[data-workspace-create]') || document.querySelector('[data-workspace-modal]')) return;
+  document.body.insertAdjacentHTML('beforeend', workspaceModalTemplate());
+};
+
+const enhanceWorkspaceModal = (modal) => {
+  modal.querySelector('.workspace-modal')?.classList.add('workspace-create-modal');
+  const form = modal.querySelector('[data-workspace-modal-form]');
+  const nameInput = form?.querySelector('[data-workspace-name-input]');
+  let setupGroup = form?.querySelector('.workspace-template-group');
+
+  if (!setupGroup) {
+    nameInput?.insertAdjacentHTML('afterend', workspaceSetupFields());
+    setupGroup = form?.querySelector('.workspace-template-group');
+  }
+
+  const setupNote = setupGroup?.querySelector('.workspace-template-note');
+  if (setupNote) {
+    setupNote.textContent = workspaceSetupNote;
+  } else {
+    setupGroup?.insertAdjacentHTML('beforeend', `<p class="workspace-template-note">${workspaceSetupNote}</p>`);
+  }
+};
+
+ensureWorkspaceModal();
+
 document.querySelectorAll('[data-workspace-modal]').forEach((modal) => {
+  enhanceWorkspaceModal(modal);
   const input = modal.querySelector('[data-workspace-name-input]');
   const form = modal.querySelector('[data-workspace-modal-form]');
   const closeButtons = [...modal.querySelectorAll('[data-workspace-modal-close]')];
@@ -1167,13 +1242,6 @@ document.querySelectorAll('[data-workspace-modal]').forEach((modal) => {
   const closeModal = () => {
     modal.hidden = true;
   };
-
-  document.querySelectorAll('[data-workspace-create]').forEach((trigger) => {
-    trigger.addEventListener('click', () => {
-      modal.hidden = false;
-      input?.focus();
-    });
-  });
 
   closeButtons.forEach((button) => {
     button.addEventListener('click', closeModal);
@@ -1190,6 +1258,21 @@ document.querySelectorAll('[data-workspace-modal]').forEach((modal) => {
     closeModal();
   });
 });
+
+document.addEventListener('click', (event) => {
+  const target = event.target?.nodeType === 1 ? event.target : event.target?.parentElement;
+  const trigger = target?.closest('[data-workspace-create]');
+  if (!trigger) return;
+
+  const modal = document.querySelector('[data-workspace-modal]');
+  const input = modal?.querySelector('[data-workspace-name-input]');
+  if (!modal) return;
+
+  event.preventDefault();
+  trigger.closest('.create-menu')?.removeAttribute('open');
+  modal.hidden = false;
+  input?.focus();
+}, true);
 
 document.querySelectorAll('[data-workspace-settings-modal]').forEach((modal) => {
   const input = modal.querySelector('[data-workspace-settings-name]');

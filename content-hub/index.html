@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Content Hub</title>
-  <link rel="stylesheet" href="assets/css/global.css?v=home-action-dropdown-1">
-  <script src="assets/js/app.js?v=home-action-dropdown-1" defer></script>
+  <link rel="stylesheet" href="assets/css/global.css?v=workspace-modal-setup-1">
+  <script src="assets/js/app.js?v=workspace-modal-setup-1" defer></script>
 </head>
 <body>
   <div class="app home-app">
@@ -584,7 +584,7 @@
     </aside>
   </div>
   <div class="modal-backdrop" data-workspace-modal hidden>
-    <section class="workspace-modal" role="dialog" aria-modal="true" aria-labelledby="workspace-modal-title">
+    <section class="workspace-modal workspace-create-modal" role="dialog" aria-modal="true" aria-labelledby="workspace-modal-title">
       <div class="workspace-modal-head">
         <h2 id="workspace-modal-title">Create workspace</h2>
         <button class="icon-btn" type="button" aria-label="Close create workspace" data-workspace-modal-close>
@@ -596,6 +596,24 @@
       <form class="workspace-modal-form" data-workspace-modal-form>
         <label for="workspace-name">Workspace name</label>
         <input id="workspace-name" type="text" name="workspace-name" placeholder="Name this workspace" autocomplete="off" required data-workspace-name-input>
+        <fieldset class="workspace-template-group">
+          <legend>Workspace setup</legend>
+          <label class="workspace-template-option">
+            <input type="radio" name="workspace-template" value="workflow" checked>
+            <span class="workspace-template-copy">
+              <strong>Workflow workspace</strong>
+              <span>Track items through Draft, In review, In approval, and Published.</span>
+            </span>
+          </label>
+          <label class="workspace-template-option">
+            <input type="radio" name="workspace-template" value="library">
+            <span class="workspace-template-copy">
+              <strong>Library workspace</strong>
+              <span>Keep content organized without item statuses or task stages.</span>
+            </span>
+          </label>
+          <p class="workspace-template-note">You can change this later from workspace settings.</p>
+        </fieldset>
         <div class="workspace-modal-actions">
           <button class="secondary-btn" type="button" data-workspace-modal-close>Cancel</button>
           <button class="primary-btn" type="submit">Create</button>

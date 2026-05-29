@@ -184,7 +184,7 @@ button {
 .app {
   --ai-column: clamp(320px, 23.22vw, 351px);
   display: grid;
-  grid-template-columns: 52px 256px minmax(0, 1fr) var(--ai-column);
+  grid-template-columns: 55px 256px minmax(0, 1fr) var(--ai-column);
   width: 100vw;
   min-width: 1180px;
   height: 100vh;
@@ -205,21 +205,21 @@ button {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  width: 52px;
+  width: 55px;
   height: 100%;
   min-height: 0;
-  padding: 0;
+  padding: 32px 2px 16px 1px;
   border-right: 1px solid #171717;
 }
 
 .rail-logo {
-  position: absolute;
-  top: 32px;
-  left: 13px;
+  position: relative;
+  flex: 0 0 auto;
   width: 26px;
   height: 32px;
+  margin-left: 13px;
   color: var(--accent);
 }
 
@@ -237,19 +237,17 @@ button {
 }
 
 .rail-nav {
-  position: absolute;
-  top: calc(50% - 198.058px);
-  left: 0;
+  position: relative;
+  flex: 0 0 auto;
   width: 52px;
   gap: 0;
 }
 
 .rail-bottom {
-  position: absolute;
-  left: 6px;
-  bottom: 16px;
-  width: 40px;
-  gap: 16px;
+  position: relative;
+  flex: 0 0 auto;
+  width: 52px;
+  gap: 0;
 }
 
 .rail-button {
@@ -267,14 +265,14 @@ button {
 }
 
 .rail-button.active {
-  background: #171717;
+  background: transparent;
   color: var(--primary);
   border-radius: 0;
 }
 
 .rail-bottom .rail-button {
-  width: 40px;
-  height: 32px;
+  width: 52px;
+  height: 52px;
 }
 
 .rail-avatar,
@@ -289,7 +287,7 @@ button {
 .rail-avatar {
   width: 32px;
   height: 32px;
-  margin-top: 4px;
+  margin-top: 20px;
   border-radius: 12px;
   font-size: 12px;
   font-weight: 500;
@@ -1112,7 +1110,7 @@ button {
   }
 
   .app {
-    grid-template-columns: 52px 232px minmax(560px, 1fr) var(--ai-column);
+    grid-template-columns: 55px 232px minmax(560px, 1fr) var(--ai-column);
   }
 
   .side-group,
