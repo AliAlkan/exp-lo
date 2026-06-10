@@ -677,6 +677,7 @@ button {
 }
 
 .table-row {
+  position: relative;
   display: flex;
   align-items: center;
   width: 100%;
@@ -687,6 +688,35 @@ button {
 }
 
 .table-row:not(.table-head):hover {
+  background-color: #171717;
+}
+
+.table-row[data-href] {
+  cursor: pointer;
+}
+
+.row-link {
+  position: absolute;
+  inset: 0 40px 0 0;
+  z-index: 1;
+  color: inherit;
+  text-decoration: none;
+}
+
+.table-row[data-href] > :not(.row-link):not(.action-cell) {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.table-row[data-href] .action-cell {
+  position: relative;
+  z-index: 3;
+}
+
+.table-row[data-href]:focus-visible {
+  outline: 1px solid #4299d9;
+  outline-offset: -1px;
   background-color: #171717;
 }
 

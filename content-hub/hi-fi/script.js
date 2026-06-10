@@ -6,6 +6,7 @@ const askButton = document.querySelector(".ask-button");
 const aiPanel = document.querySelector("#ask-ai-panel");
 const aiCloseButton = document.querySelector(".ai-close");
 const promptInput = document.querySelector("#ask-input");
+const previewRows = document.querySelectorAll(".table-row[data-href]");
 
 const setDrawerInert = (isInert) => {
   if (!aiPanel) {
@@ -69,6 +70,26 @@ sidebarItems.forEach((item) => {
   item.addEventListener("click", () => {
     sidebarItems.forEach((entry) => entry.classList.remove("selected"));
     item.classList.add("selected");
+  });
+});
+
+previewRows.forEach((row) => {
+  const navigate = (event) => {
+    if (event.target.closest("button")) {
+      return;
+    }
+
+    window.location.href = row.dataset.href;
+  };
+
+  row.addEventListener("click", navigate);
+  row.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") {
+      return;
+    }
+
+    event.preventDefault();
+    navigate(event);
   });
 });
 

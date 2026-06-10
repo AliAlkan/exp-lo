@@ -1,0 +1,2291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Evolve Content Preview</title>
+    <link rel="icon" href="data:," />
+    <style>
+      :root {
+        --black: #0a0a0a;
+        --panel: #171717;
+        --panel-2: #262626;
+        --panel-3: #404040;
+        --border: #404040;
+        --muted: #a3a3a3;
+        --muted-2: #737373;
+        --neutral-50: #fafafa;
+        --neutral-600: #525252;
+        --neutral-700: #404040;
+        --white: var(--neutral-50);
+        --paper: #fafafa;
+        --ink: #0a0a0a;
+        --orange: #d48a3b;
+        --orange-bg: rgba(120, 67, 12, 0.42);
+        --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+        --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--white);
+        font-family: var(--font-text);
+        font-size: 14px;
+        letter-spacing: 0;
+        font-kerning: normal;
+        font-synthesis: none;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: geometricPrecision;
+      }
+
+      .preview-shell {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+      }
+
+      button {
+        border: 0;
+        padding: 0;
+        color: inherit;
+        background: transparent;
+        font: inherit;
+      }
+
+      .stage {
+        --info-column: 322px;
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) var(--info-column);
+        grid-template-rows: 60px minmax(0, 1fr);
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--black);
+        transition: grid-template-columns 180ms cubic-bezier(0.2, 0, 0, 1);
+      }
+
+      .stage.info-drawer-closed {
+        --info-column: 0px;
+      }
+
+      .figma-icon {
+        display: block;
+        flex: 0 0 auto;
+        object-fit: fill;
+      }
+
+      .icon-frame {
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+      }
+
+      .icon-frame-16 {
+        width: 16px;
+        height: 16px;
+      }
+
+      .icon-x {
+        width: 11.3px;
+        height: 11.3px;
+      }
+
+      .icon-lock {
+        width: 13.2px;
+        height: 14.533px;
+      }
+
+      .icon-chevron {
+        width: 10.3px;
+        height: 5.8px;
+      }
+
+      .icon-chevron-muted {
+        width: 9.1px;
+        height: 5.1px;
+        opacity: 0.5;
+      }
+
+      .icon-info {
+        width: 16.33px;
+        height: 16.33px;
+      }
+
+      .icon-panel-info,
+      .icon-copy {
+        width: 14.533px;
+        height: 14.533px;
+      }
+
+      .icon-message {
+        width: 14.83px;
+        height: 14.83px;
+      }
+
+      .icon-history,
+      .icon-download {
+        width: 14.6px;
+        height: 14.6px;
+      }
+
+      .icon-link {
+        width: 16.015px;
+        height: 16px;
+      }
+
+      .icon-ellipsis {
+        width: 2.83px;
+        height: 13.33px;
+      }
+
+      .icon-sparkle {
+        width: 14.5337px;
+        height: 14.5337px;
+      }
+
+      .icon-box {
+        width: 13.2px;
+        height: 14.532px;
+      }
+
+      .icon-minus {
+        width: 11.6px;
+        height: 1.1px;
+      }
+
+      .icon-plus {
+        width: 11.6px;
+        height: 11.6px;
+      }
+
+      .topbar {
+        position: relative;
+        grid-column: 1 / -1;
+        grid-row: 1;
+        z-index: 10;
+        height: 60px;
+        background: var(--black);
+      }
+
+      .top-left,
+      .top-actions,
+      .file-group,
+      .avatar-stack,
+      .icon-row {
+        display: flex;
+        align-items: center;
+      }
+
+      .top-left {
+        position: absolute;
+        top: 12px;
+        left: 20px;
+        width: 373px;
+        height: 36px;
+        gap: 12px;
+      }
+
+      .close-action {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .file-group {
+        gap: 6px;
+      }
+
+      .file-chip {
+        display: flex;
+        align-items: center;
+        width: 244px;
+        height: 36px;
+        padding: 0 16px;
+        border: 1px solid #404040;
+        border-radius: 12px;
+        color: var(--white);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .review-chip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 79px;
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 10px;
+        background: var(--panel-2);
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .top-actions {
+        position: absolute;
+        top: 12px;
+        right: 20px;
+        width: 710px;
+        max-width: calc(100% - 433px);
+        height: 36px;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
+      .avatar-stack {
+        position: relative;
+        display: block;
+        flex: 0 0 auto;
+        width: 109px;
+        height: 28px;
+        overflow: visible;
+      }
+
+      .person,
+      .more-people {
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        position: absolute;
+        top: 0;
+        height: 28px;
+        border: 0;
+        border-radius: 10px;
+        box-shadow: 0 0 0 2px #171717;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
+      }
+
+      .author-avatar {
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        height: 28px;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
+      }
+
+      .person {
+        width: 28px;
+      }
+
+      .person.ap {
+        left: 0;
+      }
+
+      .person.ms {
+        left: 26px;
+      }
+
+      .person.cs {
+        left: 52px;
+      }
+
+      .person.ap,
+      .author-avatar {
+        background: #591e5a;
+        color: #fc9fff;
+      }
+
+      .person.ms {
+        background: #5a451e;
+        color: #ffe79f;
+      }
+
+      .person.cs {
+        background: #1b4d29;
+        color: #8de981;
+      }
+
+      .more-people {
+        left: 78px;
+        width: 31px;
+        background: var(--panel-2);
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 7px;
+      }
+
+      .pill {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        border-radius: 23px;
+        background: var(--panel-2);
+        color: var(--white);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        transition: background-color 120ms ease;
+      }
+
+      .share {
+        width: 106px;
+        gap: 10px;
+        background: var(--neutral-700);
+      }
+
+      .share:hover,
+      .approve-action:hover,
+      .approve-menu-trigger:hover {
+        background: var(--neutral-600);
+      }
+
+      .share-label,
+      .ask-label,
+      .manage-label {
+        display: block;
+        flex: 0 0 auto;
+      }
+
+      .share-label {
+        width: 40px;
+      }
+
+      .approve-menu-wrap {
+        position: relative;
+        flex: 0 0 auto;
+        width: 140px;
+        height: 36px;
+      }
+
+      .approve-control {
+        display: flex;
+        align-items: center;
+        width: 140px;
+        height: 36px;
+        overflow: hidden;
+        border-radius: 23px;
+        background: var(--neutral-700);
+        justify-content: flex-start;
+      }
+
+      .approve-action,
+      .approve-menu-trigger {
+        cursor: pointer;
+      }
+
+      .approve-action {
+        display: grid;
+        place-items: center;
+        width: 98px;
+        height: 36px;
+        background: transparent;
+        color: var(--white);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        transition: background-color 120ms ease;
+      }
+
+      .approve-menu-trigger {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 36px;
+        border-left: 1px solid var(--muted-2);
+        background: transparent;
+        color: var(--white);
+        transition: background-color 120ms ease, color 120ms ease;
+      }
+
+      .approve-menu-trigger:hover,
+      .approve-menu-trigger:active {
+        color: var(--neutral-50);
+      }
+
+      .approve-action:focus,
+      .approve-menu-trigger:focus {
+        outline: 0;
+      }
+
+      .approve-menu-trigger svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .approve-dropdown {
+        position: absolute;
+        top: 46px;
+        right: 0;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 256px;
+        min-height: 118px;
+        padding: 8px;
+        border-radius: 12px;
+        background: var(--panel-2);
+      }
+
+      .approve-dropdown[hidden] {
+        display: none;
+      }
+
+      .approve-menu-item {
+        display: flex;
+        align-items: center;
+        width: 240px;
+        height: 34px;
+        padding: 1px 6px;
+        gap: 8px;
+        border-radius: 8px;
+        color: #d4d4d4;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .approve-menu-item:hover,
+      .approve-menu-item:focus-visible {
+        background: rgba(64, 64, 64, 0.58);
+        outline: 0;
+      }
+
+      .approve-menu-item.destructive {
+        color: #f87171;
+      }
+
+      .approve-menu-icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+      }
+
+      .approve-menu-icon svg {
+        display: block;
+        width: 18px;
+        height: 18px;
+      }
+
+      .more-options-wrap {
+        position: relative;
+        flex: 0 0 auto;
+        width: 36px;
+        height: 36px;
+      }
+
+      .more-options-menu {
+        position: absolute;
+        top: 46px;
+        right: 0;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 256px;
+        min-height: 202px;
+        padding: 8px;
+        border-radius: 12px;
+        background: var(--panel-2);
+      }
+
+      .more-options-menu[hidden] {
+        display: none;
+      }
+
+      .more-menu-item {
+        display: flex;
+        align-items: center;
+        width: 240px;
+        height: 34px;
+        padding: 1px 6px;
+        gap: 8px;
+        border-radius: 8px;
+        color: #d4d4d4;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+
+      .more-menu-item:hover,
+      .more-menu-item:focus-visible {
+        background: rgba(64, 64, 64, 0.58);
+        outline: 0;
+      }
+
+      .more-menu-item.destructive {
+        color: #f87171;
+      }
+
+      .more-menu-icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+      }
+
+      .more-menu-icon svg {
+        display: block;
+        width: 18px;
+        height: 18px;
+      }
+
+      .more-menu-separator {
+        position: relative;
+        flex: 0 0 auto;
+        width: 240px;
+        height: 16px;
+      }
+
+      .more-menu-separator::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: var(--border);
+        content: "";
+      }
+
+      .icon-row {
+        width: 331px;
+        height: 36px;
+        gap: 4px;
+      }
+
+      .icon-button {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        color: #d4d4d4;
+        cursor: pointer;
+        transition: color 120ms ease;
+      }
+
+      .icon-button:hover,
+      .icon-button:active {
+        color: var(--neutral-50);
+      }
+
+      .icon-button[data-tooltip]::before,
+      .icon-button[data-tooltip]::after {
+        position: absolute;
+        left: 50%;
+        z-index: 40;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 120ms ease,
+          transform 120ms ease,
+          visibility 120ms ease;
+        visibility: hidden;
+      }
+
+      .icon-button[data-tooltip]::before {
+        top: calc(100% + 4px);
+        width: 8px;
+        height: 8px;
+        background: var(--panel-2);
+        content: "";
+        transform: translate(-50%, -2px) rotate(45deg);
+      }
+
+      .icon-button[data-tooltip]::after {
+        top: calc(100% + 8px);
+        min-width: max-content;
+        padding: 4px 8px;
+        border-radius: 6px;
+        background: var(--panel-2);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+        color: var(--neutral-50);
+        content: attr(data-tooltip);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+        transform: translate(-50%, -2px);
+        white-space: nowrap;
+      }
+
+      .icon-button[data-tooltip]:hover::before,
+      .icon-button[data-tooltip]:hover::after,
+      .icon-button[data-tooltip]:focus-visible::before,
+      .icon-button[data-tooltip]:focus-visible::after {
+        opacity: 1;
+        transform: translate(-50%, 0) rotate(45deg);
+        visibility: visible;
+      }
+
+      .icon-button[data-tooltip]:hover::after,
+      .icon-button[data-tooltip]:focus-visible::after {
+        transform: translate(-50%, 0);
+      }
+
+      .more-options-toggle[aria-expanded="true"]::before,
+      .more-options-toggle[aria-expanded="true"]::after,
+      .icon-button.tooltip-dismissed[data-tooltip]::before,
+      .icon-button.tooltip-dismissed[data-tooltip]::after,
+      .icon-button.tooltip-dismissed[data-tooltip]:hover::before,
+      .icon-button.tooltip-dismissed[data-tooltip]:hover::after,
+      .icon-button.tooltip-dismissed[data-tooltip]:focus-visible::before,
+      .icon-button.tooltip-dismissed[data-tooltip]:focus-visible::after {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      .divider {
+        display: block;
+        width: 12px;
+        height: 36px;
+      }
+
+      .ask {
+        width: 75px;
+        gap: 10px;
+        background: transparent;
+        color: #d4d4d4;
+        font-weight: 500;
+      }
+
+      .ask-label {
+        width: 25px;
+      }
+
+      .document-viewport {
+        position: relative;
+        grid-column: 1;
+        grid-row: 2;
+        width: 100%;
+        height: 100%;
+        min-width: 0;
+        padding: 8px 16px;
+        overflow: auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+
+      .page-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: min(982px, 100%);
+        gap: 24px;
+        padding-bottom: 112px;
+      }
+
+      .paper {
+        position: relative;
+        flex: 0 0 auto;
+        width: 100%;
+        aspect-ratio: 210 / 297;
+        overflow: hidden;
+        background: var(--paper);
+        color: var(--ink);
+        padding: 56px 32px 0;
+      }
+
+      .paper h1 {
+        width: min(856px, 100%);
+        margin: 0;
+        color: var(--ink);
+        font-family: var(--font-display);
+        font-size: 36px;
+        font-weight: 600;
+        line-height: 36px;
+        letter-spacing: 0;
+        white-space: normal;
+      }
+
+      .paper-copy {
+        width: min(856px, 100%);
+        min-height: 217px;
+        margin: 44px 0 0;
+        color: var(--ink);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 32px;
+      }
+
+      .evolve-table {
+        width: 100%;
+        max-width: 918px;
+        height: 320px;
+        margin-top: 44px;
+        overflow: hidden;
+        border: 1px solid #262626;
+        border-radius: 12px;
+      }
+
+      .evolve-table table {
+        width: 100%;
+        height: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      .evolve-table col:nth-child(1) {
+        width: 140px;
+      }
+
+      .evolve-table col:nth-child(2) {
+        width: 267px;
+      }
+
+      .evolve-table col:nth-child(3) {
+        width: 258px;
+      }
+
+      .evolve-table col:nth-child(4) {
+        width: 253px;
+      }
+
+      .evolve-table th,
+      .evolve-table td {
+        padding: 10px 16px;
+        vertical-align: top;
+        color: var(--ink);
+        border-bottom: 1px solid #262626;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: left;
+      }
+
+      .evolve-table th {
+        height: 40px;
+        font-weight: 600;
+      }
+
+      .evolve-table td {
+        font-weight: 400;
+      }
+
+      .evolve-table tbody tr:nth-child(1),
+      .evolve-table tbody tr:nth-child(2) {
+        height: 60px;
+      }
+
+      .evolve-table tbody tr:nth-child(3),
+      .evolve-table tbody tr:nth-child(4) {
+        height: 80px;
+      }
+
+      .evolve-table tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .evolve-table tbody td:first-child {
+        font-weight: 600;
+      }
+
+      .paper-copy.after-table {
+        margin-top: 44px;
+      }
+
+      .paper-copy.continuation {
+        min-height: 0;
+        margin-top: 0;
+      }
+
+      .paper-copy.flow {
+        min-height: 0;
+        margin-top: 28px;
+      }
+
+      .info-panel {
+        position: relative;
+        grid-column: 2;
+        grid-row: 2;
+        align-self: start;
+        width: 314px;
+        height: calc(100% - 8px);
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+        border-radius: 12px;
+        background: var(--panel);
+        color: var(--white);
+        opacity: 1;
+        transform: translateX(0);
+        transition:
+          opacity 140ms ease,
+          transform 180ms cubic-bezier(0.2, 0, 0, 1);
+        will-change: opacity, transform;
+      }
+
+      .stage.info-drawer-closed .info-panel {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(10px);
+      }
+
+      .info-panel[hidden] {
+        display: none;
+      }
+
+      .info-header {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 48px;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--border);
+        background: var(--panel);
+      }
+
+      .info-header h2 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+
+      .panel-close {
+        display: grid;
+        place-items: center;
+        width: 20px;
+        height: 20px;
+        color: #d4d4d4;
+        cursor: pointer;
+        transition: color 120ms ease;
+      }
+
+      .panel-close:hover,
+      .panel-close:active {
+        color: var(--neutral-50);
+      }
+
+      .panel-section {
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .panel-section.access {
+        height: 144px;
+      }
+
+      .panel-section.readiness {
+        height: 104px;
+      }
+
+      .panel-section.details {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+        border-bottom: 0;
+      }
+
+      .section-title {
+        margin: 0;
+        color: var(--white);
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+
+      .subtle {
+        margin: 12px 0 0;
+        color: var(--muted-2);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+
+      .manage-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        max-width: 100%;
+        height: 36px;
+        margin-top: 12px;
+        padding: 0 16px;
+        gap: 10px;
+        border-radius: 23px;
+        background: #404040;
+        color: var(--white);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+
+      .manage-label {
+        width: auto;
+      }
+
+      .readiness-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .status-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 126px;
+        height: 28px;
+        margin-top: 12px;
+        padding: 4px 8px;
+        gap: 8px;
+        border-radius: 10px;
+        background: var(--orange-bg);
+        color: var(--orange);
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .status-dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: var(--orange);
+      }
+
+      .detail-list {
+        display: grid;
+        gap: 12px;
+        width: 100%;
+        min-width: 0;
+        margin-top: 12px;
+      }
+
+      .detail-block {
+        width: 100%;
+        min-height: 38px;
+        min-width: 0;
+      }
+
+      .detail-label {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16px;
+      }
+
+      .detail-value {
+        display: flex;
+        align-items: center;
+        min-height: 20px;
+        margin-top: 2px;
+        gap: 8px;
+        color: var(--white);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+
+      .detail-value.wrap {
+        display: block;
+        overflow-wrap: anywhere;
+      }
+
+      .detail-value.copyable {
+        width: 100%;
+        justify-content: space-between;
+        min-width: 0;
+        overflow: hidden;
+      }
+
+      .copyable-text {
+        display: block;
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .detail-note {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
+      }
+
+
+      .author-row {
+        height: 28px;
+        margin-top: 6px;
+        font-weight: 500;
+      }
+
+      .author-avatar {
+        width: 28px;
+        margin-right: 0;
+        border: 0;
+        background: #491d49;
+        color: #fc9fff;
+      }
+
+      .location-block {
+        min-height: 42px;
+      }
+
+      .location-block .detail-value {
+        margin-top: 6px;
+        font-weight: 500;
+      }
+
+      .item-id {
+        max-width: 250px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .page-control-shell {
+        position: absolute;
+        left: calc((100% - var(--info-column) - 229px) / 2);
+        bottom: 0;
+        width: 229px;
+        height: 56px;
+        padding: 8px 0;
+        z-index: 3;
+      }
+
+      .page-control {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 229px;
+        height: 40px;
+        padding: 4px 4px 4px 16px;
+        border-radius: 999px;
+        background: var(--panel-2);
+        color: var(--white);
+      }
+
+      .page-side,
+      .zoom-side {
+        display: flex;
+        align-items: center;
+        height: 32px;
+      }
+
+      .page-side {
+        gap: 2px;
+        width: 94px;
+      }
+
+      .zoom-side {
+        width: 115px;
+        justify-content: flex-end;
+        gap: 2px;
+      }
+
+      .page-control span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+      }
+
+      .page-title {
+        width: 34px;
+      }
+
+      .page-input {
+        display: grid;
+        place-items: center;
+        width: 23px;
+        height: 24px;
+        padding: 0;
+        border: 1px solid #404040;
+        border-radius: 8px;
+        background: var(--panel-2);
+        text-align: center;
+      }
+
+      .page-total {
+        display: grid;
+        place-items: center;
+        width: 26px;
+        height: 24px;
+        padding: 2px 8px;
+        border-radius: 8px;
+        background: var(--panel-2);
+      }
+
+      .slash,
+      .minus {
+        width: 5px;
+        color: var(--muted);
+      }
+
+      .zoom-button {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 12px;
+      }
+
+      .zoom-trigger {
+        display: flex;
+        align-items: center;
+        width: 47px;
+        height: 24px;
+        gap: 6px;
+        border-radius: 12px;
+        background: var(--panel-2);
+      }
+
+      .zoom-value {
+        width: 25px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .stage,
+        .info-panel {
+          transition: none;
+        }
+      }
+
+      @media (max-width: 1180px) {
+        .top-left {
+          left: 12px;
+        }
+
+        .top-actions {
+          right: 12px;
+          gap: 6px;
+          max-width: calc(100% - 409px);
+        }
+      }
+
+      @media (max-width: 980px) {
+        body {
+          overflow: auto;
+        }
+
+        .preview-shell {
+          height: auto;
+          min-height: 100vh;
+          min-height: 100dvh;
+          overflow: visible;
+        }
+
+        .stage {
+          --info-column: 0px;
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: 60px auto auto;
+          min-height: 100vh;
+          min-height: 100dvh;
+          height: auto;
+          overflow: visible;
+        }
+
+        .top-actions {
+          width: auto;
+          max-width: none;
+        }
+
+        .icon-row {
+          display: none;
+        }
+
+        .document-viewport {
+          height: auto;
+          min-height: calc(100vh - 116px);
+          min-height: calc(100dvh - 116px);
+          overflow: visible;
+        }
+
+        .paper {
+          height: auto;
+          min-height: auto;
+          overflow: visible;
+          padding-bottom: 88px;
+        }
+
+        .info-panel {
+          grid-column: 1;
+          grid-row: 3;
+          width: 100%;
+          height: auto;
+          border-radius: 12px;
+          overflow: visible;
+        }
+
+        .panel-section,
+        .panel-section.access,
+        .panel-section.readiness,
+        .panel-section.details {
+          height: auto;
+        }
+
+        .panel-section.details {
+          overflow: visible;
+        }
+
+        .page-control-shell {
+          position: fixed;
+          left: 50%;
+          bottom: 12px;
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .top-left {
+          width: auto;
+        }
+
+        .file-chip {
+          width: 156px;
+        }
+
+        .review-chip,
+        .avatar-stack,
+        .approve-menu-wrap {
+          display: none;
+        }
+
+        .share {
+          width: 96px;
+        }
+
+        .document-viewport {
+          padding: 8px;
+        }
+
+        .paper {
+          padding: 36px 20px 88px;
+          min-height: 0;
+        }
+
+        .paper h1 {
+          width: auto;
+          font-size: 30px;
+          line-height: 34px;
+          white-space: normal;
+        }
+
+        .paper-copy {
+          min-height: 0;
+          line-height: 28px;
+        }
+
+        .evolve-table {
+          height: auto;
+          overflow-x: auto;
+        }
+
+        .evolve-table table {
+          min-width: 760px;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="preview-shell">
+    <main class="stage info-drawer-closed" aria-label="Content preview">
+      <header class="topbar" aria-label="Document actions">
+        <div class="top-left">
+          <a class="close-action" href="./index.html" aria-label="Close">
+            <img class="figma-icon icon-x" src="./assets/icons/content-preview/x.svg" alt="" />
+          </a>
+          <div class="file-group">
+            <button class="file-chip" type="button">longevity_research_brief.docx</button>
+            <div class="review-chip">In review</div>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <div class="avatar-stack" aria-label="Collaborators">
+            <span class="person ap">AP</span>
+            <span class="person ms">MS</span>
+            <span class="person cs">CS</span>
+            <span class="more-people">22+</span>
+          </div>
+          <button class="pill share" type="button">
+            <span class="icon-frame icon-frame-16">
+              <svg class="figma-icon icon-lock" viewBox="0 0 13.2 14.533" fill="none" aria-hidden="true">
+                <path d="M10.6 6.1V4.1C10.6 1.89086 8.80914 0.1 6.6 0.1C4.39086 0.1 2.6 1.89086 2.6 4.1V6.1M1.93333 6.1H11.2667C12.003 6.1 12.6 6.69695 12.6 7.43333V12.1C12.6 12.8364 12.003 13.4333 11.2667 13.4333H1.93333C1.19695 13.4333 0.6 12.8364 0.6 12.1V7.43333C0.6 6.69695 1.19695 6.1 1.93333 6.1Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span class="share-label">Share</span>
+          </button>
+          <div class="approve-menu-wrap">
+            <div class="approve-control" role="group" aria-label="Review actions">
+              <button class="approve-action" type="button">Approve</button>
+              <button
+                class="approve-menu-trigger"
+                type="button"
+                aria-label="Review action menu"
+                aria-haspopup="menu"
+                aria-controls="approve-menu"
+                aria-expanded="false"
+              >
+                <svg class="figma-icon" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+            <div class="approve-dropdown" id="approve-menu" role="menu" aria-label="Review actions" hidden>
+              <button class="approve-menu-item" type="button" role="menuitem">
+                <span class="approve-menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M3 12A9 9 0 0 1 18.36 5.64L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M21 3V8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M21 12A9 9 0 0 1 5.64 18.36L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3 21V16H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <span>Request changes</span>
+              </button>
+              <button class="approve-menu-item" type="button" role="menuitem">
+                <span class="approve-menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L7 17L2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M22 10L14.5 17.5L13 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <span>Publish</span>
+              </button>
+              <button class="approve-menu-item destructive" type="button" role="menuitem">
+                <span class="approve-menu-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <span>Reject</span>
+              </button>
+            </div>
+          </div>
+          <div class="icon-row">
+            <button class="icon-button info-toggle" type="button" aria-label="Info" aria-controls="file-info-panel" aria-expanded="false" data-tooltip="Info">
+              <svg class="figma-icon icon-info" viewBox="0 0 16.33 16.33" fill="none" aria-hidden="true">
+                <path d="M8.165 11.165V8.165M8.165 5.165H8.1725M15.665 8.165C15.665 12.3071 12.3071 15.665 8.165 15.665C4.02286 15.665 0.665 12.3071 0.665 8.165C0.665 4.02286 4.02286 0.665 8.165 0.665C12.3071 0.665 15.665 4.02286 15.665 8.165Z" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button class="icon-button" type="button" aria-label="Comments" data-tooltip="Comments">
+              <svg class="figma-icon icon-message" viewBox="0 0 14.83 14.83" fill="none" aria-hidden="true">
+                <path d="M14.165 9.665C14.165 10.0628 14.007 10.4444 13.7257 10.7257C13.4444 11.007 13.0628 11.165 12.665 11.165H3.665L0.665 14.165V2.165C0.665 1.76718 0.823035 1.38564 1.10434 1.10434C1.38564 0.823035 1.76718 0.665 2.165 0.665H12.665C13.0628 0.665 13.4444 0.823035 13.7257 1.10434C14.007 1.38564 14.165 1.76718 14.165 2.165V9.665Z" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button class="icon-button" type="button" aria-label="Activity" data-tooltip="Activity">
+              <svg class="figma-icon icon-history" viewBox="0 0 14.6 14.6" fill="none" aria-hidden="true">
+                <path d="M0.55 7.3C0.55 8.63503 0.945881 9.94007 1.68758 11.0501C2.42928 12.1601 3.48349 13.0253 4.71689 13.5362C5.95029 14.0471 7.30749 14.1808 8.61686 13.9203C9.92623 13.6599 11.129 13.017 12.073 12.073C13.017 11.129 13.6599 9.92624 13.9203 8.61686C14.1808 7.30749 14.0471 5.95029 13.5362 4.71689C13.0253 3.48349 12.1601 2.42928 11.0501 1.68758C9.94007 0.945885 8.63502 0.550004 7.3 0.550004C5.41296 0.557103 3.60173 1.29342 2.245 2.605L0.55 4.3M4.3 4.3H0.55V0.550004M7.3 3.55V7.3L10.3 8.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <img class="divider" src="./assets/icons/content-preview/divider.svg" alt="" aria-hidden="true" />
+            <button class="icon-button" type="button" aria-label="Download" data-tooltip="Download">
+              <svg class="figma-icon icon-download" viewBox="0 0 14.6 14.6" fill="none" aria-hidden="true">
+                <path d="M14.05 9.55V12.55C14.05 12.9478 13.892 13.3294 13.6107 13.6107C13.3294 13.892 12.9478 14.05 12.55 14.05H2.05C1.65218 14.05 1.27064 13.892 0.98934 13.6107C0.708035 13.3294 0.55 12.9478 0.55 12.55V9.55M11.05 5.8L7.3 9.55L3.55 5.8M7.3 9.55V0.55" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <button class="icon-button" type="button" aria-label="Copy link" data-tooltip="Copy link">
+              <svg class="figma-icon icon-link" viewBox="0 0 16.0152 16.0004" fill="none" aria-hidden="true">
+                <path d="M6.50752 8.75017C6.82961 9.18077 7.24054 9.53706 7.71243 9.79487C8.18433 10.0527 8.70615 10.206 9.24251 10.2444C9.77886 10.2828 10.3172 10.2054 10.821 10.0175C11.3248 9.82957 11.7824 9.53547 12.1625 9.15517L14.4125 6.90517C15.0956 6.19791 15.4736 5.25065 15.465 4.26741C15.4565 3.28418 15.0621 2.34363 14.3668 1.64835C13.6716 0.953069 12.731 0.558686 11.7478 0.550142C10.7645 0.541598 9.81728 0.919577 9.11002 1.60267L7.82002 2.88517M9.50767 7.25018C9.18558 6.81958 8.77465 6.46329 8.30276 6.20548C7.83086 5.94766 7.30904 5.79434 6.77268 5.75593C6.23632 5.71752 5.69798 5.79491 5.19416 5.98285C4.69034 6.17078 4.23283 6.46488 3.85267 6.84518L1.60267 9.09518C0.919577 9.80244 0.541598 10.7497 0.550142 11.7329C0.558686 12.7162 0.953069 13.6567 1.64835 14.352C2.34363 15.0473 3.28418 15.4417 4.26741 15.4502C5.25065 15.4588 6.19791 15.0808 6.90517 14.3977L8.18767 13.1152" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+            <div class="more-options-wrap">
+              <button
+                class="icon-button more-options-toggle"
+                type="button"
+                aria-label="More options"
+                data-tooltip="More"
+                aria-haspopup="menu"
+                aria-controls="more-options-menu"
+                aria-expanded="false"
+              >
+                <svg class="figma-icon icon-ellipsis" viewBox="0 0 2.83 13.33" fill="none" aria-hidden="true">
+                  <path d="M1.415 7.415C1.82921 7.415 2.165 7.07921 2.165 6.665C2.165 6.25079 1.82921 5.915 1.415 5.915C1.00079 5.915 0.665 6.25079 0.665 6.665C0.665 7.07921 1.00079 7.415 1.415 7.415Z" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M1.415 2.165C1.82921 2.165 2.165 1.82921 2.165 1.415C2.165 1.00079 1.82921 0.665 1.415 0.665C1.00079 0.665 0.665 1.00079 0.665 1.415C0.665 1.82921 1.00079 2.165 1.415 2.165Z" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M1.415 12.665C1.82921 12.665 2.165 12.3292 2.165 11.915C2.165 11.5008 1.82921 11.165 1.415 11.165C1.00079 11.165 0.665 11.5008 0.665 11.915C0.665 12.3292 1.00079 12.665 1.415 12.665Z" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="more-options-menu" id="more-options-menu" role="menu" aria-label="More options" hidden>
+                <button class="more-menu-item" type="button" role="menuitem">
+                  <span class="more-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 4V20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M4 7V5C4 4.44772 4.44772 4 5 4H19C19.5523 4 20 4.44772 20 5V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M9 20H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Rename</span>
+                </button>
+                <button class="more-menu-item" type="button" role="menuitem">
+                  <span class="more-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <rect x="8" y="8" width="14" height="14" rx="2" ry="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M4 16C2.9 16 2 15.1 2 14V4C2 2.9 2.9 2 4 2H14C15.1 2 16 2.9 16 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Make a copy</span>
+                </button>
+                <button class="more-menu-item" type="button" role="menuitem">
+                  <span class="more-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M2 9V5C2 3.89543 2.89543 3 4 3H7.9C8.56843 3 9.19256 3.3342 9.56325 3.8906L10.4 5.1C10.7707 5.6564 11.3949 6 12.0633 6H20C21.1046 6 22 6.89543 22 8V18C22 19.1046 21.1046 20 20 20H4C2.89543 20 2 19.1046 2 18V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M2 13H12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M9 16L12 13L9 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Move</span>
+                </button>
+                <div class="more-menu-separator" role="separator"></div>
+                <button class="more-menu-item" type="button" role="menuitem">
+                  <span class="more-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <rect x="2" y="3" width="20" height="5" rx="1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M4 8V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M10 12H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Archive</span>
+                </button>
+                <button class="more-menu-item destructive" type="button" role="menuitem">
+                  <span class="more-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M19 6V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </div>
+            <button class="pill ask" type="button">
+              <span class="icon-frame icon-frame-16">
+                <img class="figma-icon icon-sparkle" src="./assets/icons/content-preview/sparkle.svg" alt="" />
+              </span>
+              <span class="ask-label">Ask</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <section class="document-viewport" aria-label="Document pages" tabindex="0">
+        <div class="page-stack">
+          <article class="paper" aria-label="Page 1 of 4">
+            <h1>Healthspan Extension in an Aging World</h1>
+            <p class="paper-copy">
+              The longevity research program brings together cellular biology, clinical translation, and population health
+              to study how people can preserve function for longer periods of life. The field has moved beyond broad
+              anti-aging claims toward measurable changes in resilience, inflammation, metabolic flexibility, and tissue
+              repair. A practical research agenda should connect laboratory signals with human outcomes that matter:
+              mobility, cognition, immune response, and independence. This opening page frames the domains that should be
+              prioritized before a project moves from discovery science into a human protocol.
+            </p>
+
+            <div class="evolve-table">
+              <table aria-label="Longevity research domains">
+                <colgroup>
+                  <col />
+                  <col />
+                  <col />
+                  <col />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>Domain</th>
+                    <th>Evidence Signal</th>
+                    <th>Study Use</th>
+                    <th>Checkpoint</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Senescence</td>
+                    <td>Lower inflammatory secretions in aged tissue models</td>
+                    <td>Screen senolytic and senomorphic candidates</td>
+                    <td>Replicate in two cell types before animal work</td>
+                  </tr>
+                  <tr>
+                    <td>Metabolism</td>
+                    <td>Improved glucose handling and mitochondrial output</td>
+                    <td>Guide nutrition, exercise, and drug trials</td>
+                    <td>Confirm safety in older adult cohorts</td>
+                  </tr>
+                  <tr>
+                    <td>Epigenetics</td>
+                    <td>Slower drift across methylation clock panels</td>
+                    <td>Measure biological age as a supporting readout</td>
+                    <td>Compare clock change with functional outcomes</td>
+                  </tr>
+                  <tr>
+                    <td>Immunity</td>
+                    <td>Stronger vaccine response and lower chronic activation</td>
+                    <td>Track immune resilience after intervention</td>
+                    <td>Report infection and recovery endpoints</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="paper-copy after-table">
+              A credible longevity program should treat lifespan extension as a secondary question and healthspan as the
+              primary endpoint. The most useful studies are not the ones with the loudest mechanistic claim; they are the
+              ones that connect a plausible biological pathway to a measurable improvement in daily function. For that
+              reason, each project should include a pre-defined biomarker panel, a participant-centered outcome, and a
+              replication plan before it is promoted from discovery to translation. This keeps discovery science ambitious
+              while giving clinical teams a disciplined way to decide what belongs in a human protocol.
+            </p>
+            <p class="paper-copy flow">
+              The program should also separate evidence quality from public excitement. Animal survival curves, cell culture
+              rescue, and biological age estimates can all be useful, but none of them automatically predict a stronger,
+              safer, or more independent older adult. Each research domain should therefore include a translational bridge:
+              what would need to be true in people, over what time period, and with what safety signal.
+            </p>
+            <p class="paper-copy flow">
+              This approach creates a common language for scientists, clinicians, and operations teams. It allows the group
+              to compare very different interventions without pretending they are equally mature.
+            </p>
+            <p class="paper-copy flow">
+              The summary separates promising signals from claims that are clinically ready.
+            </p>
+          </article>
+
+          <article class="paper" aria-label="Page 2 of 4">
+            <p class="paper-copy continuation">
+              Longevity interventions should be evaluated as a portfolio rather than a single breakthrough. Exercise,
+              nutritional timing, sleep stabilization, and pharmacologic candidates can affect overlapping pathways, but
+              they differ in risk, cost, and readiness for human testing. Mature behavior-led protocols belong closest to
+              routine clinical translation because they have clearer safety profiles and can be personalized with existing
+              monitoring tools. Earlier molecular interventions, such as mTOR modulation, senolytic dosing, and partial
+              cellular reprogramming, should remain inside controlled research environments until their dosing logic and
+              adverse-event profile are better understood.
+            </p>
+            <p class="paper-copy flow">
+              The strongest intervention studies combine biological plausibility with operational realism. Protocols need
+              enough structure to produce interpretable data, but enough flexibility to fit older adults with different
+              baseline function, medication use, and recovery capacity. Safety review should occur before recruitment and
+              again after the first completion cohort, with clear stop rules for fatigue, metabolic instability, or immune
+              suppression. This is especially important when an intervention is expected to produce small cumulative gains
+              rather than an immediate clinical effect. Researchers should avoid treating short-term biomarker movement as
+              proof of rejuvenation unless it is accompanied by durable functional improvement.
+            </p>
+            <p class="paper-copy flow">
+              A practical pipeline should stage interventions by readiness. Low-risk behavioral protocols can be tested with
+              larger, more diverse cohorts, while drug candidates and cellular approaches should begin with smaller safety
+              cohorts and independent monitoring. The same dashboard can track both, but the decision thresholds should be
+              stricter when the biological mechanism is less reversible.
+            </p>
+            <p class="paper-copy flow">
+              The goal is not to slow down translation; it is to make translation credible enough to survive replication.
+            </p>
+            <p class="paper-copy flow">
+              In practice, that means every candidate protocol needs an owner, a monitoring plan, and a clear handoff from
+              discovery review to clinical operations before participants are invited into the study.
+            </p>
+            <p class="paper-copy flow">
+              Behavioral protocols should be written with the same care as drug protocols. Training frequency, recovery
+              days, nutrition windows, adherence thresholds, and escalation rules all affect the signal. If these details
+              are left informal, the study may appear pragmatic but produce data that cannot be interpreted.
+            </p>
+            <p class="paper-copy flow">
+              Molecular candidates need a different operating model. Before a senolytic or immune-modulating protocol is
+              presented to participants, the team should define a dose rationale, expected washout period, monitoring
+              cadence, and stopping criteria. Even when the hypothesis is compelling, reversibility and rescue plans matter.
+            </p>
+            <p class="paper-copy flow">
+              The most useful trials will compare intervention effects across several layers: symptoms, performance,
+              molecular signals, and participant burden. A protocol that improves one biomarker but makes daily life harder
+              may be scientifically interesting without being clinically valuable.
+            </p>
+          </article>
+
+          <article class="paper" aria-label="Page 3 of 4">
+            <p class="paper-copy continuation">
+              Biomarkers are useful only when they help researchers make better decisions. A longevity study should not
+              rely on a single biological age estimate or one inflammatory protein. Instead, it should combine molecular,
+              functional, and behavioral measures so each signal can be interpreted in context. A participant who improves
+              grip strength and sleep but shows no methylation-clock change may still be responding meaningfully. The goal
+              is to map resilience, not to chase one number. For this reason, the biomarker plan should be specified before
+              enrollment, including which signals are primary, which are exploratory, and which trigger a safety review.
+            </p>
+            <p class="paper-copy flow">
+              Data interpretation should be conservative. Short-term biomarker movement can reflect hydration, acute
+              illness, training load, medication changes, or assay noise. The review team should pre-register which
+              changes count as exploratory signals and which changes trigger a protocol decision. This discipline keeps the
+              study useful even when individual markers move in different directions. It also protects participants from
+              overinterpreting personal results that may be meaningful at the cohort level but unstable at the individual
+              level. When possible, reporting should pair each molecular marker with a functional measure such as gait
+              speed, grip strength, VO2 estimate, immune response, sleep continuity, or recovery time after exertion.
+            </p>
+            <p class="paper-copy flow">
+              The review cadence matters as much as the marker list. Monthly or quarterly reviews should look for patterns
+              across categories rather than celebrate isolated movement. If a clock score improves while inflammation,
+              fatigue, or medication burden worsens, the finding should be treated as unresolved. Biomarkers should clarify
+              decisions, not decorate them.
+            </p>
+            <p class="paper-copy flow">
+              A useful dashboard should show direction, confidence, and context together. It should make it easy to see
+              whether a change is sustained, whether it appears across related measures, and whether the participant feels
+              or functions better in parallel with the biological signal.
+            </p>
+            <p class="paper-copy flow">
+              The biomarker dictionary should be shared across projects so teams do not rename the same signal in different
+              ways. Each marker needs a unit, collection method, expected variability, known confounders, and a plain-language
+              explanation for participants. That dictionary becomes the bridge between laboratory review and clinical care.
+            </p>
+            <p class="paper-copy flow">
+              Wearables can help, but they should be treated as supportive instruments rather than medical proof. Sleep,
+              resting heart rate, activity, and recovery estimates become more useful when summarized over weeks and paired
+              with participant-reported fatigue, soreness, mood, and adherence.
+            </p>
+            <p class="paper-copy flow">
+              A practical review meeting should ask three questions: did the signal move, did the participant function
+              better, and did the protocol remain tolerable? When the answers diverge, the study has learned something
+              important even if the headline result is not simple.
+            </p>
+            <p class="paper-copy flow">
+              The same discipline should apply to negative results. If an intervention fails to improve a biomarker but
+              reveals an adherence barrier, assay problem, or subgroup difference, that finding should be captured in the
+              evidence log rather than treated as an administrative footnote.
+            </p>
+          </article>
+
+          <article class="paper" aria-label="Page 4 of 4">
+            <p class="paper-copy continuation">
+              Longevity research carries unusual communication risks because participants may interpret exploratory
+              findings as personal medical promises. The program should make clear that biological age scores, recovery
+              metrics, and molecular markers are research tools, not guarantees of future health. Recruitment should avoid
+              implying that aging is a disease to be solved by one product or protocol. The ethical foundation is simple:
+              improve evidence, protect participants, and report uncertainty in plain language. Consent materials should
+              explain what will be measured, what will not be known, and how unexpected results will be handled.
+            </p>
+            <p class="paper-copy flow">
+              Operations should reinforce that ethical posture. Genomic, wearable, and clinical records need strict access
+              controls because they can reveal identity, risk, behavior, and family information. Cohorts should be balanced
+              across age, sex, ancestry, income, and baseline function so findings do not become useful only for the
+              narrowest and healthiest participant group. Null findings and adverse findings should be published alongside
+              positive signals, because the field advances when teams can distinguish repeatable effects from noise.
+            </p>
+            <p class="paper-copy flow">
+              A responsible longevity program should be judged by the quality of its evidence culture. Strong operations
+              make it possible to learn from promising signals without overstating them. The next milestone is to assemble a
+              pilot cohort, finalize the shared biomarker dictionary, and run a twelve-month feasibility study that reports
+              both functional outcomes and participant experience.
+            </p>
+            <p class="paper-copy flow">
+              The closing review should include participant feedback, protocol burden, retention, adverse events, and the
+              clarity of returned results. Those operational measures are not secondary housekeeping; they determine
+              whether the science can scale beyond a narrow early-adopter cohort.
+            </p>
+            <p class="paper-copy flow">
+              Communication standards should be decided before the first result is returned. Participants need to know when
+              a change is actionable, when it is only exploratory, and when the study team will recommend follow-up with a
+              clinician. Clear boundaries prevent the research experience from becoming a confusing personal forecast.
+            </p>
+            <p class="paper-copy flow">
+              Equity also belongs in operations, not only in recruitment language. Visit schedules, device requirements,
+              food logging, training sessions, and blood draws can quietly exclude people with caregiving responsibilities,
+              shift work, mobility limitations, or limited transport. Those burdens should be measured and redesigned.
+            </p>
+            <p class="paper-copy flow">
+              The final output of the program should be a reusable operating model: evidence standards, safety thresholds,
+              biomarker definitions, participant communications, and replication criteria that other teams can inspect.
+            </p>
+            <p class="paper-copy flow">
+              That operating model should be reviewed after every cohort. The review should ask whether the protocol was
+              understandable, whether participants could complete it without excessive burden, and whether the returned
+              results were clear enough to support trust without creating false certainty.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <aside class="info-panel" id="file-info-panel" aria-label="File information" hidden>
+        <header class="info-header">
+          <h2>Info</h2>
+          <button class="panel-close" type="button" aria-label="Close info">
+            <svg class="figma-icon icon-x" viewBox="0 0 11.3 11.3" fill="none" aria-hidden="true">
+              <path d="M10.65 0.65L0.65 10.65M0.65 0.65L10.65 10.65" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </header>
+
+        <section class="panel-section access" aria-labelledby="access-title">
+          <h3 class="section-title" id="access-title">Access</h3>
+          <p class="subtle">Shared with 25 people</p>
+          <button class="manage-button" type="button">
+            <span class="icon-frame icon-frame-16">
+              <img class="figma-icon icon-lock" src="./assets/icons/content-preview/lock.svg" alt="" />
+            </span>
+            <span class="manage-label">Manage</span>
+          </button>
+        </section>
+
+        <section class="panel-section readiness" aria-labelledby="readiness-title">
+          <div class="readiness-title">
+            <h3 class="section-title" id="readiness-title">Readiness</h3>
+            <span class="icon-frame icon-frame-16">
+              <img class="figma-icon icon-panel-info" src="./assets/icons/content-preview/info-muted.svg" alt="" />
+            </span>
+          </div>
+          <div class="status-chip"><span class="status-dot"></span><span>Processing 5/7</span></div>
+        </section>
+
+        <section class="panel-section details" aria-labelledby="details-title">
+          <h3 class="section-title" id="details-title">File details</h3>
+          <div class="detail-list">
+            <div class="detail-block">
+              <span class="detail-label">Name</span>
+              <span class="detail-value wrap">longevity_research_brief.docx</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Type</span>
+              <span class="detail-value">Document</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Size</span>
+              <span class="detail-value">44 KB</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Uploaded by</span>
+              <div class="detail-value author-row"><span class="author-avatar">AP</span><span>Antonis Polemitis</span></div>
+            </div>
+            <div class="detail-block location-block">
+              <span class="detail-label">Location</span>
+              <div class="detail-value">
+                <span class="icon-frame icon-frame-16">
+                  <img class="figma-icon icon-box" src="./assets/icons/content-preview/box.svg" alt="" />
+                </span>
+                <span>Knowledge Base</span>
+              </div>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Source</span>
+              <span class="detail-value">Content platform</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">View</span>
+              <span class="detail-value">My uploads</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Visibility</span>
+              <span class="detail-value">Private asset</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Registered</span>
+              <span class="detail-value">10 Jun 2026, 16:30</span>
+              <span class="detail-note">Content platform</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Last update</span>
+              <span class="detail-value">10 Jun 2026, 16:30</span>
+              <span class="detail-note">Private asset</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Metadata updated</span>
+              <span class="detail-value">10 Jun 2026, 16:30</span>
+              <span class="detail-note">2 payload keys</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Primary text</span>
+              <span class="detail-value">Available</span>
+              <span class="detail-note">111 chunks</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Retrieval chunks</span>
+              <span class="detail-value">111 shown of 111</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">OCR</span>
+              <span class="detail-value wrap">File type not supported for OCR</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Paragraphs</span>
+              <span class="detail-value">90</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Tables</span>
+              <span class="detail-value">3</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Relationship parts</span>
+              <span class="detail-value">3</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Renderer</span>
+              <span class="detail-value">DOCX</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Extension</span>
+              <span class="detail-value">DOCX</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">MIME type</span>
+              <span class="detail-value copyable">
+                <span class="copyable-text">application/vnd.openxmlformats-officedocument.wordprocessingml.document</span>
+                <span class="icon-frame icon-frame-16">
+                  <img class="figma-icon icon-copy" src="./assets/icons/content-preview/copy.svg" alt="" />
+                </span>
+              </span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Item ID</span>
+              <span class="detail-value copyable">
+                <span class="copyable-text">61840b45-e99a-4046-b7ed-ed966350fe50</span>
+                <span class="icon-frame icon-frame-16">
+                  <img class="figma-icon icon-copy" src="./assets/icons/content-preview/copy.svg" alt="" />
+                </span>
+              </span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Current revision</span>
+              <span class="detail-value copyable">
+                <span class="copyable-text">b264f077-4455-45a0-8c58-6dd6bacdbff8</span>
+                <span class="icon-frame icon-frame-16">
+                  <img class="figma-icon icon-copy" src="./assets/icons/content-preview/copy.svg" alt="" />
+                </span>
+              </span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Uploader</span>
+              <span class="detail-value copyable">
+                <span class="copyable-text">956457d9-f808-4312-9ba9-6ab201e4fdcd</span>
+                <span class="icon-frame icon-frame-16">
+                  <img class="figma-icon icon-copy" src="./assets/icons/content-preview/copy.svg" alt="" />
+                </span>
+              </span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Object key</span>
+              <span class="detail-value copyable">
+                <span class="copyable-text">private/content-platform/uploads/ev0GehzS1iAEPCw-/longevity_research_report.docx</span>
+                <span class="icon-frame icon-frame-16">
+                  <img class="figma-icon icon-copy" src="./assets/icons/content-preview/copy.svg" alt="" />
+                </span>
+              </span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Bucket</span>
+              <span class="detail-value wrap">accelerate-fs-stg</span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Source hash</span>
+              <span class="detail-value copyable">
+                <span class="copyable-text">1acbe072dc4eb57cf0dbb27656793a7addc2755ee3a348ee1725bd1db9f3761</span>
+                <span class="icon-frame icon-frame-16">
+                  <img class="figma-icon icon-copy" src="./assets/icons/content-preview/copy.svg" alt="" />
+                </span>
+              </span>
+            </div>
+            <div class="detail-block">
+              <span class="detail-label">Size bytes</span>
+              <span class="detail-value">44671</span>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <nav class="page-control-shell" aria-label="Page and zoom controls">
+        <div class="page-control">
+          <div class="page-side">
+            <span class="page-title">Page</span>
+            <span class="page-input">1</span>
+            <span class="slash">/</span>
+            <span class="page-total">4</span>
+          </div>
+          <div class="zoom-side">
+            <button class="zoom-button" type="button" aria-label="Zoom out">
+              <img class="figma-icon icon-minus" src="./assets/icons/content-preview/minus.svg" alt="" />
+            </button>
+            <div class="zoom-trigger">
+              <span class="zoom-value">100</span>
+              <span class="icon-frame icon-frame-16">
+                <img class="figma-icon icon-chevron-muted" src="./assets/icons/content-preview/chevron-down-muted.svg" alt="" />
+              </span>
+            </div>
+            <button class="zoom-button" type="button" aria-label="Zoom in">
+              <img class="figma-icon icon-plus" src="./assets/icons/content-preview/plus.svg" alt="" />
+            </button>
+          </div>
+        </div>
+      </nav>
+    </main>
+    </div>
+    <script>
+      (() => {
+        const stage = document.querySelector(".stage");
+        const infoPanel = document.querySelector("#file-info-panel");
+        const infoToggle = document.querySelector(".info-toggle");
+        const panelClose = document.querySelector(".panel-close");
+        const approveMenuWrap = document.querySelector(".approve-menu-wrap");
+        const approveAction = document.querySelector(".approve-action");
+        const approveMenuTrigger = document.querySelector(".approve-menu-trigger");
+        const approveMenu = document.querySelector("#approve-menu");
+        const moreOptionsWrap = document.querySelector(".more-options-wrap");
+        const moreOptionsToggle = document.querySelector(".more-options-toggle");
+        const moreOptionsMenu = document.querySelector("#more-options-menu");
+        const documentViewport = document.querySelector(".document-viewport");
+        const pages = Array.from(document.querySelectorAll(".paper"));
+        const tooltipButtons = Array.from(document.querySelectorAll(".icon-button[data-tooltip]"));
+        const currentPageIndicator = document.querySelector(".page-input");
+        const totalPageIndicator = document.querySelector(".page-total");
+
+        if (!stage || !infoPanel || !infoToggle || !panelClose) {
+          return;
+        }
+
+        const drawerAnimationMs = 190;
+        const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        let hideInfoTimer;
+        const hasApproveMenu = Boolean(approveMenuWrap && approveMenuTrigger && approveMenu);
+        const hasMoreOptionsMenu = Boolean(moreOptionsWrap && moreOptionsToggle && moreOptionsMenu);
+        const hasPageIndicator = Boolean(documentViewport && pages.length && currentPageIndicator && totalPageIndicator);
+        const getApproveMenuItems = () => Array.from(approveMenu.querySelectorAll(".approve-menu-item"));
+        const getMoreOptionsMenuItems = () => Array.from(moreOptionsMenu.querySelectorAll(".more-menu-item"));
+        let pageUpdateQueued = false;
+
+        const isInfoOpen = () => !infoPanel.hidden && !stage.classList.contains("info-drawer-closed");
+        const isApproveMenuOpen = () => hasApproveMenu && !approveMenu.hidden;
+        const isMoreOptionsMenuOpen = () => hasMoreOptionsMenu && !moreOptionsMenu.hidden;
+
+        const closeApproveMenu = (returnFocus = false) => {
+          if (!hasApproveMenu) {
+            return;
+          }
+
+          approveMenu.hidden = true;
+          approveMenuTrigger.setAttribute("aria-expanded", "false");
+
+          if (returnFocus) {
+            approveMenuTrigger.focus();
+          }
+        };
+
+        const closeMoreOptionsMenu = (returnFocus = false) => {
+          if (!hasMoreOptionsMenu) {
+            return;
+          }
+
+          moreOptionsMenu.hidden = true;
+          moreOptionsToggle.setAttribute("aria-expanded", "false");
+
+          if (returnFocus) {
+            moreOptionsToggle.focus();
+          }
+        };
+
+        const setApproveMenuOpen = (isOpen, returnFocus = false) => {
+          if (!hasApproveMenu) {
+            return;
+          }
+
+          if (!isOpen) {
+            closeApproveMenu(returnFocus);
+            return;
+          }
+
+          if (isOpen) {
+            closeMoreOptionsMenu();
+          }
+
+          approveMenu.hidden = false;
+          approveMenuTrigger.setAttribute("aria-expanded", "true");
+        };
+
+        const focusApproveMenuItem = (index) => {
+          const items = getApproveMenuItems();
+          items[index]?.focus();
+        };
+
+        const setMoreOptionsMenuOpen = (isOpen, returnFocus = false) => {
+          if (!hasMoreOptionsMenu) {
+            return;
+          }
+
+          if (!isOpen) {
+            closeMoreOptionsMenu(returnFocus);
+            return;
+          }
+
+          if (isOpen) {
+            closeApproveMenu();
+          }
+
+          moreOptionsMenu.hidden = false;
+          moreOptionsToggle.setAttribute("aria-expanded", "true");
+        };
+
+        const focusMoreOptionsMenuItem = (index) => {
+          const items = getMoreOptionsMenuItems();
+          items[index]?.focus();
+        };
+
+        const updatePageIndicator = () => {
+          pageUpdateQueued = false;
+
+          if (!hasPageIndicator) {
+            return;
+          }
+
+          const viewportRect = documentViewport.getBoundingClientRect();
+          const viewportStyle = window.getComputedStyle(documentViewport);
+          const usesInternalScroll =
+            viewportStyle.overflowY !== "visible" && documentViewport.scrollHeight > documentViewport.clientHeight + 1;
+          const frame = usesInternalScroll
+            ? { top: viewportRect.top, bottom: viewportRect.bottom, height: viewportRect.height }
+            : { top: 0, bottom: window.innerHeight, height: window.innerHeight };
+          const frameCenter = frame.top + frame.height / 2;
+
+          const bestPage = pages.reduce(
+            (best, page, index) => {
+              const pageRect = page.getBoundingClientRect();
+              const visibleHeight = Math.max(0, Math.min(pageRect.bottom, frame.bottom) - Math.max(pageRect.top, frame.top));
+              const pageCenter = pageRect.top + pageRect.height / 2;
+              const score = visibleHeight * 2 - Math.abs(pageCenter - frameCenter);
+
+              return score > best.score ? { index, score } : best;
+            },
+            { index: 0, score: Number.NEGATIVE_INFINITY },
+          );
+          const pageNumber = bestPage.index + 1;
+
+          currentPageIndicator.textContent = String(pageNumber);
+          currentPageIndicator.setAttribute("aria-label", `Current page ${pageNumber} of ${pages.length}`);
+          totalPageIndicator.textContent = String(pages.length);
+        };
+
+        const requestPageIndicatorUpdate = () => {
+          if (!hasPageIndicator || pageUpdateQueued) {
+            return;
+          }
+
+          pageUpdateQueued = true;
+          window.requestAnimationFrame(updatePageIndicator);
+        };
+
+        const setInfoOpen = (isOpen, returnFocus = false) => {
+          window.clearTimeout(hideInfoTimer);
+          infoToggle.setAttribute("aria-expanded", String(isOpen));
+
+          if (isOpen) {
+            infoPanel.hidden = false;
+
+            if (prefersReducedMotion()) {
+              stage.classList.remove("info-drawer-closed");
+              requestPageIndicatorUpdate();
+              return;
+            }
+
+            infoPanel.getBoundingClientRect();
+            window.requestAnimationFrame(() => {
+              stage.classList.remove("info-drawer-closed");
+              requestPageIndicatorUpdate();
+            });
+            return;
+          }
+
+          stage.classList.add("info-drawer-closed");
+
+          if (prefersReducedMotion()) {
+            infoPanel.hidden = true;
+          } else {
+            hideInfoTimer = window.setTimeout(() => {
+              if (stage.classList.contains("info-drawer-closed")) {
+                infoPanel.hidden = true;
+              }
+            }, drawerAnimationMs);
+          }
+
+          if (returnFocus) {
+            infoToggle.focus();
+          }
+
+          requestPageIndicatorUpdate();
+        };
+
+        if (hasPageIndicator) {
+          currentPageIndicator.setAttribute("aria-live", "polite");
+          currentPageIndicator.setAttribute("aria-atomic", "true");
+          totalPageIndicator.textContent = String(pages.length);
+          documentViewport.addEventListener("scroll", requestPageIndicatorUpdate, { passive: true });
+          window.addEventListener("scroll", requestPageIndicatorUpdate, { passive: true });
+          window.addEventListener("resize", requestPageIndicatorUpdate);
+          window.addEventListener("load", requestPageIndicatorUpdate, { once: true });
+          requestPageIndicatorUpdate();
+        }
+
+        tooltipButtons.forEach((button) => {
+          const revealTooltipAgain = () => {
+            button.classList.remove("tooltip-dismissed");
+          };
+
+          button.addEventListener("click", () => {
+            button.classList.add("tooltip-dismissed");
+          });
+          button.addEventListener("pointerleave", revealTooltipAgain);
+          button.addEventListener("blur", revealTooltipAgain);
+        });
+
+        infoToggle.addEventListener("click", () => {
+          setInfoOpen(!isInfoOpen());
+        });
+
+        panelClose.addEventListener("click", () => {
+          setInfoOpen(false, true);
+        });
+
+        if (hasApproveMenu) {
+          approveAction?.addEventListener("click", () => {
+            setApproveMenuOpen(false);
+          });
+
+          approveMenuTrigger.addEventListener("click", () => {
+            setApproveMenuOpen(!isApproveMenuOpen());
+          });
+
+          approveMenuTrigger.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+              event.preventDefault();
+              setApproveMenuOpen(true);
+              focusApproveMenuItem(event.key === "ArrowDown" ? 0 : getApproveMenuItems().length - 1);
+            }
+          });
+
+          approveMenu.addEventListener("click", (event) => {
+            if (event.target.closest(".approve-menu-item")) {
+              setApproveMenuOpen(false, true);
+            }
+          });
+
+          approveMenu.addEventListener("keydown", (event) => {
+            const items = getApproveMenuItems();
+            const currentIndex = items.indexOf(document.activeElement);
+
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              focusApproveMenuItem((currentIndex + 1) % items.length);
+            }
+
+            if (event.key === "ArrowUp") {
+              event.preventDefault();
+              focusApproveMenuItem((currentIndex - 1 + items.length) % items.length);
+            }
+
+            if (event.key === "Home") {
+              event.preventDefault();
+              focusApproveMenuItem(0);
+            }
+
+            if (event.key === "End") {
+              event.preventDefault();
+              focusApproveMenuItem(items.length - 1);
+            }
+          });
+
+          document.addEventListener("pointerdown", (event) => {
+            if (isApproveMenuOpen() && !approveMenuWrap.contains(event.target)) {
+              setApproveMenuOpen(false);
+            }
+          });
+        }
+
+        if (hasMoreOptionsMenu) {
+          moreOptionsToggle.addEventListener("click", () => {
+            setMoreOptionsMenuOpen(!isMoreOptionsMenuOpen());
+          });
+
+          moreOptionsToggle.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+              event.preventDefault();
+              setMoreOptionsMenuOpen(true);
+              focusMoreOptionsMenuItem(event.key === "ArrowDown" ? 0 : getMoreOptionsMenuItems().length - 1);
+            }
+          });
+
+          moreOptionsMenu.addEventListener("click", (event) => {
+            if (event.target.closest(".more-menu-item")) {
+              setMoreOptionsMenuOpen(false, true);
+            }
+          });
+
+          moreOptionsMenu.addEventListener("keydown", (event) => {
+            const items = getMoreOptionsMenuItems();
+            const currentIndex = items.indexOf(document.activeElement);
+
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              focusMoreOptionsMenuItem((currentIndex + 1) % items.length);
+            }
+
+            if (event.key === "ArrowUp") {
+              event.preventDefault();
+              focusMoreOptionsMenuItem((currentIndex - 1 + items.length) % items.length);
+            }
+
+            if (event.key === "Home") {
+              event.preventDefault();
+              focusMoreOptionsMenuItem(0);
+            }
+
+            if (event.key === "End") {
+              event.preventDefault();
+              focusMoreOptionsMenuItem(items.length - 1);
+            }
+          });
+
+          document.addEventListener("pointerdown", (event) => {
+            if (isMoreOptionsMenuOpen() && !moreOptionsWrap.contains(event.target)) {
+              setMoreOptionsMenuOpen(false);
+            }
+          });
+        }
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && isMoreOptionsMenuOpen()) {
+            event.preventDefault();
+            setMoreOptionsMenuOpen(false, true);
+            return;
+          }
+
+          if (event.key === "Escape" && isApproveMenuOpen()) {
+            event.preventDefault();
+            setApproveMenuOpen(false, true);
+            return;
+          }
+
+          if (event.key === "Escape" && isInfoOpen()) {
+            setInfoOpen(false, true);
+          }
+        });
+
+      })();
+    </script>
+  </body>
+</html>
