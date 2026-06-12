@@ -24,6 +24,8 @@
         --orange-bg: rgba(120, 67, 12, 0.42);
         --green: #4ade80;
         --green-bg: rgba(22, 101, 52, 0.4);
+        --avatar-purple: rgba(147, 39, 148, 0.55);
+        --avatar-purple-text: #fc9fff;
         --font-text: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
         --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
       }
@@ -96,11 +98,11 @@
       }
 
       .stage.comments-drawer-open {
-        --comments-column: clamp(344px, 25vw, 380px);
+        --comments-column: 392px;
       }
 
       .stage.activity-drawer-open {
-        --activity-column: clamp(344px, 25vw, 380px);
+        --activity-column: 392px;
       }
 
       .figma-icon {
@@ -630,42 +632,14 @@
         transition: color 120ms ease;
       }
 
-      .icon-button:hover,
-      .icon-button:active {
+      .icon-button:hover {
         color: var(--neutral-50);
       }
 
-      .comment-toggle[aria-expanded="true"],
-      .activity-toggle[aria-expanded="true"],
       .comment-toggle:hover,
-      .comment-toggle:active,
-      .activity-toggle:hover,
-      .activity-toggle:active {
+      .activity-toggle:hover {
         background: var(--neutral-700);
         color: var(--neutral-50);
-      }
-
-      .toolbar-badge {
-        position: absolute;
-        top: 4px;
-        right: 4px;
-        display: grid;
-        place-items: center;
-        min-width: 14px;
-        height: 14px;
-        padding: 0 4px;
-        border: 2px solid var(--black);
-        border-radius: 999px;
-        background: #3b82f6;
-        color: var(--neutral-50);
-        font-size: 9px;
-        font-weight: 700;
-        line-height: 10px;
-      }
-
-      .activity-toggle .toolbar-badge {
-        background: var(--orange);
-        color: var(--black);
       }
 
       .icon-button[data-tooltip]::before,
@@ -836,10 +810,40 @@
         height: 100%;
         min-width: 0;
         padding: 8px 16px;
+        color-scheme: dark;
         overflow: auto;
+        scrollbar-color: transparent transparent;
+        scrollbar-gutter: auto;
+        scrollbar-width: thin;
         display: flex;
         justify-content: center;
         align-items: flex-start;
+      }
+
+      .document-viewport.is-scrolling {
+        scrollbar-color: rgba(250, 250, 250, 0.34) transparent;
+      }
+
+      .document-viewport::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+        background: transparent;
+      }
+
+      .document-viewport::-webkit-scrollbar-track,
+      .document-viewport::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+
+      .document-viewport::-webkit-scrollbar-thumb {
+        border: 3px solid transparent;
+        border-radius: 999px;
+        background: transparent;
+        background-clip: content-box;
+      }
+
+      .document-viewport.is-scrolling::-webkit-scrollbar-thumb {
+        background-color: rgba(250, 250, 250, 0.34);
       }
 
       .page-stack {
@@ -977,7 +981,7 @@
         width: 314px;
         height: calc(100% - 8px);
         overflow-y: auto;
-        scrollbar-gutter: stable;
+        scrollbar-width: none;
         border-radius: 12px;
         background: var(--panel);
         color: var(--white);
@@ -993,6 +997,11 @@
         opacity: 0;
         pointer-events: none;
         transform: translateX(10px);
+      }
+
+      .info-panel::-webkit-scrollbar {
+        width: 0;
+        height: 0;
       }
 
       .info-panel[hidden] {
@@ -1022,6 +1031,11 @@
           transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
           visibility 0ms linear 0ms;
         will-change: opacity, transform;
+      }
+
+      .activity-panel {
+        border-radius: 12px;
+        background: var(--panel);
       }
 
       .stage.comments-drawer-closed .comments-panel,
@@ -1508,6 +1522,378 @@
         cursor: not-allowed;
       }
 
+      .comments-panel {
+        display: flex;
+        flex-direction: column;
+        border-radius: 12px;
+        background: var(--panel);
+      }
+
+      .comments-panel .drawer-header {
+        position: relative;
+        flex: 0 0 48px;
+        min-height: 48px;
+        padding: 12px 16px;
+        align-items: center;
+        border-bottom-color: var(--border);
+      }
+
+      .comments-panel .drawer-title {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .comments-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        flex: 0 0 auto;
+      }
+
+      .comments-filter-button {
+        display: grid;
+        place-items: center;
+        width: 16px;
+        height: 16px;
+        color: #d4d4d4;
+        cursor: pointer;
+      }
+
+      .comments-filter-button .figma-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .comments-filter-button:hover,
+      .comments-filter-button:focus-visible,
+      .comments-panel .drawer-close:hover,
+      .comments-panel .drawer-close:focus-visible {
+        background: transparent;
+        color: var(--neutral-50);
+        outline: 0;
+      }
+
+      .comments-panel .drawer-close {
+        width: 20px;
+        height: 20px;
+        border-radius: 0;
+      }
+
+      .comments-panel .icon-x {
+        width: 20px;
+        height: 20px;
+      }
+
+      .comments-panel .drawer-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto;
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+
+      .comments-panel .drawer-body::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+
+      .comments-panel .comments-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 16px;
+      }
+
+      .comments-panel .comment-thread {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 0;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .comments-panel .comment-thread.resolved {
+        opacity: 0.64;
+      }
+
+      .comments-panel .comment-avatar {
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+        margin-top: 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .comment-card {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        border-radius: 12px;
+        background: var(--panel-2);
+      }
+
+      .comments-panel .thread-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 16px 16px 0;
+      }
+
+      .comments-panel .thread-author {
+        font-weight: 600;
+      }
+
+      .thread-menu-trigger {
+        display: grid;
+        place-items: center;
+        flex: 0 0 16px;
+        width: 16px;
+        height: 16px;
+        color: #d4d4d4;
+        cursor: pointer;
+      }
+
+      .thread-menu-trigger:hover,
+      .thread-menu-trigger:focus-visible,
+      .thread-menu-trigger[aria-expanded="true"] {
+        color: var(--neutral-50);
+        outline: 0;
+      }
+
+      .comment-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 16px 16px;
+      }
+
+      .comments-panel .thread-copy {
+        width: 100%;
+        margin: 0;
+        color: var(--neutral-50);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+      }
+
+      .comments-panel .thread-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 20px;
+        white-space: nowrap;
+      }
+
+      .thread-meta-dot {
+        display: block;
+        width: 2px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--muted);
+      }
+
+      .comment-menu {
+        position: absolute;
+        top: 36px;
+        right: 4px;
+        z-index: 12;
+        display: flex;
+        flex-direction: column;
+        width: 256px;
+        padding: 8px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel-2);
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38);
+      }
+
+      .comment-menu[hidden] {
+        display: none;
+      }
+
+      .comment-menu-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 34px;
+        gap: 8px;
+        padding: 1px 6px;
+        border-radius: 8px;
+        color: #d4d4d4;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        text-align: left;
+      }
+
+      .comment-menu-item:hover,
+      .comment-menu-item:focus-visible {
+        background: rgba(64, 64, 64, 0.58);
+        outline: 0;
+      }
+
+      .comment-menu-item.destructive {
+        color: #f87171;
+      }
+
+      .comment-menu-icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+      }
+
+      .comment-menu-icon svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .comments-panel .comment-composer {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex: 0 0 auto;
+        min-height: 64px;
+        gap: 12px;
+        padding: 12px;
+        border-top: 0;
+        border-radius: 0 0 12px 12px;
+        background: var(--panel-2);
+      }
+
+      .comments-panel .comment-composer.is-composer-active {
+        flex-direction: column;
+        align-items: flex-end;
+        min-height: 144px;
+        gap: 12px;
+      }
+
+      .comment-composer-field {
+        display: flex;
+        align-items: center;
+        flex: 1 1 auto;
+        min-width: 0;
+        gap: 16px;
+      }
+
+      .comments-panel .comment-composer.is-composer-active .comment-composer-field {
+        align-items: flex-start;
+        align-self: stretch;
+        flex: 0 0 auto;
+        width: 100%;
+      }
+
+      .comment-composer-field .comment-avatar {
+        margin-top: 0;
+      }
+
+      .comments-panel .comment-composer textarea {
+        width: 100%;
+        height: 20px;
+        min-height: 20px;
+        max-height: 20px;
+        padding: 0;
+        overflow: hidden;
+        resize: none;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--neutral-50);
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .comments-panel .comment-composer.is-composer-active textarea {
+        flex: 0 1 280px;
+        width: min(280px, calc(100% - 48px));
+        height: 72px;
+        min-height: 72px;
+        max-height: 128px;
+        line-height: 24px;
+      }
+
+      .comments-panel .comment-composer textarea:focus {
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      .comments-panel .comment-composer textarea::placeholder {
+        color: var(--muted);
+      }
+
+      .comments-panel .comment-composer-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex: 0 0 auto;
+        gap: 6px;
+        margin-top: 0;
+      }
+
+      .comment-cancel {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        padding: 0 20px;
+        border-radius: 23px;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+
+      .comments-panel .comment-composer.is-composer-active .comment-cancel {
+        display: inline-flex;
+      }
+
+      .comment-cancel:hover,
+      .comment-cancel:focus-visible {
+        color: var(--neutral-50);
+        outline: 0;
+      }
+
+      .comments-panel .comment-submit {
+        flex: 0 0 auto;
+        height: 36px;
+        padding: 0 20px;
+        border-radius: 23px;
+        background: transparent;
+        color: var(--neutral-50);
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+      }
+
+      .comments-panel .comment-composer.is-composer-active .comment-submit {
+        background: #932794;
+        color: var(--neutral-50);
+      }
+
+      .comments-panel .comment-composer:not(.is-composer-active) .comment-submit:disabled {
+        background: transparent;
+        color: var(--muted);
+        cursor: not-allowed;
+      }
+
       .activity-summary {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1586,6 +1972,296 @@
         font-size: 12px;
         font-weight: 700;
         line-height: 16px;
+      }
+
+      .activity-panel .drawer-header {
+        position: relative;
+        align-items: center;
+        min-height: 48px;
+        height: 48px;
+        padding: 12px 16px;
+        border-bottom-color: var(--panel-3);
+        background: var(--panel);
+      }
+
+      .activity-panel .drawer-title {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+      }
+
+      .activity-panel .drawer-close {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        color: var(--muted);
+      }
+
+      .activity-panel .drawer-close:hover,
+      .activity-panel .drawer-close:focus-visible {
+        background: transparent;
+        color: var(--neutral-50);
+        outline: 0;
+      }
+
+      .activity-close-icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .activity-content {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 48px);
+        min-height: 0;
+        gap: 12px;
+        padding: 12px 16px 0;
+      }
+
+      .activity-panel .drawer-filter-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex: 0 0 36px;
+        width: 100%;
+        height: 36px;
+        gap: 0;
+        padding: 0;
+        border-bottom: 0;
+        background: transparent;
+      }
+
+      .activity-tabs {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+        height: 36px;
+        padding: 4px;
+        border-radius: 10px;
+        background: var(--panel-2);
+      }
+
+      .activity-panel .drawer-filter {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        flex: 0 0 auto;
+        height: 100%;
+        padding: 6px 12px;
+        border-radius: 6px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+      }
+
+      .activity-panel .drawer-filter[aria-pressed="true"],
+      .activity-panel .drawer-filter:hover,
+      .activity-panel .drawer-filter:focus-visible {
+        background: var(--panel-3);
+        color: var(--neutral-50);
+      }
+
+      .activity-panel .drawer-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: auto;
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+
+      .activity-panel .drawer-body::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+      }
+
+      .activity-panel .activity-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        padding: 0 0 12px;
+      }
+
+      .activity-panel .activity-row {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        min-height: 78px;
+        gap: 8px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .activity-panel .activity-row[hidden] {
+        display: none;
+      }
+
+      .activity-panel .activity-row::before {
+        display: none;
+      }
+
+      .activity-rail {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        flex: 0 0 32px;
+        width: 32px;
+        height: 68px;
+        padding-top: 8px;
+      }
+
+      .activity-icon-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 32px;
+        height: 60px;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+
+      .activity-icon-slot,
+      .activity-avatar-slot {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex: 0 0 30px;
+        width: 32px;
+        height: 30px;
+        overflow: hidden;
+      }
+
+      .activity-avatar-slot {
+        align-items: flex-end;
+      }
+
+      .activity-event-icon,
+      .activity-avatar {
+        display: grid;
+        place-items: center;
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+      }
+
+      .activity-event-icon {
+        background: var(--panel-2);
+        color: #d4d4d4;
+      }
+
+      .activity-event-icon svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .activity-avatar {
+        margin-top: -2px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
+        text-align: center;
+      }
+
+      .activity-avatar.ap {
+        background: var(--avatar-purple);
+        color: var(--avatar-purple-text);
+      }
+
+      .activity-avatar.cs {
+        background: #1b4d29;
+        color: #8de981;
+      }
+
+      .activity-card {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-width: 0;
+        height: 78px;
+        min-height: 78px;
+        overflow: hidden;
+        border: 0;
+        border-radius: 12px;
+        background: var(--panel-2);
+      }
+
+      .activity-card.is-current {
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+          #171717;
+        box-shadow: inset 0 0 0 1.6px rgba(246, 95, 21, 0.28);
+      }
+
+      .activity-card.is-current .activity-row-header {
+        padding-right: 16px;
+      }
+
+      .activity-panel .activity-row-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 0;
+        width: 100%;
+        height: 34px;
+        gap: 12px;
+        padding: 14px 16px 0;
+      }
+
+      .activity-panel .activity-title {
+        display: block;
+        min-width: 0;
+        overflow: hidden;
+        color: var(--neutral-50);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 20px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .activity-current {
+        flex: 0 0 auto;
+        color: #d4d4d4;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        white-space: nowrap;
+      }
+
+      .activity-panel .activity-meta {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        height: 44px;
+        gap: 10px;
+        padding: 8px 16px 16px;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+      }
+
+      .activity-card.is-current .activity-meta {
+        padding-right: 16px;
+      }
+
+      .activity-panel .activity-meta span:not(.activity-meta-dot) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .activity-meta-dot {
+        flex: 0 0 2px;
+        width: 2px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--muted);
       }
 
       .ai-panel {
@@ -1829,7 +2505,7 @@
         align-items: center;
         justify-content: space-between;
         height: 48px;
-        padding: 0 20px;
+        padding: 12px 16px;
         border-bottom: 1px solid var(--border);
         background: var(--panel);
       }
@@ -1857,16 +2533,20 @@
       }
 
       .panel-section {
-        padding: 16px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px 16px 24px;
         border-bottom: 1px solid var(--border);
       }
 
       .panel-section.access {
-        height: 144px;
+        height: auto;
       }
 
       .panel-section.readiness {
-        height: 104px;
+        height: auto;
       }
 
       .panel-section.details {
@@ -1885,7 +2565,7 @@
       }
 
       .subtle {
-        margin: 12px 0 0;
+        margin: 0;
         color: var(--muted-2);
         font-size: 14px;
         font-weight: 400;
@@ -1899,8 +2579,8 @@
         width: fit-content;
         max-width: 100%;
         height: 36px;
-        margin-top: 12px;
-        padding: 0 16px;
+        margin-top: 0;
+        padding: 0 20px;
         gap: 10px;
         border-radius: 23px;
         background: var(--neutral-700);
@@ -1928,7 +2608,7 @@
         justify-content: center;
         width: 126px;
         height: 28px;
-        margin-top: 12px;
+        margin-top: 0;
         padding: 4px 8px;
         gap: 8px;
         border-radius: 10px;
@@ -2583,7 +3263,7 @@
         gap: 12px;
         width: 100%;
         min-width: 0;
-        margin-top: 12px;
+        margin-top: 0;
       }
 
       .detail-block {
@@ -2869,7 +3549,8 @@
         }
 
         .comments-panel .drawer-body {
-          height: calc(100% - 225px);
+          flex: 1 1 auto;
+          height: auto;
         }
 
         .panel-section,
@@ -3205,13 +3886,11 @@
               <svg class="figma-icon icon-message" viewBox="0 0 14.83 14.83" fill="none" aria-hidden="true">
                 <path d="M14.165 9.665C14.165 10.0628 14.007 10.4444 13.7257 10.7257C13.4444 11.007 13.0628 11.165 12.665 11.165H3.665L0.665 14.165V2.165C0.665 1.76718 0.823035 1.38564 1.10434 1.10434C1.38564 0.823035 1.76718 0.665 2.165 0.665H12.665C13.0628 0.665 13.4444 0.823035 13.7257 1.10434C14.007 1.38564 14.165 1.76718 14.165 2.165V9.665Z" stroke="currentColor" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <span class="toolbar-badge">3</span>
             </button>
             <button class="icon-button activity-toggle" type="button" aria-label="Activity" aria-controls="activity-panel" aria-expanded="false" data-tooltip="Activity">
               <svg class="figma-icon icon-history" viewBox="0 0 14.6 14.6" fill="none" aria-hidden="true">
                 <path d="M0.55 7.3C0.55 8.63503 0.945881 9.94007 1.68758 11.0501C2.42928 12.1601 3.48349 13.0253 4.71689 13.5362C5.95029 14.0471 7.30749 14.1808 8.61686 13.9203C9.92623 13.6599 11.129 13.017 12.073 12.073C13.017 11.129 13.6599 9.92624 13.9203 8.61686C14.1808 7.30749 14.0471 5.95029 13.5362 4.71689C13.0253 3.48349 12.1601 2.42928 11.0501 1.68758C9.94007 0.945885 8.63502 0.550004 7.3 0.550004C5.41296 0.557103 3.60173 1.29342 2.245 2.605L0.55 4.3M4.3 4.3H0.55V0.550004M7.3 3.55V7.3L10.3 8.8" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <span class="toolbar-badge">7</span>
             </button>
             <img class="divider" src="./assets/icons/content-preview/divider.svg" alt="" aria-hidden="true" />
             <button class="icon-button" type="button" aria-label="Download" data-tooltip="Download" data-toast-action="download">
@@ -3551,7 +4230,7 @@
             <span class="icon-frame icon-frame-16">
               <img class="figma-icon icon-lock" src="./assets/icons/content-preview/lock.svg" alt="" />
             </span>
-            <span class="manage-label">Manage</span>
+            <span class="manage-label">Manage access</span>
           </button>
         </section>
 
@@ -3724,240 +4403,1045 @@
 
       <aside class="comments-panel" id="comments-panel" aria-label="Comments" aria-hidden="true" hidden>
         <header class="drawer-header">
-          <div class="drawer-title-wrap">
-            <div class="drawer-title-row">
-              <h2 class="drawer-title">Comments</h2>
-              <span class="drawer-count-pill" data-comments-count>3</span>
-            </div>
-            <p class="drawer-summary">Open threads on this document</p>
+          <h2 class="drawer-title">Comments</h2>
+          <div class="comments-header-actions">
+            <button class="comments-filter-button" type="button" aria-label="Filter comments">
+              <svg class="figma-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M2 4H14M5 8H11M7 12H9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+              </svg>
+            </button>
+            <button class="drawer-close comments-close" type="button" aria-label="Close comments">
+              <svg class="figma-icon icon-x" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+              </svg>
+            </button>
           </div>
-          <button class="drawer-close comments-close" type="button" aria-label="Close comments">
-            <svg class="figma-icon icon-x" viewBox="0 0 11.3 11.3" fill="none" aria-hidden="true">
-              <path d="M10.65 0.65L0.65 10.65M0.65 0.65L10.65 10.65" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </button>
         </header>
-        <div class="drawer-filter-row" role="toolbar" aria-label="Comment filters">
-          <button class="drawer-filter" type="button" data-comment-filter="all" aria-pressed="true">All</button>
-          <button class="drawer-filter" type="button" data-comment-filter="open" aria-pressed="false">Open</button>
-          <button class="drawer-filter" type="button" data-comment-filter="resolved" aria-pressed="false">Resolved</button>
-        </div>
         <div class="drawer-body">
           <div class="comments-list" aria-live="polite">
             <article class="comment-thread" data-comment-state="open">
-              <header class="thread-header">
-                <span class="comment-avatar ms" aria-hidden="true">MS</span>
-                <span>
-                  <span class="thread-author">Maria Stylianou</span>
-                  <span class="thread-meta">11 Jun 2026, 14:18 / Page 1</span>
-                </span>
-                <span class="thread-status open">Open</span>
-              </header>
-              <span class="thread-anchor">Paragraph 1 / Research scope</span>
-              <p class="thread-copy">Can we make the participant-centered outcome more explicit before this goes to clinical review?</p>
-              <div class="thread-replies">
-                <div class="reply-row">
-                  <span class="comment-avatar ap" aria-hidden="true">AP</span>
-                  <span>
-                    <span class="thread-author">Antonis Polemitis</span>
-                    <span class="reply-copy">Agree. I will add a tighter outcome sentence in the next revision.</span>
-                  </span>
+              <span class="comment-avatar cs" aria-hidden="true">CS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Christos Savva</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Christos Savva comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">Can we tighten the checkpoint sentence so it is clear this applies before a project moves into protocol review?</p>
+                  <div class="thread-meta">
+                    <span>#2</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>2 hours ago</span>
+                  </div>
                 </div>
               </div>
-              <div class="thread-actions">
-                <button class="thread-action" type="button" data-thread-action="resolve">Resolve</button>
-                <button class="thread-action secondary" type="button" data-thread-action="jump">Go to place</button>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
               </div>
             </article>
 
             <article class="comment-thread" data-comment-state="open">
-              <header class="thread-header">
-                <span class="comment-avatar cs" aria-hidden="true">CS</span>
-                <span>
-                  <span class="thread-author">Content Strategy</span>
-                  <span class="thread-meta">11 Jun 2026, 13:52 / Page 1</span>
-                </span>
-                <span class="thread-status open">Open</span>
-              </header>
-              <span class="thread-anchor">Evidence table / Checkpoint column</span>
-              <p class="thread-copy">The checkpoint language is strong. Please confirm whether “two cell types” is the standard threshold for this program.</p>
-              <div class="thread-actions">
-                <button class="thread-action" type="button" data-thread-action="resolve">Resolve</button>
-                <button class="thread-action secondary" type="button" data-thread-action="jump">Go to place</button>
+              <span class="comment-avatar ap" aria-hidden="true">AP</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Antonis Polemitis</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Antonis Polemitis comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">Can we make the participant-centered outcome more explicit before this goes to clinical review?</p>
+                  <div class="thread-meta">
+                    <span>#1</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 9:41</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
               </div>
             </article>
 
-            <article class="comment-thread resolved" data-comment-state="resolved">
-              <header class="thread-header">
-                <span class="comment-avatar ap" aria-hidden="true">AP</span>
-                <span>
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar ms" aria-hidden="true">MS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Maria Stylianou</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Maria Stylianou comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">The opening paragraph names resilience, inflammation, metabolic flexibility, and tissue repair. Can the table echo those terms so the structure feels intentional?</p>
+                  <div class="thread-meta">
+                    <span>#3</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 9:35</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar cs" aria-hidden="true">CS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Christos Savva</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Christos Savva comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">For the senescence row, can we specify a sample type or assay? Lower inflammatory secretions feels too broad for a review checkpoint.</p>
+                  <div class="thread-meta">
+                    <span>#4</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 9:28</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar ap" aria-hidden="true">AP</span>
+              <div class="comment-card">
+                <header class="thread-header">
                   <span class="thread-author">Antonis Polemitis</span>
-                  <span class="thread-meta">10 Jun 2026, 17:04 / Page 3</span>
-                </span>
-                <span class="thread-status resolved">Resolved</span>
-              </header>
-              <span class="thread-anchor">Biomarker dictionary</span>
-              <p class="thread-copy">Resolved after adding unit, variability, and confounder guidance to the dictionary section.</p>
-              <div class="thread-actions">
-                <button class="thread-action secondary" type="button" data-thread-action="reopen">Reopen</button>
-                <button class="thread-action secondary" type="button" data-thread-action="jump">Go to place</button>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Antonis Polemitis comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">The metabolism checkpoint should probably mention safety monitoring before drug trials, not only confirmation in older adult cohorts.</p>
+                  <div class="thread-meta">
+                    <span>#5</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 9:19</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar ms" aria-hidden="true">MS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Maria Stylianou</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Maria Stylianou comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">Can we clarify whether epigenetic clock movement is a surrogate checkpoint or just supporting evidence for functional outcomes?</p>
+                  <div class="thread-meta">
+                    <span>#6</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 9:07</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar cs" aria-hidden="true">CS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Christos Savva</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Christos Savva comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">The immunity row would be stronger with one recovery endpoint example, such as infection duration or vaccine response durability.</p>
+                  <div class="thread-meta">
+                    <span>#7</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 8:54</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar ap" aria-hidden="true">AP</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Antonis Polemitis</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Antonis Polemitis comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">Could we add a short transition explaining why healthspan is the primary endpoint before the paragraph contrasts it with lifespan?</p>
+                  <div class="thread-meta">
+                    <span>#8</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 8:41</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar ms" aria-hidden="true">MS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Maria Stylianou</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Maria Stylianou comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">The participant-centered outcome is important enough to name before the paragraph asks every project to include one.</p>
+                  <div class="thread-meta">
+                    <span>#9</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 8:27</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar cs" aria-hidden="true">CS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Christos Savva</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Christos Savva comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">Can we define what counts as a pre-defined biomarker panel? Teams may read that as either a minimum set or a project-specific plan.</p>
+                  <div class="thread-meta">
+                    <span>#10</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 8:18</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar ap" aria-hidden="true">AP</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Antonis Polemitis</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Antonis Polemitis comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">The phrase public excitement could sound dismissive. Suggest changing it to public-facing claims or public expectations.</p>
+                  <div class="thread-meta">
+                    <span>#11</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 8:04</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar ms" aria-hidden="true">MS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Maria Stylianou</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Maria Stylianou comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">Can the replication plan call out who signs off before discovery moves to translation? That would make the governance path clearer.</p>
+                  <div class="thread-meta">
+                    <span>#12</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 7:52</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar cs" aria-hidden="true">CS</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Christos Savva</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Christos Savva comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">The animal survival curve sentence needs a caveat that these signals do not translate directly to human function.</p>
+                  <div class="thread-meta">
+                    <span>#13</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 7:39</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
+              </div>
+            </article>
+
+            <article class="comment-thread" data-comment-state="open">
+              <span class="comment-avatar ap" aria-hidden="true">AP</span>
+              <div class="comment-card">
+                <header class="thread-header">
+                  <span class="thread-author">Antonis Polemitis</span>
+                  <button class="thread-menu-trigger" type="button" aria-label="More actions for Antonis Polemitis comment" aria-haspopup="menu" aria-expanded="false" data-thread-menu-trigger>
+                    <svg class="figma-icon" viewBox="0 0 16 16" aria-hidden="true">
+                      <circle cx="4" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="8" cy="8" r="1.1" fill="currentColor" />
+                      <circle cx="12" cy="8" r="1.1" fill="currentColor" />
+                    </svg>
+                  </button>
+                </header>
+                <div class="comment-card-body">
+                  <p class="thread-copy">The table checkpoint verbs are close but not parallel. Could we keep them consistent across rows: replicate, confirm, compare, report?</p>
+                  <div class="thread-meta">
+                    <span>#14</span>
+                    <span class="thread-meta-dot" aria-hidden="true"></span>
+                    <span>Mar 16, 7:24</span>
+                  </div>
+                </div>
+              </div>
+              <div class="comment-menu" role="menu" data-comment-menu hidden>
+                <button class="comment-menu-item" type="button" role="menuitem" data-thread-action="resolve">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3.25 9.4L7.05 13.2L14.75 4.8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Mark as resolved</span>
+                </button>
+                <button class="comment-menu-item destructive" type="button" role="menuitem" data-thread-action="delete">
+                  <span class="comment-menu-icon" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M3 4.5H15M7.5 7.5V12M10.5 7.5V12M4.5 4.5L5.25 15H12.75L13.5 4.5M7 4.5L7.75 3H10.25L11 4.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                  <span>Delete</span>
+                </button>
               </div>
             </article>
           </div>
         </div>
         <form class="comment-composer">
           <label for="comment-input">Add a comment</label>
-          <textarea id="comment-input" name="comment" placeholder="Add a comment or @mention a reviewer"></textarea>
+          <div class="comment-composer-field">
+            <span class="comment-avatar ap" aria-hidden="true">AP</span>
+            <textarea id="comment-input" name="comment" placeholder="Enter a comment" rows="1"></textarea>
+          </div>
           <div class="comment-composer-actions">
-            <span class="comment-scope">Commenting on current selection</span>
-            <button class="comment-submit" type="submit" disabled>Comment</button>
+            <button class="comment-cancel" type="button" data-comment-cancel>Cancel</button>
+            <button class="comment-submit" type="submit" disabled>Post</button>
           </div>
         </form>
       </aside>
 
       <aside class="activity-panel" id="activity-panel" aria-label="Activity" aria-hidden="true" hidden>
         <header class="drawer-header">
-          <div class="drawer-title-wrap">
-            <div class="drawer-title-row">
-              <h2 class="drawer-title">Activity</h2>
-              <span class="drawer-status-pill warning">In review</span>
-            </div>
-            <p class="drawer-summary">Version history and review decisions</p>
-          </div>
+          <h2 class="drawer-title">Activity</h2>
           <button class="drawer-close activity-close" type="button" aria-label="Close activity">
-            <svg class="figma-icon icon-x" viewBox="0 0 11.3 11.3" fill="none" aria-hidden="true">
-              <path d="M10.65 0.65L0.65 10.65M0.65 0.65L10.65 10.65" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+            <svg class="figma-icon activity-close-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </button>
         </header>
-        <section class="activity-summary" aria-label="Activity summary">
-          <div class="activity-stat">
-            <span class="activity-stat-value">4</span>
-            <span class="activity-stat-label">Versions</span>
+        <div class="activity-content">
+          <div class="drawer-filter-row" role="toolbar" aria-label="Activity filters">
+            <div class="activity-tabs">
+              <button class="drawer-filter" type="button" data-activity-filter="all" aria-pressed="true">
+                <span>All</span>
+              </button>
+              <button class="drawer-filter" type="button" data-activity-filter="status" aria-pressed="false">
+                <span>Status</span>
+              </button>
+              <button class="drawer-filter" type="button" data-activity-filter="version" aria-pressed="false">
+                <span>Versions</span>
+              </button>
+            </div>
           </div>
-          <div class="activity-stat">
-            <span class="activity-stat-value">2</span>
-            <span class="activity-stat-label">Reviews</span>
-          </div>
-          <div class="activity-stat">
-            <span class="activity-stat-value">1</span>
-            <span class="activity-stat-label">Pending</span>
-          </div>
-        </section>
-        <div class="drawer-filter-row" role="toolbar" aria-label="Activity filters">
-          <button class="drawer-filter" type="button" data-activity-filter="all" aria-pressed="true">All</button>
-          <button class="drawer-filter" type="button" data-activity-filter="review" aria-pressed="false">Review</button>
-          <button class="drawer-filter" type="button" data-activity-filter="version" aria-pressed="false">Versions</button>
-        </div>
-        <div class="drawer-body">
-          <div class="activity-list" aria-live="polite">
-            <h3 class="activity-day">11 Jun 2026</h3>
-            <article class="activity-row" data-activity-type="review">
-              <header class="activity-row-header">
-                <span class="activity-icon approved" aria-hidden="true">
-                  <svg viewBox="0 0 16 16" fill="none">
-                    <path d="M3.5 8.25L6.5 11.25L12.5 4.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="activity-title">Maria approved the document</span>
-                  <span class="activity-meta">14:22 / Reviewer</span>
-                </span>
-                <span class="activity-type approved">Approved</span>
-              </header>
-              <p class="activity-copy">Clinical review is complete. No blockers were added to the approval route.</p>
-            </article>
+          <div class="drawer-body">
+            <div class="activity-list" aria-live="polite">
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M1.7 8S4.1 3.5 8 3.5S14.3 8 14.3 8S11.9 12.5 8 12.5S1.7 8 1.7 8Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M8 9.8C8.994 9.8 9.8 8.994 9.8 8C9.8 7.006 8.994 6.2 8 6.2C7.006 6.2 6.2 7.006 6.2 8C6.2 8.994 7.006 9.8 8 9.8Z" stroke="currentColor" stroke-width="1.2" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Submitted for review</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Now</span>
+                  </div>
+                </div>
+              </article>
 
-            <article class="activity-row" data-activity-type="review">
-              <header class="activity-row-header">
-                <span class="activity-icon changes" aria-hidden="true">
-                  <svg viewBox="0 0 16 16" fill="none">
-                    <path d="M8 4.25V8.25" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
-                    <path d="M8 11.25H8.01" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
-                    <path d="M8 14.25C11.4518 14.25 14.25 11.4518 14.25 8C14.25 4.54822 11.4518 1.75 8 1.75C4.54822 1.75 1.75 4.54822 1.75 8C1.75 11.4518 4.54822 14.25 8 14.25Z" stroke="currentColor" stroke-width="1.5" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="activity-title">Content Strategy requested changes</span>
-                  <span class="activity-meta">13:58 / Evidence table</span>
-                </span>
-                <span class="activity-type changes">Changes</span>
-              </header>
-              <p class="activity-copy">Asked for a standard threshold confirmation in the checkpoint column before final approval.</p>
-              <div class="activity-actions">
-                <button class="activity-action" type="button" data-activity-action="view-comments">View comments</button>
-                <button class="activity-action secondary" type="button" data-activity-action="mark-reviewed">Mark reviewed</button>
-              </div>
-            </article>
+              <article class="activity-row" data-activity-type="version">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M8 14.2C11.424 14.2 14.2 11.424 14.2 8C14.2 4.576 11.424 1.8 8 1.8C4.576 1.8 1.8 4.576 1.8 8C1.8 11.424 4.576 14.2 8 14.2Z" stroke="currentColor" stroke-width="1.2" />
+                          <path d="M8 4.7V8L10.2 9.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card is-current">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Version saved</span>
+                    <span class="activity-current">Current</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>2 mins ago</span>
+                  </div>
+                </div>
+              </article>
 
-            <article class="activity-row" data-activity-type="version">
-              <header class="activity-row-header">
-                <span class="activity-icon ap" aria-hidden="true">AP</span>
-                <span>
-                  <span class="activity-title">Antonis uploaded a new version</span>
-                  <span class="activity-meta">11:36 / Current version</span>
-                </span>
-                <span class="activity-type version">Version</span>
-              </header>
-              <span class="activity-version">Version 4</span>
-              <p class="activity-copy">Updated the healthspan endpoint section and added the biomarker dictionary guidance.</p>
-              <div class="activity-actions">
-                <button class="activity-action" type="button" data-activity-action="view-version">View version</button>
-                <button class="activity-action secondary" type="button" data-activity-action="compare-version">Compare</button>
-              </div>
-            </article>
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M7.5 4L3.5 8L7.5 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3.5 8H10.7C12.35 8 13.7 9.35 13.7 11C13.7 12.65 12.35 14 10.7 14H9.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Returned to draft</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>34 mins ago</span>
+                  </div>
+                </div>
+              </article>
 
-            <h3 class="activity-day">10 Jun 2026</h3>
-            <article class="activity-row" data-activity-type="review">
-              <header class="activity-row-header">
-                <span class="activity-icon system" aria-hidden="true">
-                  <svg viewBox="0 0 16 16" fill="none">
-                    <path d="M8 2V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                    <path d="M3 5H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                    <path d="M3 11H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="activity-title">Review route started</span>
-                  <span class="activity-meta">17:12 / 25 people notified</span>
-                </span>
-                <span class="activity-type">Route</span>
-              </header>
-              <p class="activity-copy">Reviewers were assigned from Clinical Review, Content Strategy, and Knowledge Base owners.</p>
-            </article>
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M13.1 6.3C12.6 4.4 10.9 3 8.9 3C7.7 3 6.6 3.5 5.8 4.3L4.8 5.3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M4.8 2.8V5.3H7.3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M2.9 9.7C3.4 11.6 5.1 13 7.1 13C8.3 13 9.4 12.5 10.2 11.7L11.2 10.7" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M11.2 13.2V10.7H8.7" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar cs">CS</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Changes requested</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Christos Savva</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>38 mins ago</span>
+                  </div>
+                </div>
+              </article>
 
-            <article class="activity-row" data-activity-type="version">
-              <header class="activity-row-header">
-                <span class="activity-icon ap" aria-hidden="true">AP</span>
-                <span>
-                  <span class="activity-title">Version 3 created</span>
-                  <span class="activity-meta">16:30 / DOCX render</span>
-                </span>
-                <span class="activity-type version">Version</span>
-              </header>
-              <span class="activity-version">Version 3</span>
-              <p class="activity-copy">Renamed from longevity_research_report.docx and registered as a private Knowledge Base asset.</p>
-              <div class="activity-actions">
-                <button class="activity-action" type="button" data-activity-action="view-version">View version</button>
-                <button class="activity-action secondary" type="button" data-activity-action="restore-version">Restore</button>
-              </div>
-            </article>
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M1.7 8S4.1 3.5 8 3.5S14.3 8 14.3 8S11.9 12.5 8 12.5S1.7 8 1.7 8Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M8 9.8C8.994 9.8 9.8 8.994 9.8 8C9.8 7.006 8.994 6.2 8 6.2C7.006 6.2 6.2 7.006 6.2 8C6.2 8.994 7.006 9.8 8 9.8Z" stroke="currentColor" stroke-width="1.2" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Submitted for review</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>1 hr ago</span>
+                  </div>
+                </div>
+              </article>
 
-            <article class="activity-row" data-activity-type="system">
-              <header class="activity-row-header">
-                <span class="activity-icon system" aria-hidden="true">
-                  <svg viewBox="0 0 16 16" fill="none">
-                    <path d="M3.5 8.25L6.5 11.25L12.5 4.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </span>
-                <span>
-                  <span class="activity-title">Preview and access checks completed</span>
-                  <span class="activity-meta">16:30 / System</span>
-                </span>
-                <span class="activity-type approved">Complete</span>
-              </header>
-              <p class="activity-copy">Source scan, metadata extraction, access policy sync, and browser preview render completed.</p>
-            </article>
+              <article class="activity-row" data-activity-type="version">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M8 14.2C11.424 14.2 14.2 11.424 14.2 8C14.2 4.576 11.424 1.8 8 1.8C4.576 1.8 1.8 4.576 1.8 8C1.8 11.424 4.576 14.2 8 14.2Z" stroke="currentColor" stroke-width="1.2" />
+                          <path d="M8 4.7V8L10.2 9.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Version saved</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>1 hr 4 mins ago</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M3.3 8.2L6.3 11.2L12.7 4.8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar cs">CS</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Approved</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Christos Savva</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Yesterday, 4:42 PM</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M1.7 8S4.1 3.5 8 3.5S14.3 8 14.3 8S11.9 12.5 8 12.5S1.7 8 1.7 8Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M8 9.8C8.994 9.8 9.8 8.994 9.8 8C9.8 7.006 8.994 6.2 8 6.2C7.006 6.2 6.2 7.006 6.2 8C6.2 8.994 7.006 9.8 8 9.8Z" stroke="currentColor" stroke-width="1.2" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Submitted for review</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Yesterday, 4:15 PM</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="activity-row" data-activity-type="version">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M8 14.2C11.424 14.2 14.2 11.424 14.2 8C14.2 4.576 11.424 1.8 8 1.8C4.576 1.8 1.8 4.576 1.8 8C1.8 11.424 4.576 14.2 8 14.2Z" stroke="currentColor" stroke-width="1.2" />
+                          <path d="M8 4.7V8L10.2 9.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Version saved</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Yesterday, 4:10 PM</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="activity-row" data-activity-type="version">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M8 14.2C11.424 14.2 14.2 11.424 14.2 8C14.2 4.576 11.424 1.8 8 1.8C4.576 1.8 1.8 4.576 1.8 8C1.8 11.424 4.576 14.2 8 14.2Z" stroke="currentColor" stroke-width="1.2" />
+                          <path d="M8 4.7V8L10.2 9.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Version saved</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Yesterday, 3:58 PM</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M13.1 6.3C12.6 4.4 10.9 3 8.9 3C7.7 3 6.6 3.5 5.8 4.3L4.8 5.3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M4.8 2.8V5.3H7.3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M2.9 9.7C3.4 11.6 5.1 13 7.1 13C8.3 13 9.4 12.5 10.2 11.7L11.2 10.7" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M11.2 13.2V10.7H8.7" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar cs">CS</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Changes requested</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Christos Savva</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Yesterday, 3:41 PM</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M1.7 8S4.1 3.5 8 3.5S14.3 8 14.3 8S11.9 12.5 8 12.5S1.7 8 1.7 8Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M8 9.8C8.994 9.8 9.8 8.994 9.8 8C9.8 7.006 8.994 6.2 8 6.2C7.006 6.2 6.2 7.006 6.2 8C6.2 8.994 7.006 9.8 8 9.8Z" stroke="currentColor" stroke-width="1.2" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Submitted for review</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Yesterday, 3:24 PM</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="activity-row" data-activity-type="version">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M8 14.2C11.424 14.2 14.2 11.424 14.2 8C14.2 4.576 11.424 1.8 8 1.8C4.576 1.8 1.8 4.576 1.8 8C1.8 11.424 4.576 14.2 8 14.2Z" stroke="currentColor" stroke-width="1.2" />
+                          <path d="M8 4.7V8L10.2 9.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Version saved</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Yesterday, 3:12 PM</span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="activity-row" data-activity-type="status">
+                <div class="activity-rail" aria-hidden="true">
+                  <div class="activity-icon-stack">
+                    <span class="activity-icon-slot">
+                      <span class="activity-event-icon">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M7.5 4L3.5 8L7.5 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3.5 8H10.7C12.35 8 13.7 9.35 13.7 11C13.7 12.65 12.35 14 10.7 14H9.7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                    </span>
+                    <span class="activity-avatar-slot">
+                      <span class="activity-avatar ap">AP</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="activity-card">
+                  <header class="activity-row-header">
+                    <span class="activity-title">Returned to draft</span>
+                  </header>
+                  <div class="activity-meta">
+                    <span>Antonis Polemitis</span>
+                    <span class="activity-meta-dot" aria-hidden="true"></span>
+                    <span>Yesterday, 2:58 PM</span>
+                  </div>
+                </div>
+              </article>
+            </div>
           </div>
         </div>
       </aside>
@@ -4281,11 +5765,14 @@
         const commentsCount = document.querySelector("[data-comments-count]");
         const commentInput = document.querySelector("#comment-input");
         const commentSubmit = document.querySelector(".comment-submit");
+        const commentCancel = document.querySelector("[data-comment-cancel]");
         const commentComposer = document.querySelector(".comment-composer");
         const activityToggle = document.querySelector(".activity-toggle");
         const activityPanel = document.querySelector("#activity-panel");
         const activityClose = document.querySelector(".activity-close");
         const activityFilters = Array.from(document.querySelectorAll("[data-activity-filter]"));
+        const activityList = document.querySelector(".activity-list");
+        const activityBody = activityPanel?.querySelector(".drawer-body");
         const activityRows = Array.from(document.querySelectorAll("[data-activity-type]"));
         const activityDays = Array.from(document.querySelectorAll(".activity-day"));
         const approveMenuWrap = document.querySelector(".approve-menu-wrap");
@@ -4342,6 +5829,7 @@
         let hideInfoTimer;
         let hideCommentsTimer;
         let hideActivityTimer;
+        let hideDocumentScrollbarTimer;
         let hideToastTimer;
         let removeToastTimer;
         const hasApproveMenu = Boolean(approveMenuWrap && approveMenuTrigger && approveMenu);
@@ -4757,6 +6245,23 @@
           window.requestAnimationFrame(updatePageIndicator);
         };
 
+        const revealDocumentScrollbar = () => {
+          if (!documentViewport) {
+            return;
+          }
+
+          documentViewport.classList.add("is-scrolling");
+          window.clearTimeout(hideDocumentScrollbarTimer);
+          hideDocumentScrollbarTimer = window.setTimeout(() => {
+            documentViewport.classList.remove("is-scrolling");
+          }, 820);
+        };
+
+        const handleDocumentViewportScroll = () => {
+          requestPageIndicatorUpdate();
+          revealDocumentScrollbar();
+        };
+
         const syncFileNameInputWidth = () => {
           if (!hasFileNameInput) {
             return;
@@ -4786,14 +6291,15 @@
           fileNameInput.style.width = `${nextWidth}px`;
         };
 
+        const getCommentThreads = () => Array.from(commentsPanel?.querySelectorAll("[data-comment-state]") || []);
+
         const updateCommentCount = () => {
           if (!commentsCount) {
             return;
           }
 
-          const openCount = commentThreads.filter((thread) => thread.dataset.commentState === "open").length;
+          const openCount = getCommentThreads().filter((thread) => thread.dataset.commentState === "open").length;
           commentsCount.textContent = String(openCount);
-          commentToggle?.querySelector(".toolbar-badge")?.replaceChildren(String(openCount));
         };
 
         const applyCommentFilter = (filter) => {
@@ -4801,18 +6307,62 @@
             button.setAttribute("aria-pressed", String(button.dataset.commentFilter === filter));
           });
 
-          commentThreads.forEach((thread) => {
+          getCommentThreads().forEach((thread) => {
             const shouldShow = filter === "all" || thread.dataset.commentState === filter;
             thread.hidden = !shouldShow;
           });
         };
+
+        const closeCommentMenus = (exceptThread = null) => {
+          getCommentThreads().forEach((thread) => {
+            if (thread === exceptThread) {
+              return;
+            }
+
+            const trigger = thread.querySelector("[data-thread-menu-trigger]");
+            const menu = thread.querySelector("[data-comment-menu]");
+            trigger?.setAttribute("aria-expanded", "false");
+
+            if (menu) {
+              menu.hidden = true;
+            }
+          });
+        };
+
+        const setCommentMenuOpen = (thread, isOpen) => {
+          const trigger = thread.querySelector("[data-thread-menu-trigger]");
+          const menu = thread.querySelector("[data-comment-menu]");
+
+          if (!trigger || !menu) {
+            return;
+          }
+
+          if (isOpen) {
+            closeCommentMenus(thread);
+          }
+
+          trigger.setAttribute("aria-expanded", String(isOpen));
+          menu.hidden = !isOpen;
+        };
+
+        const isAnyCommentMenuOpen = () => getCommentThreads().some((thread) => !thread.querySelector("[data-comment-menu]")?.hidden);
 
         const syncCommentSubmit = () => {
           if (!commentInput || !commentSubmit) {
             return;
           }
 
-          commentSubmit.disabled = commentInput.value.trim().length === 0;
+          const hasText = commentInput.value.trim().length > 0;
+          const hasFocus = Boolean(commentComposer?.contains(document.activeElement));
+          const isActive = hasFocus || hasText;
+
+          commentSubmit.disabled = !hasText;
+          commentComposer?.classList.toggle("is-composer-active", isActive);
+
+          commentInput.style.height = "auto";
+          const minHeight = isActive ? 72 : 20;
+          const nextHeight = Math.min(Math.max(commentInput.scrollHeight, minHeight), 128);
+          commentInput.style.height = `${nextHeight}px`;
         };
 
         const updateActivityDayVisibility = () => {
@@ -4833,17 +6383,39 @@
           });
         };
 
-        const applyActivityFilter = (filter) => {
+        const applyActivityFilter = (filter, shouldResetScroll = true) => {
+          const nextFilter = activityFilters.some((button) => button.dataset.activityFilter === filter) ? filter : "all";
+
           activityFilters.forEach((button) => {
-            button.setAttribute("aria-pressed", String(button.dataset.activityFilter === filter));
+            button.setAttribute("aria-pressed", String(button.dataset.activityFilter === nextFilter));
           });
 
-          activityRows.forEach((row) => {
-            const shouldShow = filter === "all" || row.dataset.activityType === filter;
-            row.hidden = !shouldShow;
-          });
+          const sortedRows = activityRows.filter((row) => nextFilter === "all" || row.dataset.activityType === nextFilter);
+          const sortedRowSet = new Set(sortedRows);
+
+          if (activityList && !activityDays.length) {
+            sortedRows.forEach((row) => {
+              row.hidden = false;
+            });
+
+            activityRows
+              .filter((row) => !sortedRowSet.has(row))
+              .forEach((row) => {
+                row.hidden = true;
+              });
+
+            activityList.replaceChildren(...sortedRows);
+          } else {
+            activityRows.forEach((row) => {
+              row.hidden = !sortedRowSet.has(row);
+            });
+          }
 
           updateActivityDayVisibility();
+
+          if (shouldResetScroll) {
+            activityBody?.scrollTo({ top: 0, behavior: "auto" });
+          }
         };
 
         const setCommentsDrawerOpen = (isOpen, shouldFocus = false, returnFocus = !isOpen) => {
@@ -4855,6 +6427,10 @@
           commentToggle.setAttribute("aria-expanded", String(isOpen));
           commentsPanel.setAttribute("aria-hidden", String(!isOpen));
           setPanelInert(commentsPanel, !isOpen);
+
+          if (!isOpen) {
+            closeCommentMenus();
+          }
 
           if (isOpen) {
             closeApproveMenu();
@@ -5050,7 +6626,7 @@
           currentPageIndicator.setAttribute("aria-live", "polite");
           currentPageIndicator.setAttribute("aria-atomic", "true");
           totalPageIndicator.textContent = String(pages.length);
-          documentViewport.addEventListener("scroll", requestPageIndicatorUpdate, { passive: true });
+          documentViewport.addEventListener("scroll", handleDocumentViewportScroll, { passive: true });
           window.addEventListener("scroll", requestPageIndicatorUpdate, { passive: true });
           window.addEventListener("resize", requestPageIndicatorUpdate);
           window.addEventListener("load", requestPageIndicatorUpdate, { once: true });
@@ -5081,7 +6657,7 @@
 
         if (hasActivityDrawer) {
           setPanelInert(activityPanel, true);
-          updateActivityDayVisibility();
+          applyActivityFilter(activityFilters.find((button) => button.getAttribute("aria-pressed") === "true")?.dataset.activityFilter || "all", false);
         }
 
         tooltipButtons.forEach((button) => {
@@ -5127,39 +6703,80 @@
 
           commentThreads.forEach((thread) => {
             thread.addEventListener("click", (event) => {
-              const action = event.target.closest("[data-thread-action]");
+              const target = event.target instanceof Element ? event.target : null;
+
+              if (!target) {
+                return;
+              }
+
+              const trigger = target.closest("[data-thread-menu-trigger]");
+
+              if (trigger) {
+                event.stopPropagation();
+                setCommentMenuOpen(thread, trigger.getAttribute("aria-expanded") !== "true");
+                return;
+              }
+
+              const action = target.closest("[data-thread-action]");
 
               if (!action) {
                 return;
               }
 
-              const nextState = action.dataset.threadAction === "reopen" ? "open" : action.dataset.threadAction === "resolve" ? "resolved" : null;
+              event.stopPropagation();
 
-              if (nextState) {
-                thread.dataset.commentState = nextState;
-                thread.classList.toggle("resolved", nextState === "resolved");
-                const status = thread.querySelector(".thread-status");
-                if (status) {
-                  status.textContent = nextState === "resolved" ? "Resolved" : "Open";
-                  status.classList.toggle("resolved", nextState === "resolved");
-                  status.classList.toggle("open", nextState === "open");
-                }
-
-                action.textContent = nextState === "resolved" ? "Reopen" : "Resolve";
-                action.dataset.threadAction = nextState === "resolved" ? "reopen" : "resolve";
+              if (action.dataset.threadAction === "resolve") {
+                thread.dataset.commentState = "resolved";
+                thread.classList.add("resolved");
+                setCommentMenuOpen(thread, false);
                 updateCommentCount();
                 applyCommentFilter(commentFilters.find((item) => item.getAttribute("aria-pressed") === "true")?.dataset.commentFilter || "all");
-                showToast(nextState === "resolved" ? "Comment resolved" : "Comment reopened");
+                showToast("Comment marked as resolved");
                 return;
               }
 
-              if (action.dataset.threadAction === "jump") {
-                showToast("Comment location highlighted");
+              if (action.dataset.threadAction === "delete") {
+                setCommentMenuOpen(thread, false);
+                thread.remove();
+                updateCommentCount();
+                showToast("Comment deleted");
               }
             });
           });
 
+          commentsPanel.addEventListener("pointerdown", (event) => {
+            const target = event.target instanceof Element ? event.target : null;
+
+            if (target && !target.closest(".comment-thread")) {
+              closeCommentMenus();
+            }
+          });
+
+          document.addEventListener("pointerdown", (event) => {
+            const target = event.target instanceof Element ? event.target : null;
+
+            if (target && isAnyCommentMenuOpen() && !commentsPanel.contains(target)) {
+              closeCommentMenus();
+            }
+          });
+
           commentInput?.addEventListener("input", syncCommentSubmit);
+          commentInput?.addEventListener("focus", syncCommentSubmit);
+
+          commentComposer?.addEventListener("focusout", () => {
+            window.setTimeout(syncCommentSubmit, 0);
+          });
+
+          commentCancel?.addEventListener("click", () => {
+            if (!commentInput) {
+              return;
+            }
+
+            commentInput.value = "";
+            commentInput.blur();
+            commentCancel.blur();
+            syncCommentSubmit();
+          });
 
           commentComposer?.addEventListener("submit", (event) => {
             event.preventDefault();
@@ -5172,6 +6789,7 @@
             }
 
             commentInput.value = "";
+            commentInput.blur();
             syncCommentSubmit();
             showToast("Comment added to current selection");
           });
@@ -5529,6 +7147,12 @@
           if (event.key === "Escape" && isAskDrawerOpen() && aiPanel?.contains(document.activeElement)) {
             event.preventDefault();
             setAskDrawerOpen(false);
+            return;
+          }
+
+          if (event.key === "Escape" && isAnyCommentMenuOpen()) {
+            event.preventDefault();
+            closeCommentMenus();
             return;
           }
 
