@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Evolve Content Overview</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css?v=row-preview-link-1" />
+    <link rel="stylesheet" href="./styles.css?v=workspaces-all-link-neutral-1" />
   </head>
   <body>
     <main class="app" aria-label="Evolve content overview">
@@ -92,7 +92,12 @@
           </section>
 
           <section class="side-section workspace-section" aria-labelledby="workspaces-title">
-            <h2 id="workspaces-title">Workspaces</h2>
+            <div class="side-section-header">
+              <h2 id="workspaces-title">Workspaces</h2>
+              <button class="workspace-add-button" type="button" aria-label="Add workspace">
+                <img class="icon-img" src="./assets/icons/plus.svg" alt="" />
+              </button>
+            </div>
             <button class="side-item" type="button">
               <img class="icon-img" src="./assets/icons/vector16.svg" alt="" />
               <span>Knowledge Base</span>
@@ -113,10 +118,10 @@
               <img class="icon-img" src="./assets/icons/vector16.svg" alt="" />
               <span>Compliance Library</span>
             </button>
-            <button class="side-item" type="button">
-              <img class="icon-img" src="./assets/icons/plus.svg" alt="" />
-              <span>Add workspace</span>
-            </button>
+            <a class="side-item workspace-all-link" href="./workspaces.html">
+              <span>All workspaces</span>
+              <img class="icon-img" src="./assets/icons/vector22.svg" alt="" />
+            </a>
           </section>
 
           <button class="side-item archive-link" type="button">
@@ -403,6 +408,6 @@
       </aside>
     </main>
 
-    <script src="./script.js?v=row-preview-link-1"></script>
+    <script src="./script.js?v=workspaces-toolbar-1"></script>
   </body>
 </html>

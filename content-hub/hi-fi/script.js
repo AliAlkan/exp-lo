@@ -7,6 +7,7 @@ const aiPanel = document.querySelector("#ask-ai-panel");
 const aiCloseButton = document.querySelector(".ai-close");
 const promptInput = document.querySelector("#ask-input");
 const previewRows = document.querySelectorAll(".table-row[data-href]");
+const tableSearchInputs = document.querySelectorAll("[data-table-search]");
 
 const setDrawerInert = (isInert) => {
   if (!aiPanel) {
@@ -24,7 +25,7 @@ const setDrawerInert = (isInert) => {
   }
 };
 
-const setAskDrawerOpen = (isOpen, shouldFocusInput = false) => {
+const setAskDrawerOpen = (isOpen, shouldFocusInput = false, shouldRestoreFocus = true) => {
   if (!app || !askButton || !aiPanel) {
     return;
   }
@@ -35,7 +36,9 @@ const setAskDrawerOpen = (isOpen, shouldFocusInput = false) => {
   setDrawerInert(!isOpen);
 
   if (!isOpen) {
-    askButton.focus({ preventScroll: true });
+    if (shouldRestoreFocus) {
+      askButton.focus({ preventScroll: true });
+    }
     return;
   }
 
@@ -46,7 +49,8 @@ const setAskDrawerOpen = (isOpen, shouldFocusInput = false) => {
   }
 };
 
-setAskDrawerOpen(true);
+const shouldAskDrawerStartOpen = askButton?.getAttribute("aria-expanded") !== "false" && !app?.classList.contains("ai-drawer-closed");
+setAskDrawerOpen(shouldAskDrawerStartOpen, false, false);
 
 tabs.forEach((tab) => {
   tab.addEventListener("click", () => {
@@ -93,6 +97,19 @@ previewRows.forEach((row) => {
   });
 });
 
+tableSearchInputs.forEach((input) => {
+  const table = document.querySelector(input.dataset.tableSearch);
+  const rows = table ? Array.from(table.querySelectorAll(".table-row:not(.table-head)")) : [];
+
+  input.addEventListener("input", () => {
+    const query = input.value.trim().toLowerCase();
+
+    rows.forEach((row) => {
+      row.hidden = Boolean(query) && !row.textContent.toLowerCase().includes(query);
+    });
+  });
+});
+
 askButton?.addEventListener("click", () => {
   const isOpen = askButton.getAttribute("aria-expanded") === "true";
   setAskDrawerOpen(!isOpen, !isOpen);
@@ -112,6 +129,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-document.querySelector(".prompt-field").addEventListener("submit", (event) => {
+document.querySelector(".prompt-field")?.addEventListener("submit", (event) => {
   event.preventDefault();
 });
