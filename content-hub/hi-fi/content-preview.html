@@ -150,8 +150,8 @@
 
       .icon-panel-info,
       .icon-copy {
-        width: 14.533px;
-        height: 14.533px;
+        width: 16px;
+        height: 16px;
       }
 
       .icon-message {
@@ -2063,6 +2063,51 @@
         color: var(--neutral-50);
       }
 
+      .activity-version-add {
+        flex: 0 0 36px;
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        color: #d4d4d4;
+        transition:
+          background-color 120ms ease,
+          color 120ms ease;
+      }
+
+      .activity-version-add:hover,
+      .activity-version-add:focus-visible {
+        background: transparent;
+        color: var(--neutral-50);
+        outline: 0;
+      }
+
+      .activity-version-add[data-tooltip]::before {
+        left: auto;
+        right: 14px;
+        transform: translateY(-2px) rotate(45deg);
+      }
+
+      .activity-version-add[data-tooltip]::after {
+        left: auto;
+        right: 0;
+        transform: translateY(-2px);
+      }
+
+      .activity-version-add[data-tooltip]:hover::before,
+      .activity-version-add[data-tooltip]:focus-visible::before {
+        transform: translateY(0) rotate(45deg);
+      }
+
+      .activity-version-add[data-tooltip]:hover::after,
+      .activity-version-add[data-tooltip]:focus-visible::after {
+        transform: translateY(0);
+      }
+
+      .activity-add-icon {
+        width: 18px;
+        height: 18px;
+      }
+
       .activity-panel .drawer-body {
         flex: 1 1 auto;
         min-height: 0;
@@ -2190,6 +2235,11 @@
         background: var(--panel-2);
       }
 
+      .activity-card.has-version-menu {
+        position: relative;
+        overflow: visible;
+      }
+
       .activity-card.is-current {
         background:
           linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
@@ -2212,6 +2262,10 @@
         padding: 14px 16px 0;
       }
 
+      .activity-card.has-version-menu .activity-row-header {
+        padding-right: 20px;
+      }
+
       .activity-panel .activity-title {
         display: block;
         min-width: 0;
@@ -2231,6 +2285,93 @@
         font-weight: 400;
         line-height: 20px;
         white-space: nowrap;
+      }
+
+      .version-menu-trigger {
+        display: grid;
+        place-items: center;
+        flex: 0 0 16px;
+        width: 16px;
+        height: 20px;
+        color: #d4d4d4;
+        cursor: pointer;
+        transition: color 120ms ease;
+      }
+
+      .version-menu-trigger:hover,
+      .version-menu-trigger:focus-visible,
+      .version-menu-trigger[aria-expanded="true"] {
+        color: var(--neutral-50);
+        outline: 0;
+      }
+
+      .version-menu-trigger svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .version-menu {
+        position: absolute;
+        top: 32px;
+        right: 12px;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        width: 172px;
+        padding: 6px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--panel-2);
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38);
+      }
+
+      .version-menu[hidden] {
+        display: none;
+      }
+
+      .activity-row.version-menu-open {
+        position: relative;
+        z-index: 18;
+      }
+
+      .version-menu-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 34px;
+        gap: 8px;
+        padding: 1px 6px;
+        border-radius: 8px;
+        color: #d4d4d4;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        text-align: left;
+      }
+
+      .version-menu-item:hover,
+      .version-menu-item:focus-visible {
+        background: rgba(64, 64, 64, 0.58);
+        outline: 0;
+      }
+
+      .version-menu-item.destructive {
+        color: #f87171;
+      }
+
+      .version-menu-icon {
+        display: grid;
+        place-items: center;
+        flex: 0 0 28px;
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+      }
+
+      .version-menu-icon svg {
+        width: 18px;
+        height: 18px;
       }
 
       .activity-panel .activity-meta {
@@ -2550,6 +2691,7 @@
       }
 
       .panel-section.details {
+        gap: 16px;
         height: auto;
         min-height: 0;
         overflow: visible;
@@ -2848,7 +2990,7 @@
         align-items: center;
         justify-content: center;
         padding: 24px;
-        background: rgba(10, 10, 10, 0.68);
+        background: rgba(10, 10, 10, 0.85);
       }
 
       .share-modal-backdrop[hidden] {
@@ -2856,24 +2998,43 @@
       }
 
       .share-modal {
-        width: min(640px, calc(100vw - 32px));
-        max-height: min(760px, calc(100vh - 32px));
-        max-height: min(760px, calc(100dvh - 32px));
-        overflow: hidden;
-        border: 1px solid var(--border);
-        border-radius: 12px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: min(612px, calc(100vw - 32px));
+        max-height: min(820px, calc(100vh - 32px));
+        max-height: min(820px, calc(100dvh - 32px));
+        overflow: visible;
+        border-radius: 16px;
         background: var(--panel);
         color: var(--white);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.52);
+        box-shadow: none;
+      }
+
+      .share-modal:focus {
+        outline: 0;
       }
 
       .share-modal-header {
         display: flex;
-        align-items: flex-start;
+        flex-direction: column;
+        flex: 0 0 100px;
+        width: 100%;
+        height: 100px;
+        min-height: 100px;
+        max-height: 100px;
+        gap: 8px;
+        padding: 20px 24px;
+        overflow: hidden;
+      }
+
+      .share-modal-title-row {
+        display: flex;
+        align-items: center;
         justify-content: space-between;
-        gap: 20px;
-        padding: 22px 24px 18px;
-        border-bottom: 1px solid var(--border);
+        flex: 0 0 32px;
+        width: 100%;
+        height: 32px;
       }
 
       .share-modal-title {
@@ -2881,28 +3042,101 @@
         margin: 0;
         overflow: hidden;
         color: var(--white);
-        font-size: 22px;
-        font-weight: 700;
-        line-height: 30px;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 24px;
+        letter-spacing: 0;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
-      .share-modal-summary {
-        margin: 6px 0 0;
+      .share-modal-context {
+        display: flex;
+        align-items: center;
+        width: 362px;
+        min-width: 362px;
+        max-width: 362px;
+        height: 20px;
+        gap: 10px;
+        flex: 0 0 20px;
         color: var(--muted);
+        font-family: var(--font-text);
         font-size: 14px;
+        font-weight: 500;
+        font-variation-settings: "wdth" 100;
         line-height: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .share-context-file {
+        display: block;
+        width: 204px;
+        min-width: 204px;
+        max-width: 204px;
+        height: 20px;
+        flex: 0 0 204px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .share-context-location {
+        display: flex;
+        align-items: center;
+        width: 136px;
+        min-width: 136px;
+        max-width: 136px;
+        flex: 0 0 136px;
+        height: 20px;
+        gap: 8px;
+        overflow: hidden;
+        border-radius: 12px;
+      }
+
+      .share-context-location .figma-icon {
+        position: absolute;
+        top: 0.733px;
+        left: 1.4px;
+        width: 13.2px;
+        height: 14.532px;
+        flex: 0 0 auto;
+        object-fit: fill;
+      }
+
+      .share-context-box-icon {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+        overflow: visible;
+      }
+
+      .share-context-location-text {
+        display: block;
+        width: 112px;
+        min-width: 112px;
+        max-width: 112px;
+        height: 20px;
+        flex: 0 0 112px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .share-context-dot {
+        flex: 0 0 auto;
+        width: 2px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--muted);
       }
 
       .share-modal-close {
         display: grid;
         place-items: center;
         flex: 0 0 auto;
-        width: 28px;
-        height: 28px;
-        margin-top: 1px;
-        border-radius: 8px;
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
         color: #d4d4d4;
         cursor: pointer;
         transition:
@@ -2917,184 +3151,296 @@
       }
 
       .share-modal-body {
-        max-height: min(560px, calc(100vh - 190px));
-        max-height: min(560px, calc(100dvh - 190px));
-        overflow-y: auto;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        overflow: visible;
       }
 
       .share-section {
-        padding: 20px 24px;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .share-section:last-child {
-        border-bottom: 0;
+        padding: 0 24px;
       }
 
       .share-section-title {
-        margin: 0 0 12px;
+        margin: 0 0 18px;
         color: var(--white);
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 20px;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 16px;
+        letter-spacing: 0;
       }
 
       .share-field-label {
-        display: block;
-        margin-bottom: 8px;
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 16px;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      .share-invite {
+        position: relative;
+        z-index: 4;
+        padding: 8px 24px 28px;
       }
 
       .share-invite-row {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 128px 84px;
+        grid-template-columns: minmax(0, 1fr) max-content 80px;
+        align-items: center;
         gap: 8px;
       }
 
-      .share-input,
-      .share-select {
-        width: 100%;
-        height: 40px;
+      .share-combobox {
+        display: flex;
+        align-items: center;
         min-width: 0;
-        border: 1px solid var(--panel-3);
-        border-radius: 10px;
+        height: 48px;
+        gap: 12px;
+        padding: 6px 12px;
+        border: 2px solid var(--neutral-700);
+        border-radius: 12px;
+        color: var(--muted);
+        overflow: hidden;
+      }
+
+      .share-combobox:focus-within {
+        border-color: var(--neutral-600);
+      }
+
+      .share-combobox.has-chips {
+        gap: 6px;
+        padding: 4px;
+      }
+
+      .share-search-icon {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 auto;
+      }
+
+      .share-chip-list {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        flex: 0 0 auto;
+        gap: 6px;
+      }
+
+      .share-chip-list:empty {
+        display: none;
+      }
+
+      .share-invite-chip {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+        height: 36px;
+        gap: 8px;
+        padding: 4px 14px 4px 4px;
+        border-radius: 12px;
         background: var(--panel-2);
+        color: #d4d4d4;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+      }
+
+      .share-invite-chip .share-avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
+      }
+
+      .share-input {
+        width: 100%;
+        min-width: 0;
+        height: 32px;
+        flex: 1 1 auto;
+        border: 0;
+        outline: 0;
+        background: transparent;
         color: var(--neutral-50);
         font: inherit;
         font-size: 14px;
         line-height: 20px;
-        outline: 0;
-      }
-
-      .share-input {
-        padding: 0 12px;
       }
 
       .share-input::placeholder {
-        color: var(--muted-2);
+        color: var(--muted);
         opacity: 1;
       }
 
-      .share-select {
-        padding: 0 34px 0 12px;
-        appearance: none;
-        background-image:
-          linear-gradient(45deg, transparent 50%, var(--muted) 50%),
-          linear-gradient(135deg, var(--muted) 50%, transparent 50%);
-        background-position:
-          calc(100% - 18px) 17px,
-          calc(100% - 13px) 17px;
-        background-size: 5px 5px, 5px 5px;
-        background-repeat: no-repeat;
-      }
-
-      .share-select:disabled {
-        color: var(--muted-2);
-        cursor: not-allowed;
-        opacity: 0.72;
-      }
-
-      .share-input:focus,
-      .share-select:focus {
-        border-color: var(--neutral-600);
-        box-shadow: 0 0 0 2px rgba(250, 250, 250, 0.08);
-      }
-
-      .share-primary-button,
+      .share-command,
+      .share-inline-button,
       .share-secondary-button,
-      .share-ghost-button {
+      .share-primary-button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        height: 40px;
-        min-width: 0;
-        border-radius: 999px;
+        flex: 0 0 auto;
+        border-radius: 12px;
         cursor: pointer;
+        font: inherit;
         font-size: 14px;
-        font-weight: 700;
         line-height: 20px;
+        white-space: nowrap;
         transition:
           background-color 120ms ease,
           border-color 120ms ease,
           color 120ms ease;
       }
 
+      .share-command {
+        height: 36px;
+        min-width: 0;
+        gap: 8px;
+        padding: 6px 12px;
+        border: 1px solid var(--neutral-700);
+        color: var(--white);
+        font-weight: 500;
+      }
+
+      .share-invite-row .share-command {
+        min-width: 95px;
+      }
+
+      .share-command:hover,
+      .share-command:focus-visible {
+        border-color: var(--neutral-600);
+        background: rgba(64, 64, 64, 0.28);
+        outline: 0;
+      }
+
+      .share-command .figma-icon {
+        width: 16px;
+        height: 16px;
+        opacity: 0.5;
+      }
+
+      .share-command .figma-icon[src$="chevron-down-muted.svg"] {
+        box-sizing: border-box;
+        padding: 5.45px 3.45px;
+      }
+
+      .share-inline-button {
+        height: 36px;
+        padding: 6px 20px;
+        border-radius: 999px;
+        background: var(--neutral-700);
+        color: var(--white);
+        font-weight: 600;
+      }
+
+      .share-send-button {
+        width: 80px;
+      }
+
+      .share-inline-button.ready,
       .share-primary-button {
-        padding: 0 18px;
-        background: var(--neutral-50);
-        color: var(--black);
+        background: #932794;
+        color: #fafafa;
       }
 
       .share-primary-button:hover,
       .share-primary-button:focus-visible {
-        background: #e5e5e5;
+        background: #a62ca7;
         outline: 0;
       }
 
-      .share-primary-button:disabled {
-        background: var(--panel-3);
-        color: var(--muted);
-        cursor: not-allowed;
+      .share-inline-button:hover,
+      .share-inline-button:focus-visible {
+        background: var(--neutral-600);
+        outline: 0;
       }
 
-      .share-secondary-button {
-        padding: 0 16px;
-        gap: 8px;
-        border: 1px solid var(--panel-3);
+      .share-inline-button.ready:hover,
+      .share-inline-button.ready:focus-visible {
+        background: #a62ca7;
+      }
+
+      .share-access-section {
+        padding-bottom: 0;
+      }
+
+      .share-access-card {
+        width: 100%;
+        min-height: 60px;
+        overflow: hidden;
+        border-radius: 12px;
         background: var(--panel-2);
-        color: var(--white);
       }
 
-      .share-secondary-button:hover,
-      .share-secondary-button:focus-visible {
-        border-color: var(--neutral-600);
-        background: var(--neutral-700);
-        outline: 0;
-      }
-
-      .share-ghost-button {
-        padding: 0 16px;
-        color: #d4d4d4;
-      }
-
-      .share-ghost-button:hover,
-      .share-ghost-button:focus-visible {
-        background: var(--panel-2);
-        color: var(--neutral-50);
-        outline: 0;
-      }
-
-      .share-notify {
-        display: inline-flex;
+      .share-empty-state {
+        display: flex;
+        min-height: 216px;
+        flex-direction: column;
         align-items: center;
-        margin-top: 12px;
-        gap: 8px;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 18px;
+        justify-content: center;
+        gap: 20px;
+        padding: 40px 16px;
       }
 
-      .share-notify input {
-        width: 16px;
-        height: 16px;
-        accent-color: var(--neutral-50);
+      .share-lock-mark {
+        display: grid;
+        place-items: center;
+        width: 96px;
+        height: 96px;
+        border-radius: 32px;
+        background: var(--panel);
+      }
+
+      .share-lock-mark .figma-icon {
+        width: 42px;
+        height: 42px;
+        opacity: 0.58;
+      }
+
+      .share-empty-copy {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 20px;
       }
 
       .share-person-list {
-        display: grid;
-        gap: 4px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .share-person-list[hidden],
+      .share-empty-state[hidden],
+      .share-menu[hidden],
+      .share-suggestions[hidden] {
+        display: none;
       }
 
       .share-person-row {
+        position: relative;
         display: grid;
-        grid-template-columns: 36px minmax(0, 1fr) 128px;
+        grid-template-columns: 32px minmax(0, 1fr) auto;
         align-items: center;
-        min-height: 56px;
-        gap: 12px;
-        border-radius: 10px;
+        min-height: 60px;
+        gap: 16px;
+        padding: 12px 16px;
+      }
+
+      .share-owner-label {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        white-space: nowrap;
       }
 
       .share-avatar {
@@ -3102,20 +3448,12 @@
         place-items: center;
         width: 32px;
         height: 32px;
-        border-radius: 10px;
+        border-radius: 12px;
+        background: var(--avatar-purple);
+        color: var(--avatar-purple-text);
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 500;
         line-height: 12px;
-      }
-
-      .share-avatar.ap {
-        background: #591e5a;
-        color: #fc9fff;
-      }
-
-      .share-avatar.ms {
-        background: #5a451e;
-        color: #ffe79f;
       }
 
       .share-avatar.cs {
@@ -3123,13 +3461,28 @@
         color: #8de981;
       }
 
-      .share-avatar.group {
-        background: var(--panel-2);
-        color: var(--muted);
+      .share-avatar.ms,
+      .share-avatar.everyone {
+        background: #5a451e;
+        color: #ffe79f;
+      }
+
+      .share-avatar.everyone {
+        background: rgba(120, 67, 12, 0.42);
+        color: #e88c30;
+      }
+
+      .share-avatar.everyone .figma-icon {
+        width: 16px;
+        height: 16px;
+        object-fit: contain;
       }
 
       .share-person-copy {
+        display: flex;
+        flex-direction: column;
         min-width: 0;
+        gap: 4px;
       }
 
       .share-person-name,
@@ -3141,105 +3494,46 @@
       }
 
       .share-person-name {
-        color: var(--neutral-50);
+        color: var(--white);
         font-size: 14px;
-        font-weight: 600;
+        font-weight: 500;
         line-height: 20px;
       }
 
       .share-person-meta {
         color: var(--muted);
         font-size: 12px;
-        line-height: 16px;
+        font-weight: 400;
+        line-height: 12px;
       }
 
-      .share-role-chip {
-        justify-self: end;
-        min-width: 82px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        background: var(--panel-2);
+      .share-meta-dot::before,
+      .share-suggestion-count::before {
+        content: "•";
+        padding: 0 8px;
+      }
+
+      .share-link-section {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        padding-top: 28px;
+        padding-bottom: 28px;
+      }
+
+      .share-link-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .share-access-description {
+        margin: 0;
         color: var(--muted);
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px;
-        text-align: center;
-      }
-
-      .share-access-row {
-        display: grid;
-        grid-template-columns: 36px minmax(0, 1fr) 152px 132px;
-        align-items: center;
-        gap: 8px 12px;
-      }
-
-      .share-access-icon {
-        display: grid;
-        place-items: center;
-        width: 32px;
-        height: 32px;
-        border-radius: 10px;
-        background: var(--panel-2);
-        color: var(--muted);
-      }
-
-      .share-access-icon svg {
-        width: 18px;
-        height: 18px;
-      }
-
-      .share-access-symbol {
-        display: none;
-      }
-
-      .share-access-symbol.active {
-        display: block;
-      }
-
-      .share-access-copy {
-        min-width: 0;
-      }
-
-      .share-access-status,
-      .share-access-detail {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .share-access-status {
-        color: var(--neutral-50);
         font-size: 14px;
-        font-weight: 700;
+        font-weight: 400;
         line-height: 20px;
-      }
-
-      .share-access-detail {
-        color: var(--muted);
-        font-size: 12px;
-        line-height: 16px;
-      }
-
-      .share-link-row {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        align-items: center;
-        margin-top: 14px;
-      }
-
-      .share-link-preview {
-        min-width: 0;
-        overflow: hidden;
-        padding: 10px 12px;
-        border: 1px solid var(--panel-3);
-        border-radius: 10px;
-        background: var(--panel-2);
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 18px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
 
       .share-modal-footer {
@@ -3247,20 +3541,191 @@
         align-items: center;
         justify-content: space-between;
         gap: 12px;
-        padding: 16px 24px;
-        border-top: 1px solid var(--border);
-        background: rgba(23, 23, 23, 0.96);
+        padding: 0 24px 24px;
       }
 
-      .share-footer-actions {
+      .share-secondary-button {
+        height: 40px;
+        gap: 10px;
+        padding: 6px 20px;
+        border-radius: 23px;
+        background: var(--neutral-700);
+        color: var(--white);
+        font-weight: 600;
+      }
+
+      .share-secondary-button .figma-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .share-secondary-button:hover,
+      .share-secondary-button:focus-visible {
+        background: var(--neutral-600);
+        outline: 0;
+      }
+
+      .share-primary-button {
+        height: 40px;
+        min-width: 76px;
+        padding: 8px 20px;
+        border-radius: 999px;
+        font-weight: 500;
+      }
+
+      .share-menu-wrap {
+        position: relative;
+      }
+
+      .share-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        width: 256px;
+        padding: 8px;
+        border: 1px solid var(--neutral-700);
+        border-radius: 12px;
+        background: var(--panel-2);
+        box-shadow: none;
+      }
+
+      .share-menu-option {
         display: flex;
         align-items: center;
+        width: 100%;
+        min-height: 34px;
         gap: 8px;
+        padding: 1px 6px;
+        border-radius: 8px;
+        color: #d4d4d4;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        cursor: pointer;
+      }
+
+      .share-menu-option:hover,
+      .share-menu-option:focus-visible,
+      .share-suggestion:hover,
+      .share-suggestion:focus-visible {
+        background: rgba(64, 64, 64, 0.58);
+        outline: 0;
+      }
+
+      .share-menu-icon {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 6px;
+        color: #d4d4d4;
+      }
+
+      .share-menu-icon .figma-icon {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+      }
+
+      .share-suggestions {
+        position: absolute;
+        top: 68px;
+        left: 24px;
+        z-index: 18;
+        width: calc(100% - 48px);
+        max-height: 392px;
+        overflow: hidden;
+        padding: 8px;
+        border: 1px solid var(--neutral-700);
+        border-radius: 12px;
+        background: var(--panel);
+        box-shadow: none;
+      }
+
+      .share-suggestion-list {
+        display: flex;
+        flex-direction: column;
+        max-height: 376px;
+        margin: 0;
+        padding: 0;
+        overflow: auto;
+        scrollbar-color: rgba(250, 250, 250, 0.34) transparent;
+        scrollbar-gutter: stable;
+        scrollbar-width: thin;
+        list-style: none;
+      }
+
+      .share-suggestion-list > li {
+        width: 100%;
+      }
+
+      .share-suggestion-list::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      .share-suggestion-list::-webkit-scrollbar-track,
+      .share-suggestion-list::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+
+      .share-suggestion-list::-webkit-scrollbar-thumb {
+        border: 2px solid transparent;
+        border-radius: 999px;
+        background: rgba(250, 250, 250, 0.34);
+        background-clip: content-box;
+      }
+
+      .share-suggestion-list::-webkit-scrollbar-thumb:hover {
+        background: rgba(250, 250, 250, 0.46);
+        background-clip: content-box;
+      }
+
+      .share-suggestion {
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr);
+        align-items: center;
+        width: 100%;
+        min-height: 60px;
+        gap: 16px;
+        padding: 12px;
+        border-radius: 12px;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .share-suggestion.empty {
+        min-height: 48px;
+        color: var(--muted);
+        cursor: default;
+      }
+
+      .share-suggestion.empty:hover,
+      .share-suggestion.empty:focus-visible {
+        background: transparent;
+      }
+
+      .share-modal.is-expanded .share-access-card {
+        min-height: 300px;
+      }
+
+      .share-combobox.has-chips .share-search-icon {
+        display: none;
+      }
+
+      .share-combobox.has-chips .share-input {
+        width: 24px;
+        flex: 1 1 24px;
       }
 
       .detail-list {
         display: grid;
-        gap: 12px;
+        gap: 20px;
         width: 100%;
         min-width: 0;
         margin-top: 0;
@@ -3268,23 +3733,23 @@
 
       .detail-block {
         width: 100%;
-        min-height: 38px;
+        min-height: 0;
         min-width: 0;
       }
 
       .detail-label {
         display: block;
         color: var(--muted);
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 16px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
       }
 
       .detail-value {
         display: flex;
         align-items: center;
         min-height: 20px;
-        margin-top: 2px;
+        margin-top: 1px;
         gap: 8px;
         color: var(--white);
         font-size: 14px;
@@ -3316,17 +3781,17 @@
 
       .detail-note {
         display: block;
-        margin-top: 2px;
+        margin-top: 1px;
         color: var(--muted);
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 400;
-        line-height: 16px;
+        line-height: 20px;
       }
 
 
       .author-row {
         height: 28px;
-        margin-top: 6px;
+        margin-top: 4px;
         font-weight: 500;
       }
 
@@ -3339,11 +3804,11 @@
       }
 
       .location-block {
-        min-height: 42px;
+        min-height: 0;
       }
 
       .location-block .detail-value {
-        margin-top: 6px;
+        margin-top: 4px;
         font-weight: 500;
       }
 
@@ -3685,61 +4150,58 @@
           line-height: 22px;
         }
 
+        .share-modal {
+          overflow: hidden;
+        }
+
         .share-modal-body {
-          max-height: calc(100vh - 170px);
-          max-height: calc(100dvh - 170px);
+          max-height: calc(100vh - 166px);
+          max-height: calc(100dvh - 166px);
+          overflow-y: auto;
+        }
+
+        .share-invite {
+          padding: 8px 16px 24px;
         }
 
         .share-section {
-          padding: 16px;
+          padding: 0 16px;
         }
 
         .share-invite-row {
           grid-template-columns: minmax(0, 1fr);
         }
 
+        .share-command {
+          justify-content: space-between;
+          width: 100%;
+        }
+
+        .share-access-section,
+        .share-link-section {
+          padding-bottom: 24px;
+        }
+
         .share-person-row {
-          grid-template-columns: 36px minmax(0, 1fr);
-          gap: 10px;
-          padding: 4px 0;
+          grid-template-columns: 32px minmax(0, 1fr);
+          gap: 12px;
         }
 
-        .share-person-row .share-select,
-        .share-person-row .share-role-chip {
+        .share-person-row .share-menu-wrap {
           grid-column: 2;
           justify-self: start;
-          width: 144px;
+          min-width: 142px;
         }
 
-        .share-access-row,
-        .share-link-row {
-          grid-template-columns: 36px minmax(0, 1fr);
-          gap: 10px;
-        }
-
-        .share-access-row .share-select,
-        .share-link-row .share-secondary-button {
-          grid-column: 2;
-          justify-self: start;
-        }
-
-        .share-link-preview {
-          grid-column: 1 / -1;
+        .share-suggestions {
+          top: 60px;
+          left: 16px;
+          width: calc(100% - 32px);
+          max-height: 340px;
         }
 
         .share-modal-footer {
-          flex-direction: column-reverse;
-          align-items: stretch;
-          padding: 14px 16px;
-        }
-
-        .share-modal-footer > .share-secondary-button {
-          width: 100%;
-        }
-
-        .share-footer-actions {
-          width: 100%;
-          justify-content: flex-end;
+          padding: 0 16px 16px;
         }
 
         .activity-summary {
@@ -4290,22 +4752,18 @@
             <div class="detail-block">
               <span class="detail-label">Registered</span>
               <span class="detail-value">10 Jun 2026, 16:30</span>
-              <span class="detail-note">Content platform</span>
             </div>
             <div class="detail-block">
               <span class="detail-label">Last update</span>
               <span class="detail-value">10 Jun 2026, 16:30</span>
-              <span class="detail-note">Private asset</span>
             </div>
             <div class="detail-block">
               <span class="detail-label">Metadata updated</span>
               <span class="detail-value">10 Jun 2026, 16:30</span>
-              <span class="detail-note">2 payload keys</span>
             </div>
             <div class="detail-block">
               <span class="detail-label">Primary text</span>
               <span class="detail-value">Available</span>
-              <span class="detail-note">111 chunks</span>
             </div>
             <div class="detail-block">
               <span class="detail-label">Retrieval chunks</span>
@@ -5043,6 +5501,17 @@
                 <span>Versions</span>
               </button>
             </div>
+            <button
+              class="icon-button activity-version-add"
+              type="button"
+              aria-label="Add to version history"
+              data-tooltip="Add to version history"
+              data-add-version-history
+            >
+              <svg class="figma-icon activity-add-icon" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <path d="M9 3.75V14.25M3.75 9H14.25" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
           </div>
           <div class="drawer-body">
             <div class="activity-list" aria-live="polite">
@@ -5205,10 +5674,38 @@
                     </span>
                   </div>
                 </div>
-                <div class="activity-card">
+                <div class="activity-card has-version-menu">
                   <header class="activity-row-header">
                     <span class="activity-title">Version saved</span>
+                    <button class="version-menu-trigger" type="button" aria-label="More actions for saved version" aria-haspopup="menu" aria-expanded="false" data-version-menu-trigger>
+                      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M3.2 8H3.21M8 8H8.01M12.8 8H12.81" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
                   </header>
+                  <div class="version-menu" role="menu" aria-label="Saved version actions" data-version-menu hidden>
+                    <button class="version-menu-item" type="button" role="menuitem" data-version-action="restore">
+                      <span class="version-menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M3 12A9 9 0 0 1 18.36 5.64L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M21 3V8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M21 12A9 9 0 0 1 5.64 18.36L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3 21V16H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>Restore</span>
+                    </button>
+                    <button class="version-menu-item destructive" type="button" role="menuitem" data-version-action="delete">
+                      <span class="version-menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M19 6V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>Delete</span>
+                    </button>
+                  </div>
                   <div class="activity-meta">
                     <span>Antonis Polemitis</span>
                     <span class="activity-meta-dot" aria-hidden="true"></span>
@@ -5288,10 +5785,38 @@
                     </span>
                   </div>
                 </div>
-                <div class="activity-card">
+                <div class="activity-card has-version-menu">
                   <header class="activity-row-header">
                     <span class="activity-title">Version saved</span>
+                    <button class="version-menu-trigger" type="button" aria-label="More actions for saved version" aria-haspopup="menu" aria-expanded="false" data-version-menu-trigger>
+                      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M3.2 8H3.21M8 8H8.01M12.8 8H12.81" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
                   </header>
+                  <div class="version-menu" role="menu" aria-label="Saved version actions" data-version-menu hidden>
+                    <button class="version-menu-item" type="button" role="menuitem" data-version-action="restore">
+                      <span class="version-menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M3 12A9 9 0 0 1 18.36 5.64L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M21 3V8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M21 12A9 9 0 0 1 5.64 18.36L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3 21V16H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>Restore</span>
+                    </button>
+                    <button class="version-menu-item destructive" type="button" role="menuitem" data-version-action="delete">
+                      <span class="version-menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M19 6V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>Delete</span>
+                    </button>
+                  </div>
                   <div class="activity-meta">
                     <span>Antonis Polemitis</span>
                     <span class="activity-meta-dot" aria-hidden="true"></span>
@@ -5316,10 +5841,38 @@
                     </span>
                   </div>
                 </div>
-                <div class="activity-card">
+                <div class="activity-card has-version-menu">
                   <header class="activity-row-header">
                     <span class="activity-title">Version saved</span>
+                    <button class="version-menu-trigger" type="button" aria-label="More actions for saved version" aria-haspopup="menu" aria-expanded="false" data-version-menu-trigger>
+                      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M3.2 8H3.21M8 8H8.01M12.8 8H12.81" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
                   </header>
+                  <div class="version-menu" role="menu" aria-label="Saved version actions" data-version-menu hidden>
+                    <button class="version-menu-item" type="button" role="menuitem" data-version-action="restore">
+                      <span class="version-menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M3 12A9 9 0 0 1 18.36 5.64L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M21 3V8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M21 12A9 9 0 0 1 5.64 18.36L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3 21V16H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>Restore</span>
+                    </button>
+                    <button class="version-menu-item destructive" type="button" role="menuitem" data-version-action="delete">
+                      <span class="version-menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M19 6V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>Delete</span>
+                    </button>
+                  </div>
                   <div class="activity-meta">
                     <span>Antonis Polemitis</span>
                     <span class="activity-meta-dot" aria-hidden="true"></span>
@@ -5402,10 +5955,38 @@
                     </span>
                   </div>
                 </div>
-                <div class="activity-card">
+                <div class="activity-card has-version-menu">
                   <header class="activity-row-header">
                     <span class="activity-title">Version saved</span>
+                    <button class="version-menu-trigger" type="button" aria-label="More actions for saved version" aria-haspopup="menu" aria-expanded="false" data-version-menu-trigger>
+                      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M3.2 8H3.21M8 8H8.01M12.8 8H12.81" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </button>
                   </header>
+                  <div class="version-menu" role="menu" aria-label="Saved version actions" data-version-menu hidden>
+                    <button class="version-menu-item" type="button" role="menuitem" data-version-action="restore">
+                      <span class="version-menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M3 12A9 9 0 0 1 18.36 5.64L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M21 3V8H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M21 12A9 9 0 0 1 5.64 18.36L3 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3 21V16H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>Restore</span>
+                    </button>
+                    <button class="version-menu-item destructive" type="button" role="menuitem" data-version-action="delete">
+                      <span class="version-menu-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                          <path d="M19 6V20C19 21.1046 18.1046 22 17 22H7C5.89543 22 5 21.1046 5 20V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                          <path d="M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </span>
+                      <span>Delete</span>
+                    </button>
+                  </div>
                   <div class="activity-meta">
                     <span>Antonis Polemitis</span>
                     <span class="activity-meta-dot" aria-hidden="true"></span>
@@ -5572,139 +6153,86 @@
           role="dialog"
           aria-modal="true"
           aria-labelledby="share-dialog-title"
-          aria-describedby="share-dialog-summary"
+          aria-describedby="share-dialog-context"
+          tabindex="-1"
         >
           <header class="share-modal-header">
-            <div>
-              <h2 class="share-modal-title" id="share-dialog-title">Share longevity_research_brief.docx</h2>
-              <p class="share-modal-summary" id="share-dialog-summary">Private asset / In review / Knowledge Base</p>
+            <div class="share-modal-title-row">
+              <h2 class="share-modal-title" id="share-dialog-title">Invite to collaborate</h2>
+              <button class="share-modal-close" type="button" aria-label="Close sharing" data-share-close>
+                <img class="figma-icon icon-x" src="./assets/icons/content-preview/x.svg" alt="" />
+              </button>
             </div>
-            <button class="share-modal-close" type="button" aria-label="Close sharing" data-share-close>
-              <svg class="figma-icon icon-x" viewBox="0 0 11.3 11.3" fill="none" aria-hidden="true">
-                <path d="M10.65 0.65L0.65 10.65M0.65 0.65L10.65 10.65" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </button>
+            <div class="share-modal-context" id="share-dialog-context">
+              <span class="share-context-file" data-share-file-name>longevity_research_brief.docx</span>
+              <span class="share-context-dot" aria-hidden="true"></span>
+              <span class="share-context-location">
+                <span class="share-context-box-icon" aria-hidden="true">
+                  <img class="figma-icon" src="./assets/icons/content-preview/box.svg?v=share-box-muted-1" alt="" />
+                </span>
+                <span class="share-context-location-text">Knowledge Base</span>
+              </span>
+            </div>
           </header>
 
           <div class="share-modal-body">
-            <section class="share-section" aria-labelledby="share-invite-title">
-              <h3 class="share-section-title" id="share-invite-title">Invite people and groups</h3>
-              <form class="share-invite">
-                <label class="share-field-label" for="share-invite-input">Add reviewer by name or email</label>
-                <div class="share-invite-row">
+            <form class="share-invite">
+              <label class="share-field-label" for="share-invite-input">Add people, workgroups, and collaborations</label>
+              <div class="share-invite-row">
+                <div class="share-combobox" data-share-combobox>
+                  <img class="share-search-icon figma-icon" src="./assets/icons/search.svg" alt="" />
+                  <div class="share-chip-list" data-share-chip-list></div>
                   <input
                     class="share-input"
                     id="share-invite-input"
                     name="invitee"
                     type="text"
                     autocomplete="off"
-                    placeholder="name@evolve.example"
+                    role="combobox"
+                    aria-autocomplete="list"
+                    aria-expanded="false"
+                    aria-controls="share-suggestions"
+                    placeholder="Add people, workgroups, and collaborations"
                   />
-                  <label class="share-field-label" for="share-invite-role" hidden>Invite role</label>
-                  <select class="share-select" id="share-invite-role" name="role" aria-label="Invite role">
-                    <option>Reviewer</option>
-                    <option>Commenter</option>
-                    <option>Viewer</option>
-                    <option>Editor</option>
-                  </select>
-                  <button class="share-primary-button share-send-button" type="submit" disabled>Send</button>
                 </div>
-                <label class="share-notify">
-                  <input type="checkbox" checked />
-                  <span>Notify invited people</span>
-                </label>
-              </form>
-            </section>
+                <div class="share-menu-wrap">
+                  <button class="share-command" type="button" aria-haspopup="menu" aria-expanded="false" data-share-menu-trigger="invite-role">
+                    <span data-share-invite-role-label>Can view</span>
+                    <img class="figma-icon" src="./assets/icons/content-preview/chevron-down-muted.svg" alt="" />
+                  </button>
+                  <div class="share-menu" role="menu" data-share-menu="invite-role" hidden></div>
+                </div>
+                <button class="share-inline-button share-send-button" type="submit">Share</button>
+              </div>
+              <div class="share-suggestions" id="share-suggestions" role="listbox" data-share-suggestions hidden>
+                <ul class="share-suggestion-list" data-share-suggestion-list></ul>
+              </div>
+            </form>
 
-            <section class="share-section" aria-labelledby="share-access-title">
-              <h3 class="share-section-title" id="share-access-title">People with access</h3>
-              <div class="share-person-list">
-                <div class="share-person-row">
-                  <span class="share-avatar ap" aria-hidden="true">AP</span>
-                  <span class="share-person-copy">
-                    <span class="share-person-name">Antonis Polemitis</span>
-                    <span class="share-person-meta">Owner</span>
+            <section class="share-section share-access-section" aria-labelledby="share-access-title">
+              <h3 class="share-section-title" id="share-access-title">Who can access</h3>
+              <div class="share-access-card">
+                <div class="share-empty-state" data-share-empty-state hidden>
+                  <span class="share-lock-mark" aria-hidden="true">
+                    <img class="figma-icon" src="./assets/icons/content-preview/lock.svg" alt="" />
                   </span>
-                  <span class="share-role-chip">Owner</span>
+                  <span class="share-empty-copy">No one added yet</span>
                 </div>
-                <div class="share-person-row">
-                  <span class="share-avatar ms" aria-hidden="true">MS</span>
-                  <span class="share-person-copy">
-                    <span class="share-person-name">Maria Stylianou</span>
-                    <span class="share-person-meta">Clinical review</span>
-                  </span>
-                  <label class="share-field-label" for="share-role-ms" hidden>Maria Stylianou access</label>
-                  <select class="share-select" id="share-role-ms" aria-label="Maria Stylianou access" data-share-person-role data-person-name="Maria Stylianou">
-                    <option>Reviewer</option>
-                    <option>Commenter</option>
-                    <option>Viewer</option>
-                    <option>Remove access</option>
-                  </select>
-                </div>
-                <div class="share-person-row">
-                  <span class="share-avatar cs" aria-hidden="true">CS</span>
-                  <span class="share-person-copy">
-                    <span class="share-person-name">Content Strategy</span>
-                    <span class="share-person-meta">Team group</span>
-                  </span>
-                  <label class="share-field-label" for="share-role-cs" hidden>Content Strategy access</label>
-                  <select class="share-select" id="share-role-cs" aria-label="Content Strategy access" data-share-person-role data-person-name="Content Strategy">
-                    <option>Commenter</option>
-                    <option>Reviewer</option>
-                    <option>Viewer</option>
-                    <option>Remove access</option>
-                  </select>
-                </div>
-                <div class="share-person-row">
-                  <span class="share-avatar group" aria-hidden="true">22+</span>
-                  <span class="share-person-copy">
-                    <span class="share-person-name">Additional reviewers</span>
-                    <span class="share-person-meta">Shared through review routing</span>
-                  </span>
-                  <span class="share-role-chip">Viewer</span>
-                </div>
+                <ul class="share-person-list" data-share-access-list hidden></ul>
               </div>
             </section>
 
-            <section class="share-section" aria-labelledby="share-general-title">
-              <h3 class="share-section-title" id="share-general-title">General access</h3>
-              <div class="share-access-row">
-                <span class="share-access-icon" aria-hidden="true">
-                  <svg class="share-access-symbol active" data-share-access-symbol="restricted" viewBox="0 0 24 24" fill="none">
-                    <path d="M19 11H5C3.89543 11 3 11.8954 3 13V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V13C21 11.8954 20.1046 11 19 11Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <svg class="share-access-symbol" data-share-access-symbol="workspace" viewBox="0 0 24 24" fill="none">
-                    <path d="M16 21V19C16 16.7909 14.2091 15 12 15H6C3.79086 15 2 16.7909 2 19V21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M22 21V19C22 17.1362 20.7252 15.5701 19 15.126" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M16 3.126C17.729 3.568 19.007 5.136 19.007 7.003C19.007 8.87 17.729 10.438 16 10.88" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <svg class="share-access-symbol" data-share-access-symbol="anyone" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M2 12H22" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M12 2C14.5013 4.73835 15.9228 8.29203 16 12C15.9228 15.708 14.5013 19.2616 12 22C9.49872 19.2616 8.07725 15.708 8 12C8.07725 8.29203 9.49872 4.73835 12 2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </span>
-                <span class="share-access-copy">
-                  <span class="share-access-status">Restricted</span>
-                  <span class="share-access-detail">Only people and groups listed above can open this file.</span>
-                </span>
-                <label class="share-field-label" for="share-access-level" hidden>General access level</label>
-                <select class="share-select" id="share-access-level" aria-label="General access level">
-                  <option value="restricted">Restricted</option>
-                  <option value="workspace">Workspace members</option>
-                  <option value="anyone">Anyone with link</option>
-                </select>
-                <label class="share-field-label" for="share-link-role" hidden>Link role</label>
-                <select class="share-select" id="share-link-role" aria-label="Link role" disabled>
-                  <option value="viewer">Viewer</option>
-                  <option value="commenter">Commenter</option>
-                  <option value="reviewer">Reviewer</option>
-                </select>
-              </div>
-              <div class="share-link-row">
-                <div class="share-link-preview" data-share-link-preview>file:///content-preview.html</div>
+            <section class="share-section share-link-section" aria-labelledby="share-link-title">
+              <h3 class="share-section-title" id="share-link-title">Link Access</h3>
+              <div class="share-link-controls">
+                <div class="share-menu-wrap">
+                  <button class="share-command" type="button" aria-haspopup="menu" aria-expanded="false" data-share-menu-trigger="link-access">
+                    <span data-share-link-access-label>Restricted</span>
+                    <img class="figma-icon" src="./assets/icons/content-preview/chevron-down-muted.svg" alt="" />
+                  </button>
+                  <div class="share-menu" role="menu" data-share-menu="link-access" hidden></div>
+                </div>
+                <p class="share-access-description" data-share-access-description>Only invited parties with access can access this.</p>
               </div>
             </section>
           </div>
@@ -5716,10 +6244,7 @@
               </span>
               <span class="share-button-label">Copy link</span>
             </button>
-            <div class="share-footer-actions">
-              <button class="share-ghost-button" type="button" data-share-close>Cancel</button>
-              <button class="share-primary-button share-done" type="button" data-share-close>Done</button>
-            </div>
+            <button class="share-primary-button share-done" type="button" data-share-close>Done</button>
           </footer>
         </section>
       </div>
@@ -5770,6 +6295,7 @@
         const activityToggle = document.querySelector(".activity-toggle");
         const activityPanel = document.querySelector("#activity-panel");
         const activityClose = document.querySelector(".activity-close");
+        const addVersionButton = document.querySelector("[data-add-version-history]");
         const activityFilters = Array.from(document.querySelectorAll("[data-activity-filter]"));
         const activityList = document.querySelector(".activity-list");
         const activityBody = activityPanel?.querySelector(".drawer-body");
@@ -5800,18 +6326,22 @@
         const shareDialog = document.querySelector("#share-dialog");
         const shareModal = document.querySelector(".share-modal");
         const shareTitle = document.querySelector("#share-dialog-title");
-        const shareSummary = document.querySelector("#share-dialog-summary");
+        const shareFileNameLabel = document.querySelector("[data-share-file-name]");
         const shareCloseButtons = Array.from(document.querySelectorAll("[data-share-close]"));
         const shareInviteForm = document.querySelector(".share-invite");
+        const shareCombobox = document.querySelector("[data-share-combobox]");
+        const shareChipList = document.querySelector("[data-share-chip-list]");
         const shareInviteInput = document.querySelector("#share-invite-input");
         const shareSendButton = document.querySelector(".share-send-button");
-        const shareAccessLevel = document.querySelector("#share-access-level");
-        const shareLinkRole = document.querySelector("#share-link-role");
-        const shareAccessSymbols = Array.from(document.querySelectorAll("[data-share-access-symbol]"));
-        const sharePersonRoleSelects = Array.from(document.querySelectorAll("[data-share-person-role]"));
-        const shareAccessStatus = document.querySelector(".share-access-status");
-        const shareAccessDetail = document.querySelector(".share-access-detail");
-        const shareLinkPreview = document.querySelector("[data-share-link-preview]");
+        const shareSuggestions = document.querySelector("[data-share-suggestions]");
+        const shareSuggestionList = document.querySelector("[data-share-suggestion-list]");
+        const shareAccessList = document.querySelector("[data-share-access-list]");
+        const shareEmptyState = document.querySelector("[data-share-empty-state]");
+        const shareMenuTriggers = Array.from(document.querySelectorAll("[data-share-menu-trigger]"));
+        const shareMenus = Array.from(document.querySelectorAll("[data-share-menu]"));
+        const shareInviteRoleLabel = document.querySelector("[data-share-invite-role-label]");
+        const shareLinkAccessLabel = document.querySelector("[data-share-link-access-label]");
+        const shareAccessDescription = document.querySelector("[data-share-access-description]");
         const shareCopyButtons = Array.from(document.querySelectorAll("[data-share-copy-link]"));
         const askButton = document.querySelector(".ask");
         const aiPanel = document.querySelector("#ask-ai-panel");
@@ -5849,7 +6379,7 @@
           );
         const getShareFocusable = () =>
           Array.from(shareDialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(
-            (element) => !element.disabled && !element.hidden,
+            (element) => !element.disabled && !element.hidden && !element.closest("[hidden]"),
           );
         let pageUpdateQueued = false;
         let shareReturnFocusElement = null;
@@ -5999,71 +6529,312 @@
           url.hash = "";
           return url.href;
         };
-        const shareAccessCopy = {
-          restricted: {
-            status: "Restricted",
-            detail: "Only people and groups listed above can open this file.",
-            roleDisabled: true,
-          },
-          workspace: {
-            status: "Evolve workspace",
-            detail: "Signed-in workspace members can open this review link.",
-            roleDisabled: false,
-          },
-          anyone: {
-            status: "Anyone with link",
-            detail: "People outside the workspace can view this file with the link.",
-            roleDisabled: false,
-          },
+        const sharePermissionOptions = [
+          { value: "view", menuLabel: "Can view", triggerLabel: "Can view", rowLabel: "Can view", icon: "eye" },
+          { value: "comment", menuLabel: "Can comment", triggerLabel: "Can comment", rowLabel: "Can comment", icon: "message" },
+          { value: "edit", menuLabel: "Can edit", triggerLabel: "Can edit", rowLabel: "Can edit", icon: "pen" },
+          { value: "manage", menuLabel: "Can manage", triggerLabel: "Can manage", rowLabel: "Can manage", icon: "settings" },
+        ];
+        const shareLinkAccessOptions = [
+          { value: "restricted", label: "Restricted", description: "Only invited parties with access can access this." },
+          { value: "workspace", label: "Evolve workspace", description: "Anyone in the Evolve workspace can access this." },
+          { value: "anyone", label: "Anyone with link", description: "Anyone with the link can access this." },
+        ];
+        const shareSuggestionPeople = [
+          { id: "everyone", initials: "", name: "Everyone", meta: "", type: "everyone" },
+          { id: "christos", initials: "CS", name: "Christos Savva", meta: "savva.c@unic.ac.cy", type: "cs" },
+          { id: "biology", initials: "B", name: "Biology Lab Team", meta: "Workgroup", count: "18 members", type: "ap" },
+          { id: "omics", initials: "U", name: "UNIC Hospital Omics Review", meta: "Collaboration", count: "3 participants", type: "ap" },
+          { id: "bioai", initials: "U", name: "BioAI Partner Pilot 2026", meta: "Collaboration", count: "5 participants", type: "ap" },
+          { id: "admissions", initials: "U", name: "Admissions Operations", meta: "Workgroup", count: "12 members", type: "ap" },
+          { id: "maya", initials: "MS", name: "Maya S.", meta: "maya.s@unic.ac.cy", type: "ms" },
+        ];
+        const shareOwnerAccess = { id: "owner-antonis", initials: "AP", name: "Antonis Polemitis", meta: "polemitis.a@unic.ac.cy", type: "ap", role: "owner", isOwner: true };
+        const shareFinalAccess = [
+          { id: "biology", initials: "B", name: "Biology Lab Team", meta: "Workgroup", count: "18 members", type: "ap", role: "view" },
+          { id: "omics", initials: "U", name: "UNIC Hospital Omics Review", meta: "Collaboration", count: "3 participants", type: "ap", role: "edit" },
+          { id: "bioai", initials: "U", name: "BioAI Partner Pilot 2026", meta: "Collaboration", count: "5 participants", type: "ap", role: "comment" },
+          { id: "admissions", initials: "U", name: "Admissions Operations", meta: "Workgroup", count: "12 members", type: "ap", role: "comment" },
+          { id: "christos", initials: "CS", name: "Christos Savva", meta: "savva.c@unic.ac.cy", type: "cs", role: "edit" },
+        ];
+        const shareState = {
+          selectedInviteIds: [],
+          inviteRole: "view",
+          linkAccess: "restricted",
+          accessRows: [],
+          openMenu: null,
+        };
+
+        const getPermissionOption = (value) => sharePermissionOptions.find((option) => option.value === value) ?? sharePermissionOptions[0];
+        const getLinkAccessOption = (value) => shareLinkAccessOptions.find((option) => option.value === value) ?? shareLinkAccessOptions[0];
+
+        const shareIconAssets = {
+          eye: "./assets/icons/content-preview/share-eye.svg",
+          message: "./assets/icons/content-preview/share-message.svg",
+          pen: "./assets/icons/content-preview/share-pen.svg",
+          settings: "./assets/icons/content-preview/share-settings.svg",
+          users: "./assets/icons/content-preview/share-users.svg",
+        };
+
+        const createShareIcon = (icon) => {
+          const span = document.createElement("span");
+          const img = document.createElement("img");
+
+          span.className = "share-menu-icon";
+          span.setAttribute("aria-hidden", "true");
+          img.className = "figma-icon";
+          img.src = shareIconAssets[icon] ?? shareIconAssets.eye;
+          img.alt = "";
+          span.append(img);
+          return span;
+        };
+
+        const createAvatar = (person) => {
+          const avatar = document.createElement("span");
+          avatar.className = `share-avatar ${person.type || ""}`.trim();
+          avatar.setAttribute("aria-hidden", "true");
+
+          if (person.id === "everyone") {
+            const img = document.createElement("img");
+
+            avatar.classList.add("everyone");
+            img.className = "figma-icon";
+            img.src = shareIconAssets.users;
+            img.alt = "";
+            avatar.append(img);
+            return avatar;
+          }
+
+          avatar.textContent = person.initials;
+          return avatar;
+        };
+
+        const createPersonCopy = (person) => {
+          const copy = document.createElement("span");
+          const name = document.createElement("span");
+
+          copy.className = "share-person-copy";
+          name.className = "share-person-name";
+          name.textContent = person.name;
+          copy.append(name);
+
+          if (person.meta || person.count) {
+            const meta = document.createElement("span");
+            meta.className = "share-person-meta";
+            meta.textContent = person.meta || "";
+
+            if (person.count) {
+              const count = document.createElement("span");
+              count.className = "share-suggestion-count";
+              count.textContent = person.count;
+              meta.append(count);
+            }
+
+            copy.append(meta);
+          }
+
+          return copy;
+        };
+
+        const closeShareMenus = () => {
+          shareState.openMenu = null;
+          Array.from(shareDialog.querySelectorAll("[data-share-menu]")).forEach((menu) => {
+            menu.hidden = true;
+          });
+          Array.from(shareDialog.querySelectorAll("[data-share-menu-trigger]")).forEach((trigger) => {
+            trigger.setAttribute("aria-expanded", "false");
+          });
+        };
+
+        const setShareSuggestionsOpen = (isOpen) => {
+          if (!shareSuggestions || !shareInviteInput) {
+            return;
+          }
+
+          shareSuggestions.hidden = !isOpen;
+          shareInviteInput.setAttribute("aria-expanded", String(isOpen));
+        };
+
+        const renderShareSuggestions = () => {
+          if (!shareSuggestionList) {
+            return;
+          }
+
+          const query = shareInviteInput?.value.trim().toLowerCase() || "";
+          const selected = new Set(shareState.selectedInviteIds);
+          const matches = shareSuggestionPeople.filter((person) => {
+            if (selected.has(person.id)) {
+              return false;
+            }
+
+            if (!query) {
+              return person.id !== "maya";
+            }
+
+            return `${person.name} ${person.meta || ""} ${person.count || ""}`.toLowerCase().includes(query);
+          });
+
+          shareSuggestionList.replaceChildren();
+
+          if (!matches.length) {
+            const empty = document.createElement("li");
+            empty.className = "share-suggestion empty";
+            empty.textContent = "No matching people, workgroups, or collaborations";
+            shareSuggestionList.append(empty);
+            return;
+          }
+
+          matches.forEach((person) => {
+            const item = document.createElement("li");
+            const button = document.createElement("button");
+
+            button.className = "share-suggestion";
+            button.type = "button";
+            button.setAttribute("role", "option");
+            button.dataset.shareSuggestionId = person.id;
+            button.append(createAvatar(person), createPersonCopy(person));
+            item.append(button);
+            shareSuggestionList.append(item);
+          });
+        };
+
+        const renderShareChips = () => {
+          if (!shareChipList || !shareCombobox || !shareInviteInput || !shareSendButton) {
+            return;
+          }
+
+          const selectedPeople = shareState.selectedInviteIds
+            .map((id) => shareSuggestionPeople.find((person) => person.id === id))
+            .filter(Boolean);
+
+          shareChipList.replaceChildren();
+          selectedPeople.forEach((person) => {
+            const chip = document.createElement("span");
+            chip.className = "share-invite-chip";
+            chip.append(createAvatar(person), document.createTextNode(person.id === "antonis" ? "Antonis P." : person.id === "christos" ? "Christos S." : person.name));
+            shareChipList.append(chip);
+          });
+
+          shareCombobox.classList.toggle("has-chips", selectedPeople.length > 0);
+          shareInviteInput.placeholder = selectedPeople.length ? "" : "Add people, workgroups, and collaborations";
+          shareSendButton.classList.toggle("ready", selectedPeople.length > 0);
+        };
+
+        const renderShareAccessList = () => {
+          if (!shareAccessList || !shareEmptyState || !shareModal) {
+            return;
+          }
+
+          const hasRows = shareState.accessRows.length > 0;
+          const hasInvitedRows = shareState.accessRows.some((person) => !person.isOwner);
+          shareAccessList.hidden = !hasRows;
+          shareEmptyState.hidden = hasRows;
+          shareModal.classList.toggle("is-expanded", hasInvitedRows);
+          shareAccessList.replaceChildren();
+
+          shareState.accessRows.forEach((person) => {
+            const row = document.createElement("li");
+
+            row.className = "share-person-row";
+
+            if (person.isOwner) {
+              const ownerLabel = document.createElement("span");
+              ownerLabel.className = "share-owner-label";
+              ownerLabel.textContent = "Owner";
+              row.append(createAvatar(person), createPersonCopy(person), ownerLabel);
+            } else {
+              const menuWrap = document.createElement("span");
+              const trigger = document.createElement("button");
+              const label = document.createElement("span");
+              const chevron = document.createElement("img");
+              const menu = document.createElement("div");
+
+              menuWrap.className = "share-menu-wrap";
+              trigger.className = "share-command";
+              trigger.type = "button";
+              trigger.setAttribute("aria-haspopup", "menu");
+              trigger.setAttribute("aria-expanded", "false");
+              trigger.dataset.shareMenuTrigger = `row-${person.id}`;
+              label.textContent = getPermissionOption(person.role).rowLabel;
+              label.dataset.shareRowRoleLabel = person.id;
+              chevron.className = "figma-icon";
+              chevron.src = "./assets/icons/content-preview/chevron-down-muted.svg";
+              chevron.alt = "";
+              trigger.append(label, chevron);
+              menu.className = "share-menu";
+              menu.hidden = true;
+              menu.setAttribute("role", "menu");
+              menu.dataset.shareMenu = `row-${person.id}`;
+              menuWrap.append(trigger, menu);
+              row.append(createAvatar(person), createPersonCopy(person), menuWrap);
+            }
+
+            shareAccessList.append(row);
+          });
+
+          syncShareMenuCollections();
+        };
+
+        const renderShareMenu = (menu, triggerName) => {
+          const options = triggerName === "link-access" ? shareLinkAccessOptions : sharePermissionOptions;
+
+          menu.replaceChildren();
+          options.forEach((option) => {
+            const button = document.createElement("button");
+            const label = document.createElement("span");
+
+            button.className = "share-menu-option";
+            button.type = "button";
+            button.setAttribute("role", "menuitem");
+            button.dataset.shareMenuOption = option.value;
+
+            if (triggerName !== "link-access") {
+              button.append(createShareIcon(option.icon));
+              label.textContent = option.menuLabel;
+            } else {
+              label.textContent = option.label;
+            }
+
+            button.append(label);
+            menu.append(button);
+          });
+        };
+
+        const syncShareMenuCollections = () => {
+          Array.from(shareDialog.querySelectorAll("[data-share-menu]")).forEach((menu) => {
+            renderShareMenu(menu, menu.dataset.shareMenu);
+          });
         };
 
         const syncShareHeader = () => {
           if (shareTitle) {
-            shareTitle.textContent = `Share ${getFileName()}`;
+            shareTitle.textContent = "Invite to collaborate";
           }
 
-          if (shareSummary) {
-            shareSummary.textContent = "Private asset / In review / Knowledge Base";
+          if (shareFileNameLabel) {
+            shareFileNameLabel.textContent = getFileName();
           }
-        };
-
-        const syncShareLinkPreview = () => {
-          if (!shareLinkPreview) {
-            return;
-          }
-
-          shareLinkPreview.textContent = getShareUrl();
-          shareLinkPreview.setAttribute("title", getShareUrl());
         };
 
         const syncShareAccessCopy = () => {
-          if (!shareAccessLevel || !shareAccessStatus || !shareAccessDetail) {
-            return;
+          const linkOption = getLinkAccessOption(shareState.linkAccess);
+
+          if (shareInviteRoleLabel) {
+            shareInviteRoleLabel.textContent = getPermissionOption(shareState.inviteRole).triggerLabel;
           }
 
-          const copy = shareAccessCopy[shareAccessLevel.value] ?? shareAccessCopy.restricted;
-          shareAccessStatus.textContent = copy.status;
-          shareAccessDetail.textContent = copy.detail;
-
-          if (shareLinkRole) {
-            shareLinkRole.disabled = copy.roleDisabled;
-
-            if (copy.roleDisabled) {
-              shareLinkRole.value = "viewer";
-            }
+          if (shareLinkAccessLabel) {
+            shareLinkAccessLabel.textContent = linkOption.label;
           }
 
-          shareAccessSymbols.forEach((symbol) => {
-            symbol.classList.toggle("active", symbol.dataset.shareAccessSymbol === shareAccessLevel.value);
-          });
+          if (shareAccessDescription) {
+            shareAccessDescription.textContent = linkOption.description;
+          }
         };
 
         const syncShareInviteAction = () => {
-          if (!shareSendButton || !shareInviteInput) {
-            return;
-          }
-
-          shareSendButton.disabled = shareInviteInput.value.trim().length === 0;
+          renderShareChips();
+          renderShareSuggestions();
         };
 
         const closeApproveMenu = (returnFocus = false) => {
@@ -6092,7 +6863,7 @@
           }
         };
 
-        const setShareDialogOpen = (isOpen, returnFocus = false) => {
+        const setShareDialogOpen = (isOpen, returnFocus = false, showAccessList = false) => {
           if (!hasShareDialog) {
             return;
           }
@@ -6110,14 +6881,20 @@
               readinessButton.setAttribute("aria-expanded", "false");
             }
 
+            shareState.selectedInviteIds = [];
+            shareState.accessRows = showAccessList ? [...shareFinalAccess] : [shareOwnerAccess];
+            shareInviteInput.value = "";
+            closeShareMenus();
             syncShareHeader();
-            syncShareLinkPreview();
             syncShareAccessCopy();
+            syncShareMenuCollections();
             syncShareInviteAction();
+            renderShareAccessList();
+            setShareSuggestionsOpen(false);
             shareDialog.hidden = false;
             updateModalLock();
 
-            const focusTarget = shareInviteInput || getShareFocusable()[0];
+            const focusTarget = shareModal || getShareFocusable()[0];
             focusTarget?.focus({ preventScroll: true });
             return;
           }
@@ -6346,6 +7123,58 @@
         };
 
         const isAnyCommentMenuOpen = () => getCommentThreads().some((thread) => !thread.querySelector("[data-comment-menu]")?.hidden);
+
+        const getActivityVersionMenuRows = () =>
+          Array.from(activityPanel?.querySelectorAll('.activity-row[data-activity-type="version"]') || []).filter((row) =>
+            row.querySelector("[data-version-menu-trigger]"),
+          );
+
+        const getActivityVersionMenuItems = (row) => Array.from(row.querySelectorAll(".version-menu-item"));
+
+        const closeActivityVersionMenus = (exceptRow = null) => {
+          getActivityVersionMenuRows().forEach((row) => {
+            if (row === exceptRow) {
+              return;
+            }
+
+            const trigger = row.querySelector("[data-version-menu-trigger]");
+            const menu = row.querySelector("[data-version-menu]");
+            trigger?.setAttribute("aria-expanded", "false");
+            row.classList.remove("version-menu-open");
+
+            if (menu) {
+              menu.hidden = true;
+            }
+          });
+        };
+
+        const setActivityVersionMenuOpen = (row, isOpen, returnFocus = false) => {
+          const trigger = row.querySelector("[data-version-menu-trigger]");
+          const menu = row.querySelector("[data-version-menu]");
+
+          if (!trigger || !menu) {
+            return;
+          }
+
+          if (isOpen) {
+            closeActivityVersionMenus(row);
+          }
+
+          trigger.setAttribute("aria-expanded", String(isOpen));
+          row.classList.toggle("version-menu-open", isOpen);
+          menu.hidden = !isOpen;
+
+          if (!isOpen && returnFocus) {
+            trigger.focus();
+          }
+        };
+
+        const focusActivityVersionMenuItem = (row, index) => {
+          getActivityVersionMenuItems(row)[index]?.focus();
+        };
+
+        const isAnyActivityVersionMenuOpen = () =>
+          getActivityVersionMenuRows().some((row) => !row.querySelector("[data-version-menu]")?.hidden);
 
         const getNextCommentNumber = () =>
           getCommentThreads().reduce((max, thread) => {
@@ -6584,6 +7413,7 @@
             return;
           }
 
+          closeActivityVersionMenus();
           stage.classList.add("activity-drawer-closed");
           stage.classList.remove("activity-drawer-open");
 
@@ -6873,8 +7703,118 @@
 
           activityFilters.forEach((button) => {
             button.addEventListener("click", () => {
+              closeActivityVersionMenus();
               applyActivityFilter(button.dataset.activityFilter || "all");
             });
+          });
+
+          addVersionButton?.addEventListener("click", () => {
+            showToast("Added to version history");
+          });
+
+          activityPanel.addEventListener("click", (event) => {
+            const target = event.target instanceof Element ? event.target : null;
+
+            if (!target) {
+              return;
+            }
+
+            const trigger = target.closest("[data-version-menu-trigger]");
+
+            if (trigger) {
+              const row = trigger.closest('.activity-row[data-activity-type="version"]');
+
+              if (row) {
+                event.stopPropagation();
+                setActivityVersionMenuOpen(row, trigger.getAttribute("aria-expanded") !== "true");
+              }
+
+              return;
+            }
+
+            const action = target.closest("[data-version-action]");
+
+            if (!action) {
+              return;
+            }
+
+            const row = action.closest('.activity-row[data-activity-type="version"]');
+
+            if (!row) {
+              return;
+            }
+
+            event.stopPropagation();
+            setActivityVersionMenuOpen(row, false);
+
+            const messages = {
+              restore: "Version restore queued",
+              delete: "Version delete queued",
+            };
+
+            showToast(messages[action.dataset.versionAction] || "Version action selected");
+          });
+
+          activityPanel.addEventListener("keydown", (event) => {
+            const target = event.target instanceof Element ? event.target : null;
+            const row = target?.closest('.activity-row[data-activity-type="version"]');
+
+            if (!target || !row) {
+              return;
+            }
+
+            const trigger = target.closest("[data-version-menu-trigger]");
+            const menu = target.closest("[data-version-menu]");
+
+            if (trigger && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+              event.preventDefault();
+              setActivityVersionMenuOpen(row, true);
+              focusActivityVersionMenuItem(row, event.key === "ArrowDown" ? 0 : getActivityVersionMenuItems(row).length - 1);
+              return;
+            }
+
+            if (!menu) {
+              return;
+            }
+
+            const items = getActivityVersionMenuItems(row);
+            const currentIndex = items.indexOf(document.activeElement);
+
+            if (event.key === "ArrowDown") {
+              event.preventDefault();
+              focusActivityVersionMenuItem(row, (currentIndex + 1) % items.length);
+            }
+
+            if (event.key === "ArrowUp") {
+              event.preventDefault();
+              focusActivityVersionMenuItem(row, (currentIndex - 1 + items.length) % items.length);
+            }
+
+            if (event.key === "Home") {
+              event.preventDefault();
+              focusActivityVersionMenuItem(row, 0);
+            }
+
+            if (event.key === "End") {
+              event.preventDefault();
+              focusActivityVersionMenuItem(row, items.length - 1);
+            }
+          });
+
+          activityPanel.addEventListener("pointerdown", (event) => {
+            const target = event.target instanceof Element ? event.target : null;
+
+            if (target && !target.closest("[data-version-menu]") && !target.closest("[data-version-menu-trigger]")) {
+              closeActivityVersionMenus();
+            }
+          });
+
+          document.addEventListener("pointerdown", (event) => {
+            const target = event.target instanceof Element ? event.target : null;
+
+            if (target && isAnyActivityVersionMenuOpen() && !activityPanel.contains(target)) {
+              closeActivityVersionMenus();
+            }
           });
 
           activityRows.forEach((row) => {
@@ -6911,7 +7851,7 @@
           });
 
           manageAccessButton?.addEventListener("click", () => {
-            setShareDialogOpen(true);
+            setShareDialogOpen(true, false, true);
           });
 
           shareCloseButtons.forEach((button) => {
@@ -6952,39 +7892,133 @@
             }
           });
 
-          shareInviteInput?.addEventListener("input", syncShareInviteAction);
+          shareInviteInput?.addEventListener("focus", () => {
+            renderShareSuggestions();
+            setShareSuggestionsOpen(true);
+          });
+
+          shareInviteInput?.addEventListener("input", () => {
+            syncShareInviteAction();
+            setShareSuggestionsOpen(true);
+          });
+
+          shareSuggestionList?.addEventListener("click", (event) => {
+            const option = event.target.closest("[data-share-suggestion-id]");
+
+            if (!option) {
+              return;
+            }
+
+            const id = option.dataset.shareSuggestionId;
+
+            if (!shareState.selectedInviteIds.includes(id)) {
+              shareState.selectedInviteIds.push(id);
+            }
+
+            shareInviteInput.value = "";
+            syncShareInviteAction();
+
+            if (shareState.selectedInviteIds.length >= 3) {
+              setShareSuggestionsOpen(false);
+            }
+
+            shareInviteInput.focus({ preventScroll: true });
+          });
+
+          shareDialog.addEventListener("click", (event) => {
+            const menuTrigger = event.target.closest("[data-share-menu-trigger]");
+
+            if (menuTrigger) {
+              const menuName = menuTrigger.dataset.shareMenuTrigger;
+              const menu = shareDialog.querySelector(`[data-share-menu="${menuName}"]`);
+              const isOpen = menu && !menu.hidden;
+
+              closeShareMenus();
+              setShareSuggestionsOpen(false);
+
+              if (menu && !isOpen) {
+                shareState.openMenu = menuName;
+                menu.hidden = false;
+                menuTrigger.setAttribute("aria-expanded", "true");
+              }
+
+              return;
+            }
+
+            const menuOption = event.target.closest("[data-share-menu-option]");
+
+            if (menuOption && shareState.openMenu) {
+              const nextValue = menuOption.dataset.shareMenuOption;
+
+              if (shareState.openMenu === "invite-role") {
+                shareState.inviteRole = nextValue;
+                syncShareAccessCopy();
+              } else if (shareState.openMenu === "link-access") {
+                shareState.linkAccess = nextValue;
+                syncShareAccessCopy();
+                showToast(`Link access set to ${getLinkAccessOption(nextValue).label}`);
+              } else if (shareState.openMenu.startsWith("row-")) {
+                const rowId = shareState.openMenu.replace("row-", "");
+                const row = shareState.accessRows.find((item) => item.id === rowId);
+
+                if (row) {
+                  row.role = nextValue;
+                  renderShareAccessList();
+                  showToast(`${row.name} set to ${getPermissionOption(nextValue).rowLabel}`);
+                }
+              }
+
+              closeShareMenus();
+              return;
+            }
+
+            if (!event.target.closest(".share-menu-wrap")) {
+              closeShareMenus();
+            }
+
+            if (!event.target.closest(".share-invite")) {
+              setShareSuggestionsOpen(false);
+            }
+          });
 
           shareInviteForm?.addEventListener("submit", (event) => {
             event.preventDefault();
 
-            const invitee = shareInviteInput?.value.trim();
+            const typedInvitee = shareInviteInput?.value.trim();
 
-            if (!invitee) {
-              showToast("Enter a person or group to share with", "error");
+            if (typedInvitee) {
+              const customId = `custom-${Date.now()}`;
+              shareSuggestionPeople.push({
+                id: customId,
+                initials: typedInvitee
+                  .split(/\s|@/)
+                  .filter(Boolean)
+                  .slice(0, 2)
+                  .map((part) => part[0])
+                  .join("")
+                  .toUpperCase(),
+                name: typedInvitee,
+                meta: typedInvitee.includes("@") ? typedInvitee : "Invited collaborator",
+                type: "ap",
+              });
+              shareState.selectedInviteIds.push(customId);
+            }
+
+            if (!shareState.selectedInviteIds.length) {
+              showToast("Choose people, workgroups, or collaborations to share with", "error");
+              renderShareSuggestions();
+              setShareSuggestionsOpen(true);
               shareInviteInput?.focus();
               return;
             }
 
-            showToast(`Invitation queued for ${invitee}`);
+            shareState.accessRows = [...shareFinalAccess];
+            shareState.selectedInviteIds = [];
             shareInviteInput.value = "";
             syncShareInviteAction();
-          });
-
-          shareAccessLevel?.addEventListener("change", () => {
-            syncShareAccessCopy();
-            showToast(`General access set to ${shareAccessLevel.options[shareAccessLevel.selectedIndex].text}`);
-          });
-
-          shareLinkRole?.addEventListener("change", () => {
-            showToast(`Link role set to ${shareLinkRole.options[shareLinkRole.selectedIndex].text}`);
-          });
-
-          sharePersonRoleSelects.forEach((select) => {
-            select.addEventListener("change", () => {
-              const personName = select.dataset.personName || "person";
-              const nextRole = select.options[select.selectedIndex].text;
-              showToast(nextRole === "Remove access" ? `${personName} access marked for removal` : `${personName} set to ${nextRole}`);
-            });
+            renderShareAccessList();
+            setShareSuggestionsOpen(false);
+            showToast("Sharing access updated");
           });
 
           shareCopyButtons.forEach((button) => {
@@ -7219,6 +8253,12 @@
           if (event.key === "Escape" && isAnyCommentMenuOpen()) {
             event.preventDefault();
             closeCommentMenus();
+            return;
+          }
+
+          if (event.key === "Escape" && isAnyActivityVersionMenuOpen()) {
+            event.preventDefault();
+            closeActivityVersionMenus();
             return;
           }
 

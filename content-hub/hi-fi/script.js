@@ -8,6 +8,34 @@ const aiCloseButton = document.querySelector(".ai-close");
 const promptInput = document.querySelector("#ask-input");
 const previewRows = document.querySelectorAll(".table-row[data-href]");
 const tableSearchInputs = document.querySelectorAll("[data-table-search]");
+const typeFilters = document.querySelectorAll("[data-type-filter]");
+const tableFilterStates = new Map();
+
+const getTableFilterState = (selector) => {
+  if (!tableFilterStates.has(selector)) {
+    const table = document.querySelector(selector);
+
+    tableFilterStates.set(selector, {
+      table,
+      rows: table ? Array.from(table.querySelectorAll(".table-row:not(.table-head)")) : [],
+      query: "",
+      type: ""
+    });
+  }
+
+  return tableFilterStates.get(selector);
+};
+
+const applyTableFilters = (selector) => {
+  const state = getTableFilterState(selector);
+
+  state.rows.forEach((row) => {
+    const matchesQuery = !state.query || row.textContent.toLowerCase().includes(state.query);
+    const matchesType = !state.type || row.dataset.rowType === state.type;
+
+    row.hidden = !matchesQuery || !matchesType;
+  });
+};
 
 const setDrawerInert = (isInert) => {
   if (!aiPanel) {
@@ -98,15 +126,101 @@ previewRows.forEach((row) => {
 });
 
 tableSearchInputs.forEach((input) => {
-  const table = document.querySelector(input.dataset.tableSearch);
-  const rows = table ? Array.from(table.querySelectorAll(".table-row:not(.table-head)")) : [];
+  const selector = input.dataset.tableSearch;
+  const state = getTableFilterState(selector);
 
   input.addEventListener("input", () => {
-    const query = input.value.trim().toLowerCase();
+    state.query = input.value.trim().toLowerCase();
+    applyTableFilters(selector);
+  });
+});
 
-    rows.forEach((row) => {
-      row.hidden = Boolean(query) && !row.textContent.toLowerCase().includes(query);
+typeFilters.forEach((filter) => {
+  const selector = filter.dataset.typeFilter;
+  const state = getTableFilterState(selector);
+  const trigger = filter.querySelector(".type-filter-trigger");
+  const menu = filter.querySelector(".type-filter-menu");
+  const label = filter.querySelector("[data-type-filter-label]");
+  const options = Array.from(filter.querySelectorAll("[data-filter-value]"));
+
+  const setOpen = (isOpen) => {
+    filter.classList.toggle("open", isOpen);
+    trigger?.setAttribute("aria-expanded", String(isOpen));
+
+    if (menu) {
+      menu.hidden = !isOpen;
+    }
+  };
+
+  trigger?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    setOpen(!filter.classList.contains("open"));
+  });
+
+  trigger?.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " " && event.key !== "ArrowDown") {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    setOpen(true);
+    const selectedOption = options.find((option) => option.classList.contains("active")) || options[0];
+    selectedOption?.focus({ preventScroll: true });
+  });
+
+  options.forEach((option) => {
+    const selectOption = () => {
+      state.type = option.dataset.filterValue;
+
+      options.forEach((item) => {
+        const isSelected = item === option;
+        item.classList.toggle("active", isSelected);
+        item.setAttribute("aria-selected", String(isSelected));
+      });
+
+      if (label) {
+        label.textContent = state.type ? option.textContent.trim() : "Type";
+      }
+
+      setOpen(false);
+      trigger?.focus({ preventScroll: true });
+      applyTableFilters(selector);
+    };
+
+    option.addEventListener("click", () => {
+      selectOption();
     });
+
+    option.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        trigger?.focus({ preventScroll: true });
+        return;
+      }
+
+      if (event.key !== "Enter" && event.key !== " ") {
+        return;
+      }
+
+      event.preventDefault();
+      selectOption();
+    });
+  });
+});
+
+document.addEventListener("click", (event) => {
+  typeFilters.forEach((filter) => {
+    if (!filter.contains(event.target)) {
+      filter.classList.remove("open");
+      filter.querySelector(".type-filter-trigger")?.setAttribute("aria-expanded", "false");
+      const menu = filter.querySelector(".type-filter-menu");
+
+      if (menu) {
+        menu.hidden = true;
+      }
+    }
   });
 });
 

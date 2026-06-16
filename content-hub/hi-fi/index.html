@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Evolve Content Overview</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="./styles.css?v=workspaces-all-link-neutral-1" />
+    <link rel="stylesheet" href="./styles.css?v=recent-filters-3" />
   </head>
   <body>
     <main class="app" aria-label="Evolve content overview">
@@ -197,18 +197,33 @@
         </section>
 
         <section class="recent-section" aria-label="Recent files">
-          <div class="tabs-row">
+          <div class="recent-toolbar">
             <div class="tabs" role="tablist" aria-label="Recent views">
               <button class="tab active" type="button" role="tab" aria-selected="true">Recents</button>
               <button class="tab" type="button" role="tab" aria-selected="false">Needs my attention</button>
             </div>
-            <div class="segmented" aria-label="Ownership filter">
-              <button type="button">By me</button>
-              <button class="active" type="button">By everyone</button>
+            <div class="recent-filter-controls" aria-label="Recent file filters">
+              <label class="sr-only" for="recent-search-input">Search recent files</label>
+              <div class="recent-search-field">
+                <img class="icon-img" src="./assets/icons/search.svg" alt="" />
+                <input id="recent-search-input" type="search" autocomplete="off" placeholder="Search in Recents" data-table-search="#recent-files-table" />
+              </div>
+              <div class="type-filter" data-type-filter="#recent-files-table">
+                <button class="type-filter-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span data-type-filter-label>Type</span>
+                  <img class="chip-chevron icon-img" src="./assets/icons/content-preview/chevron-down.svg" alt="" />
+                </button>
+                <div class="type-filter-menu" role="listbox" aria-label="Filter recent files by type" hidden>
+                  <button class="active" type="button" role="option" aria-selected="true" data-filter-value="">All types</button>
+                  <button type="button" role="option" aria-selected="false" data-filter-value="document">Documents</button>
+                  <button type="button" role="option" aria-selected="false" data-filter-value="folder">Folders</button>
+                  <button type="button" role="option" aria-selected="false" data-filter-value="page">Pages</button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="files-table" role="table" aria-label="Recent content">
+          <div class="files-table" id="recent-files-table" role="table" aria-label="Recent content">
             <div class="table-row table-head" role="row">
               <div class="name-cell" role="columnheader">
                 <span class="checkbox" aria-hidden="true"></span>
@@ -220,7 +235,7 @@
               <div class="action-cell" role="columnheader"></div>
             </div>
 
-            <div class="table-row file-preview-row" role="row" tabindex="0" data-href="./content-preview.html" aria-label="Open longevity_research_brief.docx">
+            <div class="table-row file-preview-row" role="row" tabindex="0" data-href="./content-preview.html" data-row-type="document" aria-label="Open longevity_research_brief.docx">
               <a class="row-link" href="./content-preview.html" aria-label="Open longevity_research_brief.docx"></a>
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
@@ -233,7 +248,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="document">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon icon-img" src="./assets/icons/file.svg" alt="" />
@@ -245,7 +260,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="folder">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon folder-filled icon-img" src="./assets/icons/vector28.svg" alt="" />
@@ -257,7 +272,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="document">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon icon-img" src="./assets/icons/file.svg" alt="" />
@@ -270,7 +285,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="document">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon icon-img" src="./assets/icons/file.svg" alt="" />
@@ -282,7 +297,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="page">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon pointer-filled icon-img" src="./assets/icons/vector29.svg" alt="" />
@@ -295,7 +310,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="folder">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon folder-filled icon-img" src="./assets/icons/vector28.svg" alt="" />
@@ -307,7 +322,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="document">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon icon-img" src="./assets/icons/file.svg" alt="" />
@@ -319,7 +334,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="document">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon icon-img" src="./assets/icons/file.svg" alt="" />
@@ -331,7 +346,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="document">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon icon-img" src="./assets/icons/file.svg" alt="" />
@@ -343,7 +358,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="document">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon icon-img" src="./assets/icons/file.svg" alt="" />
@@ -355,7 +370,7 @@
               <button class="action-cell" type="button" aria-label="More row options"><img class="icon-img" src="./assets/icons/ellipsis.svg" alt="" /></button>
             </div>
 
-            <div class="table-row" role="row">
+            <div class="table-row" role="row" data-row-type="document">
               <div class="name-cell" role="cell">
                 <span class="checkbox" aria-hidden="true"></span>
                 <img class="row-icon icon-img" src="./assets/icons/file.svg" alt="" />
@@ -408,6 +423,6 @@
       </aside>
     </main>
 
-    <script src="./script.js?v=workspaces-toolbar-1"></script>
+    <script src="./script.js?v=recent-filters-2"></script>
   </body>
 </html>
