@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Evolve Ontology Object Types</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar" aria-label="Global navigation">
+        <a class="brand" href="#" aria-label="Evolve home">
+          <span class="brand-name">EVOLVE</span>
+        </a>
+
+        <nav class="topnav" aria-label="Primary">
+          <a href="#">Launchpad</a>
+          <a href="#">App Store</a>
+        </nav>
+
+        <div class="top-actions">
+          <label class="global-search">
+            <span class="sr-only">Search apps and tools</span>
+            <input type="search" placeholder="Search apps and tools...">
+          </label>
+          <button class="avatar" type="button" aria-label="Open user menu">AA</button>
+        </div>
+      </header>
+
+      <div class="body-shell">
+        <main class="workspace">
+          <section class="workspace-head" aria-labelledby="page-title">
+            <div class="head-row">
+              <h1 id="page-title">Ontology</h1>
+            </div>
+          </section>
+
+          <section class="ontology-layout" aria-label="Environment ontology browser">
+            <aside class="object-panel" aria-labelledby="object-types-heading">
+              <div class="panel-head">
+                <div>
+                  <h2 id="object-types-heading">Object types</h2>
+                </div>
+                <button class="ghost-button" id="clearSelection" type="button">Clear</button>
+              </div>
+
+              <label class="object-search">
+                <span class="sr-only">Search object types</span>
+                <input id="objectSearch" type="search" placeholder="Search object types">
+              </label>
+
+              <div class="object-filters" aria-label="Object type filters">
+                <label class="filter-control">
+                  <span>Domain</span>
+                  <select id="domainFilter" data-filter="domain"></select>
+                </label>
+                <label class="filter-control">
+                  <span>Sensitivity</span>
+                  <select id="sensitivityFilter" data-filter="sensitivity"></select>
+                </label>
+                <label class="filter-control">
+                  <span>Depth</span>
+                  <select id="depthFilter" data-filter="depth"></select>
+                </label>
+                <label class="filter-control">
+                  <span>Status</span>
+                  <select id="statusFilter" data-filter="status"></select>
+                </label>
+              </div>
+
+              <div class="result-count" id="resultCount" aria-live="polite"></div>
+              <div class="object-list" id="objectList" role="listbox" aria-label="Environment object types"></div>
+            </aside>
+
+            <section class="details-panel" id="detailsPanel" aria-live="polite"></section>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
