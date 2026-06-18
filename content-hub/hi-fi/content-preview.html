@@ -2741,21 +2741,22 @@
       .readiness-title {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
       }
 
       .status-chip {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        width: 126px;
+        justify-content: flex-start;
+        width: fit-content;
+        max-width: 100%;
         height: 28px;
         margin-top: 0;
         padding: 4px 8px;
-        gap: 8px;
+        gap: 6px;
         border-radius: 10px;
-        background: var(--orange-bg);
-        color: var(--orange);
+        background: #262626;
+        color: #d4d4d4;
         cursor: pointer;
         font-size: 14px;
         line-height: 20px;
@@ -2766,31 +2767,51 @@
 
       .status-chip:hover,
       .status-chip:active {
-        background: rgba(120, 67, 12, 0.62);
-        color: #f0ad5f;
+        background: #333333;
+        color: var(--white);
       }
 
       .status-chip:focus-visible {
-        outline: 2px solid var(--orange);
+        outline: 2px solid #0d99ff;
         outline-offset: 2px;
       }
 
-      .status-dot {
-        width: 4px;
-        height: 4px;
-        border-radius: 50%;
-        background: var(--orange);
+      .figma-mask-icon {
+        display: block;
+        flex: 0 0 auto;
+        background: currentColor;
+        -webkit-mask-position: center;
+        mask-position: center;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-size: contain;
+        mask-size: contain;
+      }
+
+      .status-chip-icon {
+        width: 16px;
+        height: 16px;
+      }
+
+      .readiness-close-icon {
+        width: 11.3px;
+        height: 11.3px;
+        -webkit-mask-image: url("./assets/icons/content-preview/x.svg");
+        mask-image: url("./assets/icons/content-preview/x.svg");
+      }
+
+      .readiness-back-icon {
+        width: 5.2px;
+        height: 9.2px;
+        -webkit-mask-image: url("./assets/icons/vector21.svg");
+        mask-image: url("./assets/icons/vector21.svg");
       }
 
       .readiness-modal-backdrop {
         position: fixed;
         inset: 0;
         z-index: 40;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        background: rgba(10, 10, 10, 0.64);
+        background: transparent;
       }
 
       .readiness-modal-backdrop[hidden] {
@@ -2798,49 +2819,52 @@
       }
 
       .readiness-modal {
-        width: min(640px, calc(100vw - 32px));
-        max-height: min(720px, calc(100vh - 32px));
-        overflow: hidden;
-        border: 1px solid var(--border);
+        position: absolute;
+        top: 260px;
+        right: calc(var(--side-column, 322px) + 10px);
+        width: 350px;
+        max-height: min(620px, calc(100vh - 84px));
+        max-height: min(620px, calc(100dvh - 84px));
+        overflow: auto;
+        border: 1px solid #262626;
         border-radius: 12px;
-        background: var(--panel);
+        background: #171717;
         color: var(--white);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+      }
+
+      .readiness-modal[hidden] {
+        display: none;
       }
 
       .readiness-modal-header {
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: space-between;
-        gap: 24px;
-        padding: 22px 24px 18px;
-        border-bottom: 1px solid var(--border);
+        gap: 12px;
+        padding: 16px 16px 12px;
+      }
+
+      .readiness-detail-header {
+        justify-content: flex-start;
       }
 
       .readiness-modal-title {
         margin: 0;
         color: var(--white);
-        font-size: 26px;
-        font-weight: 700;
-        line-height: 32px;
-      }
-
-      .readiness-modal-summary {
-        margin: 6px 0 0;
-        color: var(--muted);
-        font-size: 18px;
-        font-weight: 500;
-        line-height: 26px;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
       }
 
       .readiness-modal-close {
         display: grid;
         place-items: center;
         flex: 0 0 auto;
-        width: 28px;
-        height: 28px;
+        width: 20px;
+        height: 20px;
         margin-top: 2px;
-        border-radius: 8px;
+        border-radius: 5px;
         color: #d4d4d4;
         cursor: pointer;
         transition:
@@ -2854,132 +2878,154 @@
         color: var(--neutral-50);
       }
 
-      .readiness-progress {
-        height: 6px;
-        margin: 18px 24px 4px;
+      .readiness-back-button {
+        display: grid;
+        place-items: center;
+        flex: 0 0 auto;
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+        color: #d4d4d4;
+        cursor: pointer;
+        transition:
+          background-color 120ms ease,
+          color 120ms ease;
+      }
+
+      .readiness-back-button:hover,
+      .readiness-back-button:active {
+        background: var(--panel-2);
+        color: var(--white);
+      }
+
+      .readiness-back-button:focus-visible,
+      .readiness-modal-close:focus-visible {
+        outline: 2px solid #0d99ff;
+        outline-offset: 2px;
+      }
+
+      .readiness-detail-header .readiness-modal-close {
+        margin-left: auto;
+      }
+
+      .processing-status-summary {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 16px;
+        padding: 0 16px 12px;
+      }
+
+      .processing-status-track {
+        height: 7px;
         overflow: hidden;
-        border-radius: 999px;
         background: var(--panel-2);
       }
 
-      .readiness-progress-bar {
+      .processing-status-track span {
         display: block;
-        width: 71.428%;
+        width: 60%;
         height: 100%;
-        border-radius: inherit;
-        background: var(--orange);
+        background: #d9d9d9;
       }
 
-      .readiness-check-list {
+      .processing-status-count {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 20px;
+        white-space: nowrap;
+      }
+
+      .processing-status-list {
         display: flex;
         flex-direction: column;
-        max-height: min(480px, calc(100vh - 220px));
         margin: 0;
-        padding: 8px 0 0;
-        overflow-y: auto;
+        padding: 0 16px 16px;
         list-style: none;
       }
 
-      .readiness-check-row {
+      .processing-status-row {
         display: grid;
-        grid-template-columns: 32px minmax(0, 1fr) auto;
+        grid-template-columns: 16px minmax(0, 1fr) 16px;
         align-items: center;
         gap: 14px;
-        min-height: 72px;
-        padding: 14px 24px;
-        border-top: 1px solid var(--border);
+        width: 100%;
+        min-height: 40px;
+        padding: 0;
+        border-top: 1px solid #404040;
+        color: var(--white);
+        font-size: 14px;
+        line-height: 20px;
+        text-align: left;
       }
 
-      .readiness-check-row:first-child {
+      .processing-status-list > .processing-status-row:first-child {
         border-top: 0;
       }
 
-      .readiness-check-state {
+      button.processing-status-row {
+        cursor: pointer;
+        transition: color 120ms ease;
+      }
+
+      button.processing-status-row:hover,
+      button.processing-status-row:active {
+        color: var(--neutral-50);
+      }
+
+      button.processing-status-row:focus-visible {
+        position: relative;
+        z-index: 1;
+        outline: 2px solid #0d99ff;
+        outline-offset: -2px;
+      }
+
+      .processing-status-icon {
         display: grid;
         place-items: center;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
+        width: 16px;
+        height: 16px;
       }
 
-      .readiness-check-state::before {
-        content: "";
-        display: block;
+      .processing-status-icon.complete {
+        color: #4ade80;
       }
 
-      .readiness-check-state.complete {
-        background: var(--green-bg);
-        color: var(--green);
+      .processing-status-icon.running {
+        color: #a3a3a3;
       }
 
-      .readiness-check-state.complete::before {
-        width: 10px;
-        height: 6px;
-        border-bottom: 2px solid currentColor;
-        border-left: 2px solid currentColor;
-        transform: rotate(-45deg) translate(1px, -1px);
+      .processing-status-icon.pending {
+        color: #d48a3b;
       }
 
-      .readiness-check-state.processing {
-        border: 1px solid rgba(212, 138, 59, 0.58);
-        background: var(--orange-bg);
+      .processing-status-icon svg {
+        width: 16px;
+        height: 16px;
       }
 
-      .readiness-check-state.processing::before {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: var(--orange);
+      .processing-status-icon img {
+        width: 16px;
+        height: 16px;
       }
 
-      .readiness-check-copy {
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        gap: 3px;
-      }
-
-      .readiness-check-title {
+      .processing-status-text {
         overflow: hidden;
-        color: var(--white);
-        font-size: 15px;
-        font-weight: 600;
-        line-height: 22px;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
-      .readiness-check-meta {
-        overflow: hidden;
-        color: var(--muted);
-        font-size: 13px;
-        font-weight: 400;
-        line-height: 18px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .readiness-check-status {
+      .processing-status-chevron {
         justify-self: end;
-        min-width: 82px;
-        padding: 4px 10px;
-        border-radius: 999px;
-        background: var(--panel-2);
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 16px;
-        text-align: center;
+        width: 5.2px;
+        height: 9.2px;
+        color: #d4d4d4;
+        -webkit-mask-image: url("./assets/icons/vector22.svg");
+        mask-image: url("./assets/icons/vector22.svg");
       }
 
-      .readiness-check-status.complete {
-        background: var(--green-bg);
-        color: var(--green);
-      }
-
-      .readiness-check-status.processing {
-        background: var(--orange-bg);
-        color: var(--orange);
+      .readiness-detail-list {
+        padding-top: 0;
       }
 
       .share-modal-backdrop {
@@ -4037,7 +4083,12 @@
         }
 
         .readiness-modal {
-          width: min(640px, calc(100vw - 24px));
+          top: 84px;
+          right: 12px;
+          left: 12px;
+          width: auto;
+          max-height: calc(100vh - 108px);
+          max-height: calc(100dvh - 108px);
         }
 
         .toast-region {
@@ -4103,8 +4154,7 @@
         }
 
         .readiness-modal-backdrop {
-          align-items: flex-end;
-          padding: 12px;
+          background: rgba(10, 10, 10, 0.46);
         }
 
         .share-modal-backdrop {
@@ -4113,7 +4163,6 @@
         }
 
         .readiness-modal {
-          width: 100%;
           max-height: calc(100vh - 24px);
           max-height: calc(100dvh - 24px);
           border-radius: 12px;
@@ -4127,7 +4176,7 @@
         }
 
         .readiness-modal-header {
-          padding: 18px 16px 16px;
+          padding: 18px 16px 12px;
         }
 
         .share-modal-header {
@@ -4135,8 +4184,8 @@
         }
 
         .readiness-modal-title {
-          font-size: 22px;
-          line-height: 28px;
+          font-size: 17px;
+          line-height: 24px;
         }
 
         .share-modal-title {
@@ -4145,9 +4194,14 @@
           line-height: 26px;
         }
 
-        .readiness-modal-summary {
-          font-size: 16px;
-          line-height: 22px;
+        .processing-status-summary {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 8px;
+          padding: 0 16px 12px;
+        }
+
+        .processing-status-count {
+          justify-self: start;
         }
 
         .share-modal {
@@ -4230,25 +4284,8 @@
           width: 100%;
         }
 
-        .readiness-progress {
-          margin-right: 16px;
-          margin-left: 16px;
-        }
-
-        .readiness-check-list {
-          max-height: calc(100vh - 190px);
-          max-height: calc(100dvh - 190px);
-        }
-
-        .readiness-check-row {
-          grid-template-columns: 28px minmax(0, 1fr);
-          gap: 10px;
-          padding: 14px 16px;
-        }
-
-        .readiness-check-status {
-          grid-column: 2;
-          justify-self: start;
+        .processing-status-list {
+          padding: 0 16px 16px;
         }
       }
 
@@ -4698,14 +4735,14 @@
 
         <section class="panel-section readiness" aria-labelledby="readiness-title">
           <div class="readiness-title">
-            <h3 class="section-title" id="readiness-title">Readiness</h3>
+            <h3 class="section-title" id="readiness-title">Processing status</h3>
             <span class="icon-frame icon-frame-16">
               <img class="figma-icon icon-panel-info" src="./assets/icons/content-preview/info-muted.svg" alt="" />
             </span>
           </div>
           <button class="status-chip" type="button" aria-haspopup="dialog" aria-controls="readiness-dialog" aria-expanded="false">
-            <span class="status-dot"></span>
-            <span>Processing 5/7</span>
+            <img class="figma-icon status-chip-icon" src="./assets/icons/content-preview/status-running.svg" alt="" />
+            <span class="status-chip-label">3 of 5 completed</span>
           </button>
         </section>
 
@@ -6066,82 +6103,134 @@
 
       <div class="readiness-modal-backdrop" id="readiness-dialog" hidden>
         <section
-          class="readiness-modal"
+          class="readiness-modal processing-status-window"
+          data-readiness-panel="status"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="readiness-dialog-title"
-          aria-describedby="readiness-dialog-summary"
+          aria-labelledby="processing-status-dialog-title"
+          aria-describedby="processing-status-dialog-summary"
+          tabindex="-1"
         >
           <header class="readiness-modal-header">
-            <div>
-              <h2 class="readiness-modal-title" id="readiness-dialog-title">Readiness checks</h2>
-              <p class="readiness-modal-summary" id="readiness-dialog-summary">5 complete and 2 processing checks</p>
-            </div>
-            <button class="readiness-modal-close" type="button" aria-label="Close readiness checks">
-              <svg class="figma-icon icon-x" viewBox="0 0 11.3 11.3" fill="none" aria-hidden="true">
-                <path d="M10.65 0.65L0.65 10.65M0.65 0.65L10.65 10.65" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
+            <h2 class="readiness-modal-title" id="processing-status-dialog-title">Processing status</h2>
+            <button class="readiness-modal-close" type="button" aria-label="Close processing status" data-readiness-close>
+              <span class="figma-mask-icon readiness-close-icon" aria-hidden="true"></span>
             </button>
           </header>
-          <div class="readiness-progress" aria-hidden="true">
-            <span class="readiness-progress-bar"></span>
+          <div class="processing-status-summary">
+            <div class="processing-status-track" aria-hidden="true">
+              <span></span>
+            </div>
+            <span class="processing-status-count" id="processing-status-dialog-summary">3 of 5 completed</span>
           </div>
-          <ul class="readiness-check-list">
-            <li class="readiness-check-row">
-              <span class="readiness-check-state complete" aria-hidden="true"></span>
-              <span class="readiness-check-copy">
-                <span class="readiness-check-title">Source file scan</span>
-                <span class="readiness-check-meta">Document opened and security scan completed</span>
+          <ul class="processing-status-list">
+            <li class="processing-status-row">
+              <span class="processing-status-icon complete" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-complete.svg" alt="" />
               </span>
-              <span class="readiness-check-status complete">Complete</span>
+              <span class="processing-status-text">Registered</span>
+              <span aria-hidden="true"></span>
             </li>
-            <li class="readiness-check-row">
-              <span class="readiness-check-state complete" aria-hidden="true"></span>
-              <span class="readiness-check-copy">
-                <span class="readiness-check-title">Metadata extraction</span>
-                <span class="readiness-check-meta">Name, size, source, and ownership fields mapped</span>
+            <li class="processing-status-row">
+              <span class="processing-status-icon complete" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-complete.svg" alt="" />
               </span>
-              <span class="readiness-check-status complete">Complete</span>
+              <span class="processing-status-text">Metadata available</span>
+              <span aria-hidden="true"></span>
             </li>
-            <li class="readiness-check-row">
-              <span class="readiness-check-state complete" aria-hidden="true"></span>
-              <span class="readiness-check-copy">
-                <span class="readiness-check-title">Primary text availability</span>
-                <span class="readiness-check-meta">111 content chunks available for review</span>
+            <li class="processing-status-row">
+              <span class="processing-status-icon complete" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-complete.svg" alt="" />
               </span>
-              <span class="readiness-check-status complete">Complete</span>
+              <span class="processing-status-text">Scan Clean</span>
+              <span aria-hidden="true"></span>
             </li>
-            <li class="readiness-check-row">
-              <span class="readiness-check-state complete" aria-hidden="true"></span>
-              <span class="readiness-check-copy">
-                <span class="readiness-check-title">Access policy sync</span>
-                <span class="readiness-check-meta">Private asset permissions verified</span>
+            <li class="processing-status-row">
+              <span class="processing-status-icon running" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-running.svg" alt="" />
               </span>
-              <span class="readiness-check-status complete">Complete</span>
+              <span class="processing-status-text">Extraction Running</span>
+              <span aria-hidden="true"></span>
             </li>
-            <li class="readiness-check-row">
-              <span class="readiness-check-state complete" aria-hidden="true"></span>
-              <span class="readiness-check-copy">
-                <span class="readiness-check-title">Preview render</span>
-                <span class="readiness-check-meta">Document pages rendered for browser preview</span>
-              </span>
-              <span class="readiness-check-status complete">Complete</span>
+            <li>
+              <button class="processing-status-row" type="button" data-readiness-detail-open>
+                <span class="processing-status-icon running" aria-hidden="true">
+                  <img class="figma-icon" src="./assets/icons/content-preview/status-running.svg" alt="" />
+                </span>
+                <span class="processing-status-text">Readiness Running</span>
+                <span class="figma-mask-icon processing-status-chevron" aria-hidden="true"></span>
+              </button>
             </li>
-            <li class="readiness-check-row" aria-current="step">
-              <span class="readiness-check-state processing" aria-hidden="true"></span>
-              <span class="readiness-check-copy">
-                <span class="readiness-check-title">Readiness summary</span>
-                <span class="readiness-check-meta">Quality signals are being scored</span>
+            <li class="processing-status-row">
+              <span class="processing-status-icon pending" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-pending.svg" alt="" />
               </span>
-              <span class="readiness-check-status processing">Processing</span>
+              <span class="processing-status-text">Search Pending</span>
+              <span aria-hidden="true"></span>
             </li>
-            <li class="readiness-check-row">
-              <span class="readiness-check-state processing" aria-hidden="true"></span>
-              <span class="readiness-check-copy">
-                <span class="readiness-check-title">Approval routing</span>
-                <span class="readiness-check-meta">Reviewer actions are being prepared</span>
+            <li class="processing-status-row">
+              <span class="processing-status-icon pending" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-pending.svg" alt="" />
               </span>
-              <span class="readiness-check-status processing">Processing</span>
+              <span class="processing-status-text">Preview Pending</span>
+              <span aria-hidden="true"></span>
+            </li>
+            <li class="processing-status-row">
+              <span class="processing-status-icon pending" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-pending.svg" alt="" />
+              </span>
+              <span class="processing-status-text">Delivery Unpublished</span>
+              <span aria-hidden="true"></span>
+            </li>
+          </ul>
+        </section>
+
+        <section
+          class="readiness-modal readiness-detail-window"
+          data-readiness-panel="detail"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="readiness-running-title"
+          hidden
+          tabindex="-1"
+        >
+          <header class="readiness-modal-header readiness-detail-header">
+            <button class="readiness-back-button" type="button" aria-label="Back to processing status" data-readiness-detail-back>
+              <span class="figma-mask-icon readiness-back-icon" aria-hidden="true"></span>
+            </button>
+            <h2 class="readiness-modal-title" id="readiness-running-title">Readiness Running</h2>
+            <button class="readiness-modal-close" type="button" aria-label="Close readiness running" data-readiness-close>
+              <span class="figma-mask-icon readiness-close-icon" aria-hidden="true"></span>
+            </button>
+          </header>
+          <ul class="processing-status-list readiness-detail-list">
+            <li class="processing-status-row">
+              <span class="processing-status-icon complete" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-complete.svg" alt="" />
+              </span>
+              <span class="processing-status-text">Upload completed</span>
+              <span aria-hidden="true"></span>
+            </li>
+            <li class="processing-status-row">
+              <span class="processing-status-icon running" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-running.svg" alt="" />
+              </span>
+              <span class="processing-status-text">Scan verifying</span>
+              <span aria-hidden="true"></span>
+            </li>
+            <li class="processing-status-row">
+              <span class="processing-status-icon running" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-running.svg" alt="" />
+              </span>
+              <span class="processing-status-text">Primary text running</span>
+              <span aria-hidden="true"></span>
+            </li>
+            <li class="processing-status-row">
+              <span class="processing-status-icon pending" aria-hidden="true">
+                <img class="figma-icon" src="./assets/icons/content-preview/status-pending.svg" alt="" />
+              </span>
+              <span class="processing-status-text">Preview pending</span>
+              <span aria-hidden="true"></span>
             </li>
           </ul>
         </section>
@@ -6316,8 +6405,11 @@
         const fileNameInput = document.querySelector(".file-chip");
         const readinessButton = document.querySelector(".status-chip");
         const readinessDialog = document.querySelector("#readiness-dialog");
-        const readinessModal = document.querySelector(".readiness-modal");
-        const readinessClose = document.querySelector(".readiness-modal-close");
+        const readinessStatusPanel = readinessDialog?.querySelector('[data-readiness-panel="status"]');
+        const readinessDetailPanel = readinessDialog?.querySelector('[data-readiness-panel="detail"]');
+        const readinessCloseButtons = readinessDialog ? Array.from(readinessDialog.querySelectorAll("[data-readiness-close]")) : [];
+        const readinessDetailOpen = readinessDialog?.querySelector("[data-readiness-detail-open]");
+        const readinessDetailBack = readinessDialog?.querySelector("[data-readiness-detail-back]");
         const toastRegion = document.querySelector(".toast-region");
         const downloadButton = document.querySelector('[data-toast-action="download"]');
         const copyLinkButton = document.querySelector('[data-toast-action="copy-link"]');
@@ -6366,7 +6458,7 @@
         const hasMoreOptionsMenu = Boolean(moreOptionsWrap && moreOptionsToggle && moreOptionsMenu);
         const hasPageIndicator = Boolean(documentViewport && pages.length && currentPageIndicator && totalPageIndicator);
         const hasFileNameInput = Boolean(fileNameInput);
-        const hasReadinessDialog = Boolean(readinessButton && readinessDialog && readinessModal && readinessClose);
+        const hasReadinessDialog = Boolean(readinessButton && readinessDialog && readinessStatusPanel && readinessDetailPanel && readinessCloseButtons.length);
         const hasShareDialog = Boolean(shareButton && shareDialog && shareModal && shareCloseButtons.length);
         const hasCommentsDrawer = Boolean(commentToggle && commentsPanel && commentsClose);
         const hasActivityDrawer = Boolean(activityToggle && activityPanel && activityClose);
@@ -6375,7 +6467,7 @@
         const getMoreOptionsMenuItems = () => Array.from(moreOptionsMenu.querySelectorAll(".more-menu-item"));
         const getReadinessFocusable = () =>
           Array.from(readinessDialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(
-            (element) => !element.disabled && !element.hidden,
+            (element) => !element.disabled && !element.hidden && !element.closest("[hidden]"),
           );
         const getShareFocusable = () =>
           Array.from(shareDialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(
@@ -6533,7 +6625,6 @@
           { value: "view", menuLabel: "Can view", triggerLabel: "Can view", rowLabel: "Can view", icon: "eye" },
           { value: "comment", menuLabel: "Can comment", triggerLabel: "Can comment", rowLabel: "Can comment", icon: "message" },
           { value: "edit", menuLabel: "Can edit", triggerLabel: "Can edit", rowLabel: "Can edit", icon: "pen" },
-          { value: "manage", menuLabel: "Can manage", triggerLabel: "Can manage", rowLabel: "Can manage", icon: "settings" },
         ];
         const shareLinkAccessOptions = [
           { value: "restricted", label: "Restricted", description: "Only invited parties with access can access this." },
@@ -6572,7 +6663,6 @@
           eye: "./assets/icons/content-preview/share-eye.svg",
           message: "./assets/icons/content-preview/share-message.svg",
           pen: "./assets/icons/content-preview/share-pen.svg",
-          settings: "./assets/icons/content-preview/share-settings.svg",
           users: "./assets/icons/content-preview/share-users.svg",
         };
 
@@ -6863,6 +6953,23 @@
           }
         };
 
+        const setReadinessDialogView = (view, moveFocus = false) => {
+          if (!hasReadinessDialog) {
+            return;
+          }
+
+          const showDetail = view === "detail";
+          readinessStatusPanel.hidden = showDetail;
+          readinessDetailPanel.hidden = !showDetail;
+
+          if (!moveFocus) {
+            return;
+          }
+
+          const focusTarget = showDetail ? readinessDetailBack : readinessCloseButtons[0];
+          focusTarget?.focus({ preventScroll: true });
+        };
+
         const setShareDialogOpen = (isOpen, returnFocus = false, showAccessList = false) => {
           if (!hasShareDialog) {
             return;
@@ -6879,6 +6986,7 @@
             if (hasReadinessDialog) {
               readinessDialog.hidden = true;
               readinessButton.setAttribute("aria-expanded", "false");
+              setReadinessDialogView("status");
             }
 
             shareState.selectedInviteIds = [];
@@ -6919,17 +7027,19 @@
             closeApproveMenu();
             closeMoreOptionsMenu();
             setShareDialogOpen(false);
+            setReadinessDialogView("status");
             readinessDialog.hidden = false;
             updateModalLock();
-            readinessClose.focus();
+            readinessCloseButtons[0]?.focus({ preventScroll: true });
             return;
           }
 
           readinessDialog.hidden = true;
+          setReadinessDialogView("status");
           updateModalLock();
 
           if (returnFocus) {
-            readinessButton.focus();
+            readinessButton.focus({ preventScroll: true });
           }
         };
 
@@ -8182,8 +8292,18 @@
             setReadinessDialogOpen(true);
           });
 
-          readinessClose.addEventListener("click", () => {
-            setReadinessDialogOpen(false, true);
+          readinessCloseButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              setReadinessDialogOpen(false, true);
+            });
+          });
+
+          readinessDetailOpen?.addEventListener("click", () => {
+            setReadinessDialogView("detail", true);
+          });
+
+          readinessDetailBack?.addEventListener("click", () => {
+            setReadinessDialogView("status", true);
           });
 
           readinessDialog.addEventListener("pointerdown", (event) => {
